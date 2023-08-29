@@ -1,3 +1,9 @@
+export type EventName = 'onClick';
+
+type EventsMap<T extends EventName> = {
+  [K in T]?: string;
+};
+
 export type Page = {
   id: BlockId;
   title: string;
@@ -37,6 +43,7 @@ export type ButtonBlock = BaseBlock & {
   type: 'button';
   props: {
     children: BlockId[];
+    events: EventsMap<'onClick'>;
   };
 };
 
@@ -54,6 +61,27 @@ export type Block =
   | ButtonBlock
   | InputBlock;
 
-type HasChildren<T> = T extends { props: { children: BlockId[] } } ? T : never;
+type FilterType<T, F> = T extends F ? T : never;
 
-export type BlockWithChildren = HasChildren<Block>;
+export type NestableBlock = FilterType<
+  Block,
+  { props: { children: BlockId[] } }
+>;
+
+export type ClickableBlock = FilterType<
+  Block,
+  {
+    props: {
+      events: EventsMap<'onClick'>;
+    };
+  }
+>;
+
+export type WithContentEditBlock = FilterType<
+  Block,
+  {
+    props: {
+      content: string;
+    };
+  }
+>;

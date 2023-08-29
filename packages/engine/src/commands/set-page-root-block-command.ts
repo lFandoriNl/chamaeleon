@@ -4,14 +4,17 @@ import { Block, BlockId, Page } from '../types';
 
 export function createSetPageRootBlockCommand(
   newBlock: Block,
-  to: BlockId,
+  target: BlockId,
 ): Command<Record<BlockId, Page>> {
+  let oldValue = '';
+
   return {
     execute(context) {
-      context[to].props.children = newBlock.id;
+      oldValue = context[target].props.children;
+      context[target].props.children = newBlock.id;
     },
     undo(context) {
-      context[to].props.children = '';
+      context[target].props.children = oldValue;
     },
   };
 }
