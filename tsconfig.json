@@ -22,7 +22,7 @@
   },
   "references": [
     {
-      "path": "apps/builder",
+      "path": "apps/builder"
     },
     {
       "path": "packages/engine"
