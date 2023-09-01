@@ -19,5 +19,3 @@ export function createListenersRegistry() {
     get,
   };
 }
-
-export const listenersRegistry = createListenersRegistry();

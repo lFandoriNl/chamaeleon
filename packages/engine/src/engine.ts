@@ -4,10 +4,13 @@ import { nanoid } from 'nanoid';
 import { CommandManager, createCommandManager } from './command-manager';
 import { blockConfig } from './block-config';
 
-import { commands } from './commands';
+import { createCommandRegistry } from './commands';
 
-import { Page, Block, BlockId, EventName } from './types';
-import { listenersRegistry } from './listeners-registry';
+import { Page, Block, BlockId, EventName, StateContext } from './types';
+import { createListenersRegistry } from './listeners-registry';
+
+const commands = createCommandRegistry();
+const listenersRegistry = createListenersRegistry();
 
 const initialPage = {
   id: nanoid(10),
@@ -21,22 +24,29 @@ export class Engine {
   pages: Record<BlockId, Page> = {
     [initialPage.id]: initialPage,
   };
-  pagesHistory: CommandManager<Record<BlockId, Page>>;
-
   blocks: Record<BlockId, Block> = {};
-  blocksHistory: CommandManager<Record<BlockId, Block>>;
+
+  stateHistory: CommandManager<StateContext>;
 
   currentPageId: BlockId = Object.keys(this.pages)[0];
 
   currentBlockId: BlockId | null = null;
 
   constructor() {
-    makeAutoObservable(this, { pagesHistory: false, blocksHistory: false });
+    makeAutoObservable(this, { stateHistory: false });
 
-    this.pagesHistory = createCommandManager(this.pages);
-    this.blocksHistory = createCommandManager<Record<BlockId, Block>>(
-      this.blocks,
-    );
+    this.stateHistory = createCommandManager<StateContext>({
+      pages: this.pages,
+      blocks: this.blocks,
+    });
+  }
+
+  get currentBlock() {
+    return this.currentBlockId ? this.blocks[this.currentBlockId] : null;
+  }
+
+  getBlock(blockId: BlockId) {
+    return this.blocks[blockId];
   }
 
   addRootPageBlock(type: Block['type']) {
@@ -47,10 +57,8 @@ export class Engine {
       ...initialBlock,
     };
 
-    this.blocksHistory.execute(commands.createAddPageRootBlockCommand(block));
-
-    this.pagesHistory.execute(
-      commands.createSetPageRootBlockCommand(block, this.currentPageId),
+    this.stateHistory.execute(
+      commands.createAddPageRootBlockCommand(this.currentPageId, block),
     );
 
     this.currentBlockId = block.id;
@@ -66,7 +74,7 @@ export class Engine {
       ...initialBlock,
     };
 
-    this.blocksHistory.execute(commands.createAddBlockCommand(block, target));
+    this.stateHistory.execute(commands.createAddBlockCommand(target, block));
 
     this.currentBlockId = block.id;
 
@@ -74,7 +82,7 @@ export class Engine {
   }
 
   changeContent(target: BlockId, content: string) {
-    this.blocksHistory.execute(
+    this.stateHistory.execute(
       commands.createChangeContentCommand(target, content),
     );
 
@@ -84,24 +92,35 @@ export class Engine {
   addEventListener(target: BlockId, eventName: EventName, actionRaw: string) {
     const listenerId = listenersRegistry.set(target, eventName, actionRaw);
 
-    this.blocksHistory.execute(
+    this.stateHistory.execute(
       commands.createAddEventListenerCommand(target, eventName, listenerId),
     );
   }
 
-  executeEvent(listenerId: string) {}
+  executeEvent(listenerId: string) {
+    return listenerId;
+  }
+
+  redo() {
+    this.stateHistory.redo();
+  }
+
+  undo() {
+    this.stateHistory.undo();
+  }
+
+  getSnapshot() {
+    return {
+      pages: toJS(this.pages),
+      blocks: toJS(this.blocks),
+    };
+  }
 
   debugFull() {
-    console.dir(
-      {
-        pages: toJS(this.pages),
-        blocks: toJS(this.blocks),
-      },
-      { depth: Infinity },
-    );
+    console.dir(this.getSnapshot(), { depth: Infinity });
   }
 
   debugBlocks() {
-    console.dir(toJS(this.blocks), { depth: Infinity });
+    console.dir(this.getSnapshot().blocks, { depth: Infinity });
   }
 }

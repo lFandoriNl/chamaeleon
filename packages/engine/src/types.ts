@@ -61,6 +61,11 @@ export type Block =
   | ButtonBlock
   | InputBlock;
 
+export type StateContext = {
+  pages: Record<string, Page>;
+  blocks: Record<BlockId, Block>;
+};
+
 type FilterType<T, F> = T extends F ? T : never;
 
 export type NestableBlock = FilterType<

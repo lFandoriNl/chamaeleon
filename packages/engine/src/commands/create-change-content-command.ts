@@ -1,17 +1,17 @@
 import { Command } from '../command-manager';
 
-import { Block, BlockId } from '../types';
+import { BlockId, StateContext } from '../types';
 import { isContentEditingBlock } from '../utils';
 
 export function createChangeContentCommand(
   target: BlockId,
   content: string,
-): Command<Record<BlockId, Block>> {
+): Command<StateContext> {
   let oldValue = '';
 
   return {
     execute(context) {
-      const block = context[target];
+      const block = context.blocks[target];
 
       if (isContentEditingBlock(block)) {
         oldValue = block.props.content;
@@ -19,7 +19,7 @@ export function createChangeContentCommand(
       }
     },
     undo(context) {
-      const block = context[target];
+      const block = context.blocks[target];
 
       if (isContentEditingBlock(block)) {
         block.props.content = oldValue;

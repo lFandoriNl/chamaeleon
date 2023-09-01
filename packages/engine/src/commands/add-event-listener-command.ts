@@ -1,18 +1,18 @@
 import { Command } from '../command-manager';
 
-import { Block, BlockId, EventName } from '../types';
+import { BlockId, EventName, StateContext } from '../types';
 import { isClickableBlock } from '../utils';
 
 export function createAddEventListenerCommand(
   target: BlockId,
   eventName: EventName,
   callbackKey: string,
-): Command<Record<BlockId, Block>> {
+): Command<StateContext> {
   let oldValue: string | undefined = undefined;
 
   return {
     execute(context) {
-      const block = context[target];
+      const block = context.blocks[target];
 
       // TODO: refactor
       if (eventName === 'onClick') {
@@ -23,7 +23,7 @@ export function createAddEventListenerCommand(
       }
     },
     undo(context) {
-      const block = context[target];
+      const block = context.blocks[target];
 
       // TODO: refactor
       if (eventName === 'onClick') {

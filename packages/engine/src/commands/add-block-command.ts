@@ -1,30 +1,30 @@
 import { Command } from '../command-manager';
 
-import { Block, BlockId } from '../types';
+import { Block, BlockId, StateContext } from '../types';
 import { isWithChildrenBlock } from '../utils';
 
 export function createAddBlockCommand(
-  newBlock: Block,
   target: BlockId,
-): Command<Record<BlockId, Block>> {
+  newBlock: Block,
+): Command<StateContext> {
   return {
     execute(context) {
-      const block = context[target];
+      const block = context.blocks[target];
 
       if (isWithChildrenBlock(block)) {
         block.props.children.push(newBlock.id);
-        context[newBlock.id] = block;
+        context.blocks[newBlock.id] = newBlock;
       }
     },
     undo(context) {
-      const block = context[target];
+      const block = context.blocks[target];
 
       if (isWithChildrenBlock(block)) {
         block.props.children = block.props.children.filter(
           (id) => id !== newBlock.id,
         );
 
-        delete context[newBlock.id];
+        delete context.blocks[newBlock.id];
       }
     },
   };
