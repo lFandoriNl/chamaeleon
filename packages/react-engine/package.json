@@ -1,0 +1,19 @@
+{
+  "name": "@chameleon/react-engine",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@chameleon/engine": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7"
+  }
+}

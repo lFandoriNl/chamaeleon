@@ -1,7 +1,7 @@
 import { Command } from '../command-manager';
 
 import { Block, BlockId, StateContext } from '../types';
-import { isWithChildrenBlock } from '../utils';
+import { isWithChildrenBlock } from '../type-guard';
 
 export function createAddBlockCommand(
   target: BlockId,

@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import { PageEditor } from './pages/page-editor';
 
@@ -10,6 +15,10 @@ const App = () => {
   return (
     <Router>
       <Switch>
+        <Route exact path="/">
+          <Redirect to="/editor" />
+        </Route>
+
         <Route exact path="/editor">
           <PageEditor />
         </Route>

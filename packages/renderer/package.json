@@ -1,9 +1,9 @@
 {
-  "name": "builder",
+  "name": "@chameleon/renderer",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "src/main.ts",
+  "main": "src/index.tsx",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -12,15 +12,14 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@chameleon/engine": "workspace:^",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "5.2.0"
+    "@chameleon/react-engine": "workspace:^",
+    "mobx-react-lite": "4.0.4"
   },
   "devDependencies": {
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
-    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "4.0.4",
     "autoprefixer": "10.4.15",
     "postcss": "8.4.28",

@@ -1,7 +1,7 @@
 import { Command } from '../command-manager';
 
 import { BlockId, StateContext } from '../types';
-import { isContentEditingBlock } from '../utils';
+import { isContentEditingBlock } from '../type-guard';
 
 export function createChangeContentCommand(
   target: BlockId,

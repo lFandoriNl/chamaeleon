@@ -4,11 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "sideEffects": false,
-  "main": "src/main.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "build": "tsc",
     "test": "vitest"
   },
   "dependencies": {
@@ -17,9 +15,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.22.11",
-    "@babel/preset-env": "^7.22.10",
-    "typescript": "5.1.6",
-    "vite": "4.4.9",
+    "@babel/preset-env": "7.22.14",
     "vitest": "0.34.3"
   }
 }

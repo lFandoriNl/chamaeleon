@@ -45,6 +45,10 @@ export class Engine {
     return this.currentBlockId ? this.blocks[this.currentBlockId] : null;
   }
 
+  get pagesArray() {
+    return Object.keys(this.pages).map((id) => this.pages[id]);
+  }
+
   getBlock(blockId: BlockId) {
     return this.blocks[blockId];
   }

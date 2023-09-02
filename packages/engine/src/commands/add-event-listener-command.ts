@@ -1,7 +1,7 @@
 import { Command } from '../command-manager';
 
 import { BlockId, EventName, StateContext } from '../types';
-import { isClickableBlock } from '../utils';
+import { isClickableBlock } from '../type-guard';
 
 export function createAddEventListenerCommand(
   target: BlockId,

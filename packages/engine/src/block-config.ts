@@ -7,19 +7,19 @@ export type BlockTag =
   | 'clickable'
   | 'content-editing';
 
-type BlockConfig<T> = {
+type BlockSetting<T> = {
   initial: Omit<Extract<Block, { type: T }>, 'id'>;
   allowedNestedBlocks?: Block['type'][];
   tags: BlockTag[];
 };
 
-type BlocksConfig = {
+type BlocksSettings = {
   blocks: {
-    [T in Block['type']]: BlockConfig<T>;
+    [T in Block['type']]: BlockSetting<T>;
   };
 };
 
-const settings: BlocksConfig = {
+const settings: BlocksSettings = {
   blocks: {
     row: {
       initial: {
@@ -70,7 +70,9 @@ const settings: BlocksConfig = {
   },
 };
 
-export function createBlockConfig() {
+export type BlockConfig = ReturnType<typeof createBlockConfig>;
+
+function createBlockConfig() {
   const getInitialBlockByType = (type: Block['type']) => {
     return settings.blocks[type].initial;
   };
