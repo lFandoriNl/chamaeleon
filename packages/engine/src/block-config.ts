@@ -1,21 +1,25 @@
 import { Block } from './types';
 
 export type BlockTag =
+  | 'structural'
   | 'rootable'
   | 'nestable'
   | 'clickable'
   | 'content-editing';
 
-type BlockConfig = {
+type BlockConfig<T> = {
+  initial: Omit<Extract<Block, { type: T }>, 'id'>;
+  allowedNestedBlocks?: Block['type'][];
+  tags: BlockTag[];
+};
+
+type BlocksConfig = {
   blocks: {
-    [T in Block['type']]: {
-      initial: Omit<Extract<Block, { type: T }>, 'id'>;
-      tags: BlockTag[];
-    };
+    [T in Block['type']]: BlockConfig<T>;
   };
 };
 
-const settings: BlockConfig = {
+const settings: BlocksConfig = {
   blocks: {
     row: {
       initial: {
@@ -24,7 +28,8 @@ const settings: BlockConfig = {
           children: [],
         },
       },
-      tags: ['rootable', 'nestable'],
+      allowedNestedBlocks: ['column'],
+      tags: ['structural', 'rootable', 'nestable'],
     },
     column: {
       initial: {
@@ -33,7 +38,7 @@ const settings: BlockConfig = {
           children: [],
         },
       },
-      tags: ['nestable'],
+      tags: ['structural', 'nestable'],
     },
     text: {
       initial: {
@@ -52,6 +57,7 @@ const settings: BlockConfig = {
           events: {},
         },
       },
+      allowedNestedBlocks: ['text'],
       tags: ['nestable', 'clickable'],
     },
     input: {
@@ -69,8 +75,13 @@ export function createBlockConfig() {
     return settings.blocks[type].initial;
   };
 
-  const hasBlockTag = (tag: BlockTag, type: Block['type']) => {
-    return settings.blocks[type].tags.includes(tag);
+  const getAllowedRootBlocks = () => {
+    return getBlocksByTag('rootable');
+  };
+
+  const getAllowedNestedBlocks = (type: Block['type']) => {
+    const allowedNestedBlocks = settings.blocks[type].allowedNestedBlocks;
+    return allowedNestedBlocks ? allowedNestedBlocks : [];
   };
 
   const getBlocksByTag = (tag: BlockTag) => {
@@ -79,8 +90,14 @@ export function createBlockConfig() {
     ).filter((type) => hasBlockTag(tag, type));
   };
 
+  const hasBlockTag = (tag: BlockTag, type: Block['type']) => {
+    return settings.blocks[type].tags.includes(tag);
+  };
+
   return {
     getInitialBlockByType,
+    getAllowedRootBlocks,
+    getAllowedNestedBlocks,
     getBlocksByTag,
     hasBlockTag,
   };

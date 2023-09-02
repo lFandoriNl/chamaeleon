@@ -65,7 +65,5 @@ describe('Engine', () => {
 
     engine.redo();
     expect(engine.getSnapshot()).toEqual(afterChangeSnapshot);
-
-    engine.debugFull();
   });
 });
