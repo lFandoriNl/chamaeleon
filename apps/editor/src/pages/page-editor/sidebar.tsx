@@ -3,24 +3,34 @@ import { observer } from 'mobx-react-lite';
 import { useEngine } from '@chameleon/react-engine';
 import { clm } from '@chameleon/component-library-manager';
 
-import { EditorRow } from '@chameleon/component-library-manager/library/row/editor-row';
-import { EditorText } from '@chameleon/component-library-manager/library/text/editor-text';
+import { Row } from '@chameleon/component-library-manager/library/row/row';
+import { Text } from '@chameleon/component-library-manager/library/text/text';
 
 clm.addComponent('row', {
-  editor: EditorRow,
+  natural: Row,
+  editorLoader: () =>
+    import('@chameleon/component-library-manager/library/row/editor-row').then(
+      (mod) => mod.EditorRow,
+    ),
   paletteLoader: () =>
-    import(
-      '@chameleon/component-library-manager/src/library/row/palette-row'
-    ).then((mod) => mod.PaletteRow),
+    import('@chameleon/component-library-manager/library/row/palette-row').then(
+      (mod) => mod.PaletteRow,
+    ),
 });
 
 clm.addComponent('text', {
-  editor: EditorText,
+  natural: Text,
+  editorLoader: () =>
+    import(
+      '@chameleon/component-library-manager/library/text/editor-text'
+    ).then((mod) => mod.EditorText),
   paletteLoader: () =>
     import(
-      '@chameleon/component-library-manager/src/library/text/palette-text'
+      '@chameleon/component-library-manager/library/text/palette-text'
     ).then((mod) => mod.PaletteText),
 });
+
+Promise.all([clm.loadComponents('editor'), clm.loadComponents('palette')]);
 
 export const Sidebar = observer(() => {
   const engine = useEngine();

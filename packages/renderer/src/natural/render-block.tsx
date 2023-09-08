@@ -14,10 +14,11 @@ export const RenderBlock = observer<RenderBlockProps>(({ blockId }) => {
 
   if (!block) throw new Error(`Block with id "${blockId}" does not exist.`);
 
-  const Component = clm.getEditorComponent(block.type);
+  const Component = clm.getNaturalComponent(block.type);
 
   if (typeGuard.isWithChildrenBlock(block)) {
     return (
+      // @ts-expect-error
       <Component blockId={blockId}>
         {block.props.children.map((id) => (
           <RenderBlock key={id} blockId={id} />

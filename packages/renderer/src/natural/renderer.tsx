@@ -1,6 +1,8 @@
-import { useEngine } from '@chameleon/react-engine';
-import { RenderBlock } from './render';
 import { observer } from 'mobx-react-lite';
+
+import { useEngine } from '@chameleon/react-engine';
+
+import { RenderBlock } from './render-block';
 
 export const Renderer = observer(() => {
   const engine = useEngine();

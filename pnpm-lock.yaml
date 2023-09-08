@@ -41,6 +41,9 @@ importers:
       '@chameleon/component-library-manager':
         specifier: workspace:^
         version: link:../../packages/component-library-manager
+      '@chameleon/react-editor':
+        specifier: workspace:^
+        version: link:../../packages/react-editor
       '@chameleon/react-engine':
         specifier: workspace:^
         version: link:../../packages/react-engine
@@ -105,9 +108,18 @@ importers:
       '@chameleon/engine':
         specifier: workspace:^
         version: link:../engine
+      '@chameleon/react-editor':
+        specifier: workspace:^
+        version: link:../react-editor
       '@chameleon/react-engine':
         specifier: workspace:^
         version: link:../react-engine
+      '@chameleon/uikit':
+        specifier: workspace:^
+        version: link:../uikit
+      clsx:
+        specifier: 2.0.0
+        version: 2.0.0
       mobx-react-lite:
         specifier: 4.0.4
         version: 4.0.4(mobx@6.10.2)(react-dom@18.2.0)(react@18.2.0)
@@ -117,6 +129,9 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      react-icons:
+        specifier: 4.11.0
+        version: 4.11.0(react@18.2.0)
     devDependencies:
       '@types/react':
         specifier: 18.2.15
@@ -124,6 +139,25 @@ importers:
       '@types/react-dom':
         specifier: 18.2.7
         version: 18.2.7
+
+  packages/editor-core:
+    dependencies:
+      '@chameleon/engine':
+        specifier: workspace:^
+        version: link:../engine
+      mobx:
+        specifier: 6.10.2
+        version: 6.10.2
+    devDependencies:
+      '@babel/core':
+        specifier: 7.22.11
+        version: 7.22.11
+      '@babel/preset-env':
+        specifier: 7.22.14
+        version: 7.22.14(@babel/core@7.22.11)
+      vitest:
+        specifier: 0.34.3
+        version: 0.34.3
 
   packages/engine:
     dependencies:
@@ -144,6 +178,19 @@ importers:
         specifier: 0.34.3
         version: 0.34.3
 
+  packages/react-editor:
+    dependencies:
+      '@chameleon/editor-core':
+        specifier: workspace:^
+        version: link:../editor-core
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+    devDependencies:
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+
   packages/react-engine:
     dependencies:
       '@chameleon/engine':
@@ -162,6 +209,9 @@ importers:
       '@chameleon/component-library-manager':
         specifier: workspace:^
         version: link:../component-library-manager
+      '@chameleon/react-editor':
+        specifier: workspace:^
+        version: link:../react-editor
       '@chameleon/react-engine':
         specifier: workspace:^
         version: link:../react-engine
@@ -3967,6 +4017,14 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-icons@4.11.0(react@18.2.0):
+    resolution: {integrity: sha512-V+4khzYcE5EBk/BvcuYRq6V/osf11ODUM2J8hg2FDSswRrGvqiYUYPRy4OdrWaQOBj4NcpJfmHZLNaD+VH0TyA==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is@16.13.1:

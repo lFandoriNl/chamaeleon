@@ -14,6 +14,7 @@
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "@chameleon/react-editor": "workspace:^",
     "@chameleon/react-engine": "workspace:^",
     "@chameleon/component-library-manager": "workspace:^",
     "mobx-react-lite": "4.0.4"

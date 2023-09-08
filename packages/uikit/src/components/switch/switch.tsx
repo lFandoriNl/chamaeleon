@@ -5,7 +5,7 @@ export type SwitchProps = {
   className?: string;
   label?: string;
   checked?: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 export function Switch(props: SwitchProps) {

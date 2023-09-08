@@ -1,14 +1,18 @@
 import { observer } from 'mobx-react-lite';
 
+import {
+  EditorProvider,
+  EditorUIState,
+  useEditor,
+} from '@chameleon/react-editor';
 import { EngineProvider, useEngine, Engine } from '@chameleon/react-engine';
 import { Renderer, EditorRenderer } from '@chameleon/renderer';
 
 import { Sidebar } from './sidebar';
 import { AppBar } from './app-bar';
 
-import { editorModel } from './model/editor-model';
-
 const Content = observer(() => {
+  const editor = useEditor();
   const engine = useEngine();
 
   return (
@@ -19,10 +23,10 @@ const Content = observer(() => {
         </h1>
       ))}
 
-      {editorModel.renderMode === 'preview' ? (
+      {editor.ui.renderMode === 'preview' ? (
         <Renderer engine={engine} />
       ) : (
-        <EditorRenderer engine={engine} />
+        <EditorRenderer editor={editor} engine={engine} />
       )}
     </div>
   );
@@ -35,16 +39,22 @@ window.engine = engine;
 
 export const PageEditor = () => {
   return (
-    <EngineProvider value={engine}>
-      <div className="flex">
-        <Sidebar />
+    <EditorProvider
+      value={{
+        ui: new EditorUIState(),
+      }}
+    >
+      <EngineProvider value={engine}>
+        <div className="flex">
+          <Sidebar />
 
-        <div className="w-full">
-          <AppBar />
+          <div className="w-full">
+            <AppBar />
 
-          <Content />
+            <Content />
+          </div>
         </div>
-      </div>
-    </EngineProvider>
+      </EngineProvider>
+    </EditorProvider>
   );
 };

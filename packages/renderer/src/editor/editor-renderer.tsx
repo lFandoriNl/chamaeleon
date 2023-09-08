@@ -1,5 +1,5 @@
 import { useEngine } from '@chameleon/react-engine';
-import { RenderBlock } from './render';
+import { EditorRenderBlock } from './editor-render-block';
 import { observer } from 'mobx-react-lite';
 
 export const EditorRenderer = observer(() => {
@@ -8,7 +8,7 @@ export const EditorRenderer = observer(() => {
   return (
     <div className="w-full h-full border border-gray-500">
       {engine.rootPageBlock && (
-        <RenderBlock blockId={engine.rootPageBlock.id} />
+        <EditorRenderBlock blockId={engine.rootPageBlock.id} />
       )}
 
       {!engine.rootPageBlock && (

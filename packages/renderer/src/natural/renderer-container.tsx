@@ -1,9 +1,8 @@
 import { observer } from 'mobx-react-lite';
+
 import { EngineProvider, Engine } from '@chameleon/react-engine';
 
 import { Renderer } from './renderer';
-
-import './index.css';
 
 type RendererProps = {
   engine: Engine;

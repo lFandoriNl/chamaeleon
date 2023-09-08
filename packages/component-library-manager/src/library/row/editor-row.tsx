@@ -3,6 +3,10 @@ import { observer } from 'mobx-react-lite';
 
 import { BlockId, RowBlock } from '@chameleon/engine';
 import { useEngine } from '@chameleon/react-engine';
+import { useEditor } from '@chameleon/react-editor';
+
+import { PanelButton } from '@chameleon/uikit';
+import { SettingsOverlay } from '../../common/settings-overlay';
 
 type EditorRowProps = {
   blockId: BlockId;
@@ -10,16 +14,25 @@ type EditorRowProps = {
 };
 
 export const EditorRow = observer<EditorRowProps>(({ blockId, children }) => {
+  const editor = useEditor();
   const engine = useEngine();
 
   const block = engine.getBlock<RowBlock>(blockId);
 
   console.log({ children });
 
+  const handleOpenSettings = () => {
+    editor.ui.openBlockSettings(blockId);
+  };
+
+  console.log({ ...editor.ui.blockSettings });
+
   return (
-    <div className="grid">
-      {children.length === 0 && <button>Select the number of columns</button>}
-    </div>
+    <SettingsOverlay onClick={handleOpenSettings}>
+      <div className="grid">
+        {children.length === 0 && <PanelButton>Row</PanelButton>}
+      </div>
+    </SettingsOverlay>
   );
 });
 

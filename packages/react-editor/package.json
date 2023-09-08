@@ -1,0 +1,17 @@
+{
+  "name": "@chameleon/react-editor",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "@chameleon/editor-core": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.15"
+  }
+}

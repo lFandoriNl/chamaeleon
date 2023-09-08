@@ -9,7 +9,9 @@ type Component = React.FunctionComponent<{
 }>;
 
 type ComponentPack = {
+  natural: Component;
   editor: Component;
+  editorLoader?: () => Promise<Component>;
   palette: Component;
   paletteLoader?: () => Promise<Component>;
 };
@@ -17,15 +19,26 @@ type ComponentPack = {
 class ComponentLibraryManager {
   private components: Partial<Record<Block['type'], ComponentPack>> = {};
 
-  addComponent(name: Block['type'], pack: Omit<ComponentPack, 'palette'>) {
+  addComponent(
+    name: Block['type'],
+    pack: Omit<ComponentPack, 'editor' | 'palette'>,
+  ) {
     if (this.components[name]) {
       throw new Error(`Component "${name}" already exists.`);
     }
 
     this.components[name] = {
       ...pack,
+      editor: () => null,
       palette: PaletteLoading,
     };
+  }
+
+  getNaturalComponent(name: Block['type']) {
+    if (!this.components[name])
+      throw new Error(`Component "${name}" dost not exist.`);
+
+    return this.components[name].natural;
   }
 
   getEditorComponent(name: Block['type']) {
@@ -43,22 +56,22 @@ class ComponentLibraryManager {
     delete this.components[name];
   }
 
-  async loadPaletteComponents() {
-    const paletteComponents = await Promise.all(
+  async loadComponents(type: 'editor' | 'palette') {
+    const loadedComponents = await Promise.all(
       Object.keys(this.components)
-        .filter((name) => Boolean(this.components[name].paletteLoader))
+        .filter((name) => Boolean(this.components[name][`${type}Loader`]))
         .map(async (name) => {
-          const palette = await this.components[name].paletteLoader();
+          const component = await this.components[name][`${type}Loader`]();
 
           return {
             name,
-            palette,
+            component,
           };
         }),
     );
 
-    paletteComponents.forEach(({ name, palette }) => {
-      this.components[name].palette = palette;
+    loadedComponents.forEach(({ name, component }) => {
+      this.components[name][type] = component;
     });
   }
 }

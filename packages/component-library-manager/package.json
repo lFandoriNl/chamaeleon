@@ -10,9 +10,13 @@
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "@chameleon/uikit": "workspace:^",
     "@chameleon/engine": "workspace:^",
+    "@chameleon/react-editor": "workspace:^",
     "@chameleon/react-engine": "workspace:^",
-    "mobx-react-lite": "4.0.4"
+    "mobx-react-lite": "4.0.4",
+    "react-icons": "4.11.0",
+    "clsx": "2.0.0"
   },
   "devDependencies": {
     "@types/react": "18.2.15",

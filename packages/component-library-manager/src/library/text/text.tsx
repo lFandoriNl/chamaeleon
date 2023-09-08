@@ -4,12 +4,12 @@ import { observer } from 'mobx-react-lite';
 import { TextBlock } from '@chameleon/engine';
 import { BlockId, useEngine } from '@chameleon/react-engine';
 
-type EditorTextProps = {
+type TextProps = {
   blockId: BlockId;
   children?: React.ReactNode;
 };
 
-export const EditorText = observer<EditorTextProps>(({ blockId }) => {
+export const Text = observer<TextProps>(({ blockId }) => {
   const engine = useEngine();
 
   const block = engine.getBlock<TextBlock>(blockId);
@@ -17,4 +17,4 @@ export const EditorText = observer<EditorTextProps>(({ blockId }) => {
   return <p className="text-base">{block.props.content}</p>;
 });
 
-EditorText.displayName = 'EditorText';
+Text.displayName = 'Text';
