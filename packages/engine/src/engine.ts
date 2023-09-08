@@ -6,8 +6,11 @@ import { blockConfig } from './block-config';
 
 import { createCommandRegistry } from './commands';
 
-import { Page, Block, BlockId, EventName, StateContext } from './types';
 import { createListenersRegistry } from './listeners-registry';
+
+import { isNotNullOrUndefined } from './utils';
+
+import { Page, Block, BlockId, EventName, StateContext } from './types';
 
 const commands = createCommandRegistry();
 const listenersRegistry = createListenersRegistry();
@@ -41,16 +44,22 @@ export class Engine {
     });
   }
 
+  get rootPageBlock() {
+    return this.blocks[this.pages[this.currentPageId].props.children];
+  }
+
   get currentBlock() {
     return this.currentBlockId ? this.blocks[this.currentBlockId] : null;
   }
 
   get pagesArray() {
-    return Object.keys(this.pages).map((id) => this.pages[id]);
+    return Object.keys(this.pages)
+      .map((id) => this.pages[id])
+      .filter(isNotNullOrUndefined);
   }
 
-  getBlock(blockId: BlockId) {
-    return this.blocks[blockId];
+  getBlock<T extends Block>(blockId: BlockId): T {
+    return this.blocks[blockId] as T;
   }
 
   addRootPageBlock(type: Block['type']) {

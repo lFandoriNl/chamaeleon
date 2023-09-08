@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["rootable"]
+  "cSpell.words": ["clsx", "rootable"],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

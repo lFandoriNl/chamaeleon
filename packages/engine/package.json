@@ -10,7 +10,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "mobx": "6.10.0",
+    "mobx": "6.10.2",
     "nanoid": "4.0.2"
   },
   "devDependencies": {

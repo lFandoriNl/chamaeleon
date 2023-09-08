@@ -18,7 +18,19 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "strictNullChecks": true,
+    "paths": {
+      "@chameleon/uikit": ["./packages/uikit/src"],
+      "@chameleon/uikit/*": ["./packages/uikit/src/*"],
+      "@chameleon/component-library-manager": [
+        "./packages/component-library-manager/src"
+      ],
+      "@chameleon/component-library-manager/*": [
+        "./packages/component-library-manager/src/*"
+      ]
+    }
   },
   "references": [
     {

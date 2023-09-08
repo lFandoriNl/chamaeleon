@@ -12,12 +12,16 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@chameleon/uikit": "workspace:^",
+    "@chameleon/component-library-manager": "workspace:^",
     "@chameleon/react-engine": "workspace:^",
     "@chameleon/renderer": "workspace:^",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "5.2.0",
-    "mobx-react-lite": "4.0.4"
+    "mobx": "6.10.2",
+    "mobx-react-lite": "4.0.4",
+    "clsx": "2.0.0"
   },
   "devDependencies": {
     "@types/react": "18.2.21",

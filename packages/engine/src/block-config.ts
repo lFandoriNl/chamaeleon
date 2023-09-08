@@ -44,7 +44,7 @@ const settings: BlocksSettings = {
       initial: {
         type: 'text',
         props: {
-          content: '',
+          content: 'Text',
         },
       },
       tags: ['content-editing'],

@@ -19,6 +19,12 @@ module.exports = {
   plugins: ['@typescript-eslint', 'react'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 0,
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        varsIgnorePattern: 'React',
+      },
+    ],
   },
   overrides: [
     {
