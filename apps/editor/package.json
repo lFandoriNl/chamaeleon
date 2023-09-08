@@ -22,6 +22,7 @@
     "react-router-dom": "5.2.0",
     "mobx": "6.10.2",
     "mobx-react-lite": "4.0.4",
+    "react-icons": "4.11.0",
     "clsx": "2.0.0"
   },
   "devDependencies": {
