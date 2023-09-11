@@ -3,11 +3,11 @@ import { observer } from 'mobx-react-lite';
 import { useEditor } from '@chameleon/react-editor';
 import { useEngine } from '@chameleon/react-engine';
 
-type BlockSettingsWidgetProps = {
+type BlockPropertiesWidgetProps = {
   extra?: React.ReactNode;
 };
 
-export const BlockSettingsWidget = observer<BlockSettingsWidgetProps>(
+export const BlockPropertiesWidget = observer<BlockPropertiesWidgetProps>(
   ({ extra }) => {
     const editor = useEditor();
     const engine = useEngine();
@@ -33,4 +33,4 @@ export const BlockSettingsWidget = observer<BlockSettingsWidgetProps>(
   },
 );
 
-BlockSettingsWidget.displayName = 'BlockSettingsWidget';
+BlockPropertiesWidget.displayName = 'BlockPropertiesWidget';

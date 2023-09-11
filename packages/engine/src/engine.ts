@@ -19,7 +19,7 @@ const initialPage = {
   id: nanoid(10),
   title: 'Enter your page name',
   props: {
-    children: '',
+    children: null,
   },
 };
 
@@ -31,7 +31,7 @@ export class Engine {
 
   stateHistory: CommandManager<StateContext>;
 
-  currentPageId: BlockId = Object.keys(this.pages)[0];
+  currentPageId: BlockId = Object.keys(this.pages)[0]!;
 
   currentBlockId: BlockId | null = null;
 
@@ -45,7 +45,11 @@ export class Engine {
   }
 
   get rootPageBlock() {
-    return this.blocks[this.pages[this.currentPageId].props.children];
+    const block = this.pages[this.currentPageId];
+
+    if (!block || !block.props.children) return null;
+
+    return this.blocks[block.props.children];
   }
 
   get currentBlock() {

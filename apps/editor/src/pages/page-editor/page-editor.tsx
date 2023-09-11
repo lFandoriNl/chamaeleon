@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import clsx from 'clsx';
+
 import { observer } from 'mobx-react-lite';
 
 import { AiOutlineBorderLeft, AiOutlineBorderRight } from 'react-icons/ai';
@@ -16,15 +18,16 @@ import { Renderer, EditorRenderer } from '@chameleon/renderer';
 
 import { Sidebar } from './sidebar';
 import { AppBar } from './app-bar';
-import { BlockSettingsWidget } from '../../widgets/block-settings-widget/block-settings-widget';
+import { BlockPropertiesWidget } from '../../widgets/block-properties-widget';
 
 import { Drawer } from '../../shared/ui/drawer';
-import clsx from 'clsx';
 
 const DrawerBlockSettingsWidget = observer(() => {
   const editor = useEditor();
 
   const [direction, setDirection] = useState<'left' | 'right'>('right');
+
+  console.log({ direction });
 
   return (
     <Drawer
@@ -34,12 +37,12 @@ const DrawerBlockSettingsWidget = observer(() => {
       direction={direction}
       enableOverlay={true}
     >
-      <BlockSettingsWidget
+      <BlockPropertiesWidget
         extra={
           <div>
             <IconButton
-              className={clsx('!p-1 shadow-none rounded-none border', {
-                'bg-slate-200': direction === 'left',
+              className={clsx('!p-1 !shadow-none rounded-none border', {
+                '!bg-slate-200': direction === 'left',
               })}
               onClick={() => setDirection('left')}
             >
@@ -47,8 +50,8 @@ const DrawerBlockSettingsWidget = observer(() => {
             </IconButton>
 
             <IconButton
-              className={clsx('!p-1 shadow-none rounded-none border', {
-                'bg-slate-200': direction === 'right',
+              className={clsx('!p-1 !shadow-none rounded-none border', {
+                '!bg-slate-200': direction === 'right',
               })}
               onClick={() => setDirection('right')}
             >
@@ -56,7 +59,7 @@ const DrawerBlockSettingsWidget = observer(() => {
             </IconButton>
 
             <IconButton
-              className="ml-4 shadow-none"
+              className="ml-4 !shadow-none"
               onClick={() => editor.ui.closeBlockSettings()}
             >
               <IoMdClose size={24} />

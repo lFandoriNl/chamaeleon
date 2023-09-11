@@ -22,6 +22,8 @@
     "noUncheckedIndexedAccess": true,
     "strictNullChecks": true,
     "paths": {
+      "@chameleon/plugin": ["./packages/plugin/src"],
+      "@chameleon/plugin/*": ["./packages/plugin/src/*"],
       "@chameleon/uikit": ["./packages/uikit/src"],
       "@chameleon/uikit/*": ["./packages/uikit/src/*"],
       "@chameleon/component-library-manager": [

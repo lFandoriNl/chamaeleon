@@ -28,6 +28,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      ...resolveWorkspaceAlias('plugin'),
       ...resolveWorkspaceAlias('uikit'),
       ...resolveWorkspaceAlias('component-library-manager'),
     },

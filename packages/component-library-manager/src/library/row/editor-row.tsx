@@ -6,7 +6,7 @@ import { useEngine } from '@chameleon/react-engine';
 import { useEditor } from '@chameleon/react-editor';
 
 import { PanelButton } from '@chameleon/uikit';
-import { SettingsOverlay } from '../../common/settings-overlay';
+import { PropertiesOverlay } from '../../common/properties-overlay';
 
 type EditorRowProps = {
   blockId: BlockId;
@@ -28,11 +28,11 @@ export const EditorRow = observer<EditorRowProps>(({ blockId, children }) => {
   console.log({ ...editor.ui.blockSettings });
 
   return (
-    <SettingsOverlay onClick={handleOpenSettings}>
+    <PropertiesOverlay onClick={handleOpenSettings}>
       <div className="grid">
         {children.length === 0 && <PanelButton>Row</PanelButton>}
       </div>
-    </SettingsOverlay>
+    </PropertiesOverlay>
   );
 });
 

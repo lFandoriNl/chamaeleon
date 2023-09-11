@@ -1,2 +1,4 @@
+.vscode/easycode.ignore
+
 node_modules
 dist

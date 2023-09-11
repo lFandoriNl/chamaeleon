@@ -8,7 +8,7 @@ export type Page = {
   id: BlockId;
   title: string;
   props: {
-    children: BlockId;
+    children: BlockId | null;
   };
 };
 

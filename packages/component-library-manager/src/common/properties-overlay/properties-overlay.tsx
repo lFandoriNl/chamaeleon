@@ -3,12 +3,15 @@ import { IoSettingsOutline } from 'react-icons/io5';
 
 import { IconButton } from '@chameleon/uikit';
 
-type SettingsOverlayProps = {
+type PropertiesOverlayProps = {
   children: React.ReactNode | React.ReactNode[];
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export function SettingsOverlay({ children, onClick }: SettingsOverlayProps) {
+export function PropertiesOverlay({
+  children,
+  onClick,
+}: PropertiesOverlayProps) {
   return (
     <div className="group/overlay relative">
       {children}

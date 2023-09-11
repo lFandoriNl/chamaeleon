@@ -181,6 +181,43 @@ importers:
         specifier: 0.34.3
         version: 0.34.3
 
+  packages/plugin:
+    dependencies:
+      '@chameleon/engine':
+        specifier: workspace:^
+        version: link:../engine
+      '@chameleon/react-editor':
+        specifier: workspace:^
+        version: link:../react-editor
+      '@chameleon/react-engine':
+        specifier: workspace:^
+        version: link:../react-engine
+      '@chameleon/uikit':
+        specifier: workspace:^
+        version: link:../uikit
+      clsx:
+        specifier: 2.0.0
+        version: 2.0.0
+      mobx-react-lite:
+        specifier: 4.0.4
+        version: 4.0.4(mobx@6.10.2)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-icons:
+        specifier: 4.11.0
+        version: 4.11.0(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+      '@types/react-dom':
+        specifier: 18.2.7
+        version: 18.2.7
+
   packages/react-editor:
     dependencies:
       '@chameleon/editor-core':

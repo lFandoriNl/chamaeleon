@@ -1,25 +1,41 @@
 import { Block } from './types';
 
 export type BlockTag =
-  | 'structural'
   | 'rootable'
+  | 'structural'
   | 'nestable'
   | 'clickable'
   | 'content-editing';
 
+type Property = {
+  type: 'children';
+};
+
 type BlockSetting<T> = {
   initial: Omit<Extract<Block, { type: T }>, 'id'>;
-  allowedNestedBlocks?: Block['type'][];
+  allowedNestedBlocks?: {
+    byType?: Block['type'][];
+    byTag?: BlockTag[];
+  };
   tags: BlockTag[];
+  properties: {
+    configurable: Property[];
+  };
 };
 
 type BlocksSettings = {
+  properties: Record<Property['type'], Property>;
   blocks: {
     [T in Block['type']]: BlockSetting<T>;
   };
 };
 
 const settings: BlocksSettings = {
+  properties: {
+    children: {
+      type: 'children',
+    },
+  },
   blocks: {
     row: {
       initial: {
@@ -28,8 +44,17 @@ const settings: BlocksSettings = {
           children: [],
         },
       },
-      allowedNestedBlocks: ['column'],
-      tags: ['structural', 'rootable', 'nestable'],
+      allowedNestedBlocks: {
+        byType: ['column'],
+      },
+      tags: ['rootable', 'structural', 'nestable'],
+      properties: {
+        configurable: [
+          {
+            type: 'children',
+          },
+        ],
+      },
     },
     column: {
       initial: {
@@ -38,7 +63,17 @@ const settings: BlocksSettings = {
           children: [],
         },
       },
+      allowedNestedBlocks: {
+        byTag: ['structural', 'nestable', 'content-editing'],
+      },
       tags: ['structural', 'nestable'],
+      properties: {
+        configurable: [
+          {
+            type: 'children',
+          },
+        ],
+      },
     },
     text: {
       initial: {
@@ -48,6 +83,9 @@ const settings: BlocksSettings = {
         },
       },
       tags: ['content-editing'],
+      properties: {
+        configurable: [],
+      },
     },
     button: {
       initial: {
@@ -57,8 +95,17 @@ const settings: BlocksSettings = {
           events: {},
         },
       },
-      allowedNestedBlocks: ['text'],
+      allowedNestedBlocks: {
+        byType: ['text'],
+      },
       tags: ['nestable', 'clickable'],
+      properties: {
+        configurable: [
+          {
+            type: 'children',
+          },
+        ],
+      },
     },
     input: {
       initial: {
@@ -66,6 +113,9 @@ const settings: BlocksSettings = {
         props: {},
       },
       tags: [],
+      properties: {
+        configurable: [],
+      },
     },
   },
 };
@@ -83,7 +133,19 @@ function createBlockConfig() {
 
   const getAllowedNestedBlocks = (type: Block['type']) => {
     const allowedNestedBlocks = settings.blocks[type].allowedNestedBlocks;
-    return allowedNestedBlocks ? allowedNestedBlocks : [];
+
+    if (!allowedNestedBlocks) return [];
+
+    const blocks = Object.keys(settings.blocks) as Block['type'][];
+
+    return blocks.filter((block) => {
+      return (
+        allowedNestedBlocks.byType?.includes(block) ||
+        allowedNestedBlocks.byTag?.some((tag) =>
+          settings.blocks[block].tags.includes(tag),
+        )
+      );
+    });
   };
 
   const getBlocksByTag = (tag: BlockTag) => {
