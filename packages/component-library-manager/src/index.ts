@@ -9,10 +9,10 @@ type Component = React.FunctionComponent<{
 }>;
 
 type ComponentPack = {
-  natural: Component;
-  editor: Component;
+  Natural: Component;
+  Editor: Component;
   editorLoader?: () => Promise<Component>;
-  palette: Component;
+  Palette: Component;
   paletteLoader?: () => Promise<Component>;
 };
 
@@ -21,7 +21,7 @@ class ComponentLibraryManager {
 
   addComponent(
     name: Block['type'],
-    pack: Omit<ComponentPack, 'editor' | 'palette'>,
+    pack: Omit<ComponentPack, 'Editor' | 'Palette'>,
   ) {
     if (this.components[name]) {
       throw new Error(`Component "${name}" already exists.`);
@@ -29,8 +29,8 @@ class ComponentLibraryManager {
 
     this.components[name] = {
       ...pack,
-      editor: () => null,
-      palette: PaletteLoading,
+      Editor: () => null,
+      Palette: PaletteLoading,
     };
   }
 
@@ -38,18 +38,18 @@ class ComponentLibraryManager {
     if (!this.components[name])
       throw new Error(`Component "${name}" dost not exist.`);
 
-    return this.components[name].natural;
+    return this.components[name].Natural;
   }
 
   getEditorComponent(name: Block['type']) {
     if (!this.components[name])
       throw new Error(`Component "${name}" dost not exist.`);
 
-    return this.components[name].editor;
+    return this.components[name].Editor;
   }
 
   getPaletteComponent(name: Block['type']) {
-    return this.components[name].palette;
+    return this.components[name].Palette;
   }
 
   removeComponent(name: Block['type']) {

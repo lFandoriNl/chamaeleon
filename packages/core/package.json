@@ -1,0 +1,42 @@
+{
+  "name": "@chameleon/core",
+  "version": "0.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Chameleon core",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "module": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "check-types": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "immer": "^10.0.2"
+  },
+  "dependencies": {
+    "nanoid": "4.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.21",
+    "tailwind-config": "workspace:*",
+    "tsconfig": "workspace:*",
+    "tsup": "^7.2.0"
+  }
+}

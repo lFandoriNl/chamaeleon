@@ -7,10 +7,13 @@ import { AiOutlineBorderLeft, AiOutlineBorderRight } from 'react-icons/ai';
 import { IoMdClose } from 'react-icons/io';
 
 import { IconButton } from '@chameleon/uikit';
+import { createRowPlugin, createTextPlugin } from '@chameleon/plugin';
+import { clm } from '@chameleon/component-library-manager';
 
 import {
   EditorProvider,
   EditorUIState,
+  PropertiesOverlay,
   useEditor,
 } from '@chameleon/react-editor';
 import { EngineProvider, useEngine, Engine } from '@chameleon/react-engine';
@@ -18,16 +21,27 @@ import { Renderer, EditorRenderer } from '@chameleon/renderer';
 
 import { Sidebar } from './sidebar';
 import { AppBar } from './app-bar';
+
 import { BlockPropertiesWidget } from '../../widgets/block-properties-widget';
 
 import { Drawer } from '../../shared/ui/drawer';
+
+import { Commands } from '@chameleon/core';
+
+declare module '@chameleon/core' {
+  export interface Commands<ReturnType> {
+    test: {
+      test: (emitUpdate?: boolean) => ReturnType;
+    };
+  }
+}
+
+type A = Commands['addPageRootBlock'];
 
 const DrawerBlockSettingsWidget = observer(() => {
   const editor = useEditor();
 
   const [direction, setDirection] = useState<'left' | 'right'>('right');
-
-  console.log({ direction });
 
   return (
     <Drawer
@@ -94,6 +108,19 @@ const Content = observer(() => {
 
 const engine = new Engine();
 
+engine.registerPlugin(createRowPlugin());
+engine.registerPlugin(createTextPlugin());
+
+engine.plugins.forEach((plugin) => {
+  clm.addComponent(plugin.type, {
+    Natural: plugin.components.Natural,
+    editorLoader: plugin.components.editorLoader,
+    paletteLoader: plugin.components.paletteLoader,
+  });
+});
+
+Promise.all([clm.loadComponents('editor'), clm.loadComponents('palette')]);
+
 // @ts-expect-error
 window.engine = engine;
 
@@ -102,6 +129,9 @@ export const PageEditor = () => {
     <EditorProvider
       value={{
         ui: new EditorUIState(),
+        components: {
+          PropertiesOverlay: PropertiesOverlay,
+        },
       }}
     >
       <EngineProvider value={engine}>

@@ -1,4 +1,41 @@
-.vscode/easycode.ignore
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
 node_modules
-dist
+packages/*/node_modules
+apps/*/node_modules
+
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+.pnpm-debug.log*
+
+# other lockfiles that's not pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# local env files
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# vscode
+.vscode
+
+dist/**
+/dist
+packages/*/dist

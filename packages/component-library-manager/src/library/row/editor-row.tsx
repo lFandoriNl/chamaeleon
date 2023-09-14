@@ -6,7 +6,7 @@ import { useEngine } from '@chameleon/react-engine';
 import { useEditor } from '@chameleon/react-editor';
 
 import { PanelButton } from '@chameleon/uikit';
-import { PropertiesOverlay } from '../../common/properties-overlay';
+import { PropertiesOverlay } from '../../../../editor-core/src/ui/properties-overlay';
 
 type EditorRowProps = {
   blockId: BlockId;

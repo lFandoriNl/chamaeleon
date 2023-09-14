@@ -23,6 +23,7 @@
     "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react": "^7.33.2",
     "kill-port": "2.0.1",
-    "typescript": "5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.4"
   }
 }
