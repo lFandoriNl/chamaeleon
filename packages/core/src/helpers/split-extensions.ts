@@ -8,7 +8,7 @@ export function splitExtensions(extensions: Extensions) {
   ) as Extension[];
 
   const blockExtensions = extensions.filter(
-    (extension) => extension.type === 'node',
+    (extension) => extension.type === 'block',
   ) as Block[];
 
   return {

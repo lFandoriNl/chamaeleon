@@ -1,7 +1,7 @@
 import { EditorState, EditorStateConfig } from './editor-state';
 import { Transaction } from './transaction';
 
-const keys = Object.create(null);
+const keys: Record<string, number> = {};
 
 function createKey(name: string) {
   if (name in keys) return name + '$' + ++keys[name];

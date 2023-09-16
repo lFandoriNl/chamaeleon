@@ -5,13 +5,18 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "check-types": "tsc --noEmit",
+    "test": "vitest"
   },
   "dependencies": {
     "react": "18.2.0",
-    "@chameleon/editor-core": "workspace:^"
+    "@chameleon/core": "workspace:*"
   },
   "devDependencies": {
-    "@types/react": "18.2.15"
+    "@types/react": "18.2.15",
+    "tsconfig": "workspace:*",
+    "tsup": "^7.2.0"
   }
 }

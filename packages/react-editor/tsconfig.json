@@ -1,5 +1,12 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "extends": "tsconfig/react.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"],
+  "compilerOptions": {
+    "baseUrl": "."
+    // "paths": {
+    //   "@chameleon/react-editor": ["src"],
+    //   "@chameleon/react-editor/*": ["src/*"]
+    // }
+  }
 }

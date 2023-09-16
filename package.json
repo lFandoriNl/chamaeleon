@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "app-editor": "pnpm --filter editor dev",
-    "app-editor-build": "pnpm --parallel --filter editor build",
+    "packages": "pnpm --parallel --filter \"./packages/**\" dev",
     "build": "pnpm --parallel --filter \"./**\" build",
     "preview": "pnpm --parallel --filter \"./**\" preview",
     "stop": "kill-port --port 5000,5001",
@@ -24,6 +24,7 @@
     "eslint-plugin-react": "^7.33.2",
     "kill-port": "2.0.1",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.4"
+    "vitest": "^0.34.4",
+    "happy-dom": "^11.2.0"
   }
 }

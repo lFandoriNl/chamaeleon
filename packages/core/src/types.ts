@@ -85,5 +85,5 @@ export type RawCommands = {
 };
 
 export type SingleCommands = {
-  [Item in keyof UnionCommands]: UnionCommands<boolean>[Item];
+  [Item in keyof UnionCommands]: UnionCommands<void>[Item];
 };

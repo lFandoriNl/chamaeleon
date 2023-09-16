@@ -13,11 +13,8 @@
   },
   "dependencies": {
     "@chameleon/uikit": "workspace:^",
-    "@chameleon/component-library-manager": "workspace:^",
-    "@chameleon/react-engine": "workspace:^",
     "@chameleon/react-editor": "workspace:^",
     "@chameleon/renderer": "workspace:^",
-    "@chameleon/plugin": "workspace:^",
     "@chameleon/core": "workspace:^",
     "react": "18.2.0",
     "react-dom": "18.2.0",

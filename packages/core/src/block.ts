@@ -24,7 +24,7 @@ declare module '.' {
 }
 
 export class Block<Options = any> {
-  type = 'block';
+  type = 'block' as const;
 
   name = 'block';
 

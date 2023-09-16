@@ -1,5 +1,4 @@
 import { Editor } from '.';
-import { Extension } from './extension';
 import { getSchemaByResolvedExtensions } from './helpers/get-schema-by-resolved-extensions';
 import { Schema } from './model/schema';
 import { Plugin } from './state/plugin';
@@ -12,7 +11,7 @@ export class ExtensionManager {
 
   extensions: Extensions;
 
-  constructor(extensions: Extension[], editor: Editor) {
+  constructor(extensions: Extensions, editor: Editor) {
     this.editor = editor;
 
     this.extensions = extensions;

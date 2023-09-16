@@ -13,23 +13,11 @@ declare module '.' {
     addCommands?: () => Partial<RawCommands>;
 
     addPlugins?: () => Plugin[];
-
-    // addKeyboardShortcuts?: (this: {
-    //   name: string;
-    //   options: Options;
-    //   storage: Storage;
-    //   editor: Editor;
-    //   parent: ParentConfig<
-    //     ExtensionConfig<Options, Storage>
-    //   >['addKeyboardShortcuts'];
-    // }) => {
-    //   [key: string]: KeyboardShortcutCommand;
-    // };
   }
 }
 
 export class Extension<Options = any> {
-  type = 'extension';
+  type = 'extension' as const;
 
   name = 'extension';
 

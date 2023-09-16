@@ -7,7 +7,6 @@ import { AiOutlineBorderLeft, AiOutlineBorderRight } from 'react-icons/ai';
 import { IoMdClose } from 'react-icons/io';
 
 import { IconButton } from '@chameleon/uikit';
-import { createRowPlugin, createTextPlugin } from '@chameleon/plugin';
 import { clm } from '@chameleon/component-library-manager';
 
 import {
@@ -16,7 +15,6 @@ import {
   PropertiesOverlay,
   useEditor,
 } from '@chameleon/react-editor';
-import { EngineProvider, useEngine, Engine } from '@chameleon/react-engine';
 import { Renderer, EditorRenderer } from '@chameleon/renderer';
 
 import { Sidebar } from './sidebar';
@@ -36,7 +34,7 @@ declare module '@chameleon/core' {
   }
 }
 
-type A = Commands['addPageRootBlock'];
+type A = Commands['insertContent'];
 
 const DrawerBlockSettingsWidget = observer(() => {
   const editor = useEditor();
@@ -107,9 +105,6 @@ const Content = observer(() => {
 });
 
 const engine = new Engine();
-
-engine.registerPlugin(createRowPlugin());
-engine.registerPlugin(createTextPlugin());
 
 engine.plugins.forEach((plugin) => {
   clm.addComponent(plugin.type, {

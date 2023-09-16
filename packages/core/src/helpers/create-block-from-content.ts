@@ -4,7 +4,7 @@ import { Schema } from '../model/schema';
 
 import { Content } from '../types';
 
-export function createNodeFromContent(
+export function createBlocksFromContent(
   content: Content,
   schema: Schema,
 ): Block | Fragment {

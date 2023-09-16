@@ -2,9 +2,11 @@ import { Block } from './block';
 import { Schema } from './schema';
 
 export class Fragment {
-  constructor(
-    readonly children: Block['id'][], // readonly size: number,
-  ) {}
+  constructor(readonly children: Block['id'][]) {}
+
+  extend(block: Block) {
+    return new Fragment([...this.children, block.id]);
+  }
 
   static from(blocks?: Fragment | Block | readonly Block[] | null) {
     if (!blocks) return Fragment.empty;

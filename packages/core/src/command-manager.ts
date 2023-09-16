@@ -35,6 +35,8 @@ export class CommandManager {
           // @ts-expect-error
           const callback = command(...args)(props);
 
+          this.editor.view.dispatch(props.tr);
+
           return callback;
         };
 

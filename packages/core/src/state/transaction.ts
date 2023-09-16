@@ -1,38 +1,23 @@
-import { EditorState } from './editor-state';
-import { Transform } from './transform';
-import { Block } from '../model/block';
-import { Fragment } from '../model/fragment';
+import { Blocks, EditorState } from './editor-state';
+import { Transform } from '../transform';
 import { Plugin, PluginKey } from './plugin';
+import { Step } from '../transform/step';
 
 export class Transaction extends Transform {
   activeId: EditorState['activeId'];
-  lastModifiedBlock: EditorState['lastModifiedBlock'];
 
-  private meta: { [name: string]: any } = Object.create(null);
+  private meta: { [name: string]: any } = {};
 
   constructor(private state: EditorState) {
-    super(state.blocks);
+    super(state.blocks, state.lastModifiedBlock);
 
     this.activeId = state.activeId;
-    this.lastModifiedBlock = state.lastModifiedBlock;
   }
 
   get activeBlock() {
     if (!this.activeId) return null;
 
     return this.blocks[this.activeId];
-  }
-
-  insertContent(target: Block['id'] | null, block: Block | Fragment): this {
-    if (block instanceof Block) {
-      this.blocks[target || block.id] = block;
-
-      this.lastModifiedBlock = block.id;
-    } else {
-      // this.blocks[target || 'root'] = Fragment.from(newBlock.children);
-    }
-
-    return this;
   }
 
   select() {
@@ -53,13 +38,15 @@ export class Transaction extends Transform {
     return this.meta[typeof key == 'string' ? key : key.key];
   }
 
-  log() {
-    console.log('Transaction');
+  addStep(step: Step, blocks: Blocks) {
+    super.addStep(step, blocks);
+  }
 
-    const { activeId, blocks } = this;
+  log() {
+    const { activeId, lastModifiedBlock, blocks } = this;
 
     console.dir(
-      { activeId, blocks },
+      { activeId, lastModifiedBlock, blocks },
       {
         depth: Infinity,
       },

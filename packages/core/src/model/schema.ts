@@ -4,7 +4,7 @@ import { Fragment } from './fragment';
 export type Props = { readonly [prop: string]: any };
 
 function defaultProps(props: Props) {
-  const defaults: Record<string, any> = Object.create(null);
+  const defaults: Record<string, any> = {};
 
   for (const propName in props) {
     const prop = props[propName];
@@ -18,7 +18,7 @@ function defaultProps(props: Props) {
 }
 
 function computeProps(props: Props, value: Props | null) {
-  const built: Record<string, any> = Object.create(null);
+  const built: Record<string, any> = {};
 
   for (const name in props) {
     let given = value && value[name];
@@ -39,7 +39,7 @@ function computeProps(props: Props, value: Props | null) {
 }
 
 function initProps(props?: { [name: string]: PropertySpec }) {
-  const result: { [name: string]: Property } = Object.create(null);
+  const result: { [name: string]: Property } = {};
 
   if (props) {
     for (const name in props) {
@@ -69,7 +69,7 @@ class Property {
 }
 
 export interface BlockSpec {
-  allowContent?: Block['type'][];
+  allowContent?: Block['type']['name'][];
   props?: { [name: string]: PropertySpec };
 }
 
@@ -105,7 +105,7 @@ export class BlockType {
     blocks: Map<Blocks, BlockSpec>,
     schema: Schema<Blocks>,
   ): { readonly [name in Blocks]: BlockType } {
-    const result: Record<Blocks, BlockType> = Object.create(null);
+    const result = {} as Record<Blocks, BlockType>;
 
     blocks.forEach((spec, name) => {
       result[name] = new BlockType(name, schema, spec);

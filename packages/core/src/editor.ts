@@ -6,6 +6,8 @@ import { CommandManager } from './command-manager';
 import { EventEmitter } from './event-emitter';
 
 import { Commands } from './extensions/commands';
+import { Page } from './extensions/page';
+
 import { Schema } from './model/schema';
 
 import { EditorEvents, EditorOptions, SingleCommands } from './types';
@@ -36,7 +38,7 @@ export class Editor extends EventEmitter<EditorEvents> {
       editor: this,
     });
 
-    this.view = new EditorView({
+    this.view = new EditorView(document.body, {
       state: EditorState.create({
         schema: this.schema,
         blocks: this.options.blocks,
@@ -61,7 +63,7 @@ export class Editor extends EventEmitter<EditorEvents> {
   }
 
   private createExtensionManager() {
-    const coreExtensions = [Commands];
+    const coreExtensions = [Commands, Page];
 
     this.extensionManager = new ExtensionManager(coreExtensions, this);
   }

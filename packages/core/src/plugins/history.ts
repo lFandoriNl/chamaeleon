@@ -1,5 +1,5 @@
 import { Patch } from 'immer';
-import { Plugin, PluginKey } from '../state/plugin';
+import { Plugin, PluginKey } from '../state';
 
 type HistoryOptions = {
   limit: number;
@@ -24,9 +24,7 @@ export function history(options: HistoryOptions) {
 
         return { changes, canUndo, canRedo };
       },
-      apply(tr, value, oldState, newState) {
-        tr();
-      },
+      apply(tr, value, oldState, newState) {},
     },
   });
 }

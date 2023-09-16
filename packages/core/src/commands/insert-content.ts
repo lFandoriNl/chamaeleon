@@ -1,5 +1,5 @@
-import { createNodeFromContent } from '../helpers/create-block-from-content';
-import { Block } from '../model/block';
+import { createBlocksFromContent } from '../helpers/create-block-from-content';
+import { Block } from '../model';
 import { Content, RawCommands } from '../types';
 
 declare module '..' {
@@ -14,9 +14,11 @@ declare module '..' {
 }
 
 export const insertContent: RawCommands['insertContent'] =
-  (target, value) =>
+  (target, content) =>
   ({ tr, editor }) => {
-    const content = createNodeFromContent(value, editor.schema);
+    const blocks = createBlocksFromContent(content, editor.schema);
 
-    tr.insertContent(target, content);
+    if (blocks instanceof Block) {
+      tr.insertContent(target, blocks);
+    }
   };

@@ -1,12 +1,8 @@
-import { enablePatches } from 'immer';
-
 import { Transaction } from './transaction';
 import { Plugin, StateField } from './plugin';
 
 import { Block } from '../model/block';
 import { Schema } from '../model/schema';
-
-enablePatches();
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 function bind<T extends Function>(f: T, self?: any): T {
@@ -57,7 +53,7 @@ const baseFields = [
 class Configuration {
   fields: FieldDesc<any>[];
   plugins: Plugin[] = [];
-  pluginsByKey: { [key: string]: Plugin } = Object.create(null);
+  pluginsByKey: { [key: string]: Plugin } = {};
 
   constructor(
     readonly schema: Schema,
@@ -106,6 +102,12 @@ export class EditorState {
 
   get plugins(): readonly Plugin[] {
     return this.config.plugins;
+  }
+
+  get activeBlock() {
+    if (!this.activeId) return null;
+
+    return this.blocks[this.activeId];
   }
 
   apply(tr: Transaction) {
@@ -257,6 +259,7 @@ export class EditorState {
   toJSON(): any {
     const result = {
       activeId: this.activeId,
+      lastModifiedBlock: this.lastModifiedBlock,
       blocks: Object.values(this.blocks)
         .map((block) => block.toJSON())
         .reduce((acc, block) => {
