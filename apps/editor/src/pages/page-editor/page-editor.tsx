@@ -73,7 +73,7 @@ const Content = observer(() => {
   const editor = useEditor();
 
   return (
-    <div className="p-4 border">
+    <div className="border">
       {/* {engine.pagesArray.map((page) => (
         <h1 key={page.id} className="text-3xl font-semibold mb-4">
           {page.title}
@@ -94,6 +94,18 @@ const Content = observer(() => {
 Content.displayName = 'Content';
 
 const editor = new Editor();
+
+editor.commands.addPage(null);
+editor.commands.select();
+
+editor.commands.addRow(editor.state.activeId!);
+editor.commands.select();
+
+editor.commands.addColumn(editor.state.activeId!);
+editor.commands.select();
+
+editor.commands.addText(editor.state.activeId!, { value: 'Some Text' });
+editor.commands.select();
 
 // @ts-expect-error
 window.editor = editor;

@@ -41,11 +41,11 @@ export const Page = Block.create({
 
   addBlockViews() {
     return {
-      natural: ({ block, Children }) => {
-        return <Children id={block.id} />;
+      natural: ({ block, children }) => {
+        return children;
       },
-      editor: ({ block, Children }) => {
-        return <Children id={block.id} />;
+      editor: ({ block, children }) => {
+        return children;
       },
       palette: () => {
         return <div>Page</div>;

@@ -34,7 +34,6 @@
   "devDependencies": {
     "@types/react": "^18.2.21",
     "tailwind-config": "workspace:*",
-    "tsconfig": "workspace:*",
     "tsup": "^7.2.0"
   }
 }

@@ -1,10 +1,10 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Default",
   "compilerOptions": {
+    // base
     "composite": false,
     "declaration": true,
     "declarationMap": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
@@ -15,8 +15,16 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
+
+    // react
+    "lib": ["DOM", "es2019"],
+    "module": "ESNext",
+    "target": "ES6",
+    "jsx": "react-jsx",
+
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./*"]
+      "@chameleon/*": ["./packages/*"]
     }
   },
   "exclude": ["node_modules"]

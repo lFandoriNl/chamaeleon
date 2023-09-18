@@ -14,7 +14,15 @@
     "lint": "eslint .",
     "format": "prettier --write ."
   },
+  "dependencies": {
+    "react": "18.2.0",
+    "mobx": "6.10.2",
+    "mobx-react-lite": "4.0.4",
+    "react-icons": "4.11.0",
+    "clsx": "2.0.0"
+  },
   "devDependencies": {
+    "@types/react": "18.2.15",
     "@originjs/vite-plugin-federation": "1.2.3",
     "@typescript-eslint/eslint-plugin": "6.4.1",
     "@typescript-eslint/parser": "6.4.1",

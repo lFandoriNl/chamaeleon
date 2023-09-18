@@ -26,11 +26,11 @@
   },
   "dependencies": {
     "react": "18.2.0",
-    "@chameleon/core": "workspace:*"
+    "@chameleon/core": "workspace:*",
+    "@chameleon/uikit": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "18.2.15",
-    "tsconfig": "workspace:*",
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   }

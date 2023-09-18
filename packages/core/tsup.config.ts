@@ -9,7 +9,7 @@ export default defineConfig((options: Options) => ({
   dts: true,
   sourcemap: true,
   clean: true,
-  minify: true,
+  minify: false,
   external: ['react', 'react-dom', 'scheduler', 'react/jsx-runtime'],
   injectStyle: true,
   shims: false,

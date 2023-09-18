@@ -42,19 +42,11 @@ export const Row = Block.create({
 
   addBlockViews() {
     return {
-      natural: ({ block, Children }) => {
-        return (
-          <div className="grid">
-            <Children id={block.id} />
-          </div>
-        );
+      natural: ({ block, children }) => {
+        return <div className="e-row flex flex-wrap">{children}</div>;
       },
-      editor: ({ block, Children }) => {
-        return (
-          <div className="grid">
-            <Children id={block.id} />
-          </div>
-        );
+      editor: ({ block, children }) => {
+        return <div className="e-row flex flex-wrap">{children}</div>;
       },
       palette: () => {
         return <div>Row</div>;

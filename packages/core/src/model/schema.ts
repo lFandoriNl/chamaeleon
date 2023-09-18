@@ -97,8 +97,14 @@ export class BlockType {
   create(
     props: Props | null = null,
     content?: Fragment | Block | readonly Block[] | null,
+    id?: Block['id'],
   ) {
-    return new Block(this, this.computeProps(props), Fragment.from(content));
+    return new Block(
+      this,
+      this.computeProps(props),
+      Fragment.from(content),
+      id,
+    );
   }
 
   static compile<Blocks extends string>(
@@ -150,10 +156,10 @@ export class Schema<Blocks extends string = any> {
     if (typeof type == 'string') {
       type = this.blockType(type);
     } else if (!(type instanceof BlockType)) {
-      throw new RangeError('Invalid node type: ' + type);
+      throw new RangeError('Invalid block type: ' + type);
     } else if (type.schema != this) {
       throw new RangeError(
-        `Node type from different schema used (${type.name})`,
+        `Block type from different schema used (${type.name})`,
       );
     }
 

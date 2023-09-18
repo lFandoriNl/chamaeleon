@@ -1,3 +1,4 @@
+import { Block } from '../model';
 import { EditorState, Transaction } from '../state';
 import { AnyExtension, BlockViewRendererPack } from '../types';
 
@@ -56,5 +57,14 @@ export class EditorView {
       ...this._props,
       ...props,
     };
+  }
+
+  getBlockViews(name: Block['type']['name']) {
+    if (!this.props.blockViews || !this.props.blockViews[name])
+      throw new RangeError(
+        `BlockViews for "Block.type.name=${name}" does not exist.`,
+      );
+
+    return this.props.blockViews[name];
   }
 }

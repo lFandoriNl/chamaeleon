@@ -28,7 +28,7 @@ export const Text = Block.create({
 
   addCommands() {
     return {
-      addRow: (target, props) => {
+      addText: (target, props) => {
         return ({ commands }) => {
           commands.insertContent(target, {
             type: Text.name,
@@ -42,11 +42,12 @@ export const Text = Block.create({
   addBlockViews() {
     return {
       natural: ({ block }) => {
-        return <p>{block.props.value}</p>;
+        return <p className="e-text">{block.props.value}</p>;
       },
       editor: ({ block, editor }) => {
         return (
           <input
+            className="e-text"
             placeholder="Enter your text"
             value={block.props.value}
             onChange={(event) => {

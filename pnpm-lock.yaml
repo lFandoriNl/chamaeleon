@@ -7,10 +7,29 @@ settings:
 importers:
 
   .:
+    dependencies:
+      clsx:
+        specifier: 2.0.0
+        version: 2.0.0
+      mobx:
+        specifier: 6.10.2
+        version: 6.10.2
+      mobx-react-lite:
+        specifier: 4.0.4
+        version: 4.0.4(mobx@6.10.2)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-icons:
+        specifier: 4.11.0
+        version: 4.11.0(react@18.2.0)
     devDependencies:
       '@originjs/vite-plugin-federation':
         specifier: 1.2.3
         version: 1.2.3
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
       '@typescript-eslint/eslint-plugin':
         specifier: 6.4.1
         version: 6.4.1(@typescript-eslint/parser@6.4.1)(eslint@8.47.0)(typescript@5.2.2)
@@ -62,24 +81,12 @@ importers:
       '@chameleon/uikit':
         specifier: workspace:^
         version: link:../../packages/uikit
-      clsx:
-        specifier: 2.0.0
-        version: 2.0.0
-      mobx:
-        specifier: 6.10.2
-        version: 6.10.2
-      mobx-react-lite:
-        specifier: 4.0.4
-        version: 4.0.4(mobx@6.10.2)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
-      react-icons:
-        specifier: 4.11.0
-        version: 4.11.0(react@18.2.0)
       react-router-dom:
         specifier: 5.2.0
         version: 5.2.0(react@18.2.0)
@@ -121,9 +128,6 @@ importers:
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.29)(typescript@5.2.2)
@@ -133,6 +137,9 @@ importers:
       '@chameleon/core':
         specifier: workspace:*
         version: link:../core
+      '@chameleon/uikit':
+        specifier: workspace:*
+        version: link:../uikit
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -143,9 +150,6 @@ importers:
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.29)(typescript@5.2.2)
@@ -155,9 +159,6 @@ importers:
       '@chameleon/react-editor':
         specifier: workspace:^
         version: link:../react-editor
-      mobx-react-lite:
-        specifier: 4.0.4
-        version: 4.0.4(mobx@6.10.2)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -180,32 +181,11 @@ importers:
 
   packages/tailwind-config: {}
 
-  packages/tsconfig: {}
-
   packages/uikit:
-    dependencies:
-      clsx:
-        specifier: 2.0.0
-        version: 2.0.0
-      react:
-        specifier: 18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: 18.2.0
-        version: 18.2.0(react@18.2.0)
     devDependencies:
-      '@types/react':
-        specifier: 18.2.15
-        version: 18.2.15
-      '@types/react-dom':
-        specifier: 18.2.7
-        version: 18.2.7
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.29)(typescript@5.2.2)
@@ -2598,7 +2578,7 @@ packages:
       ufo: 1.3.0
     dev: true
 
-  /mobx-react-lite@4.0.4(mobx@6.10.2)(react-dom@18.2.0)(react@18.2.0):
+  /mobx-react-lite@4.0.4(mobx@6.10.2)(react@18.2.0):
     resolution: {integrity: sha512-68uNYvQC/5Dazs3sIBv+bnpzRwcWde8y4ujHiLizhq8yeQtJ2tlNUGSh4r40gyE5M0utACIofBDsAj2hplcovQ==}
     peerDependencies:
       mobx: ^6.9.0
@@ -2613,7 +2593,6 @@ packages:
     dependencies:
       mobx: 6.10.2
       react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 

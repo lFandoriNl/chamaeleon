@@ -1,7 +1,7 @@
 import { applyPatches } from 'immer';
 import { Blocks } from '../state';
 import { Step, StepResult } from './step';
-import { Block, Fragment } from '../model';
+import { Block } from '../model';
 
 export class InsertStep extends Step {
   constructor(
@@ -19,6 +19,7 @@ export class InsertStep extends Step {
         draft[this.target] = draft[this.target].type.create(
           draft[this.target].props,
           draft[this.target].children.extend(this.block),
+          draft[this.target].id,
         );
       } else {
         draft[this.block.id] = this.block;

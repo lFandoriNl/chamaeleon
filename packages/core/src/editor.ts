@@ -12,6 +12,7 @@ import { Schema } from './model/schema';
 
 import { EditorEvents, EditorOptions, SingleCommands } from './types';
 import { Row, Column, Text } from './extensions';
+import { Transaction } from './state';
 
 export class Editor extends EventEmitter<EditorEvents> {
   private commandManager: CommandManager;
@@ -70,6 +71,7 @@ export class Editor extends EventEmitter<EditorEvents> {
         blocks: this.options.blocks,
         plugins: this.extensionManager.plugins,
       }),
+      dispatchTransaction: this.dispatchTransaction.bind(this),
     });
 
     this.createBlockViews();
@@ -78,6 +80,27 @@ export class Editor extends EventEmitter<EditorEvents> {
   private createBlockViews() {
     this.view.setProps({
       blockViews: this.extensionManager.blockViews,
+    });
+  }
+
+  private dispatchTransaction(transaction: Transaction) {
+    // if (this.view.isDestroyed) {
+    //   return;
+    // }
+
+    const state = this.state.apply(transaction);
+    this.view.updateState(state);
+
+    console.log('update', transaction);
+
+    this.emit('transaction', {
+      editor: this,
+      transaction,
+    });
+
+    this.emit('update', {
+      editor: this,
+      transaction,
     });
   }
 }

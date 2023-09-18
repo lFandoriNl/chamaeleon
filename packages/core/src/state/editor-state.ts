@@ -110,6 +110,21 @@ export class EditorState {
     return this.blocks[this.activeId];
   }
 
+  get blocksArray() {
+    return Object.values(this.blocks);
+  }
+
+  get rootPage() {
+    return this.blocksArray.find((block) => block.type.name === 'page');
+  }
+
+  getBlock(id: Block['id']) {
+    if (!this.blocks[id])
+      throw new Error(`Block with id: ${id} - does not exist.`);
+
+    return this.blocks[id];
+  }
+
   apply(tr: Transaction) {
     return this.applyTransaction(tr).state;
   }

@@ -39,4 +39,18 @@ export const Column = Block.create({
       },
     };
   },
+
+  addBlockViews() {
+    return {
+      natural: ({ block, children }) => {
+        return <div className="e-column md:w-1/2">{children}</div>;
+      },
+      editor: ({ block, children }) => {
+        return <div className="e-column md:w-1/2">{children}</div>;
+      },
+      palette: () => {
+        return <div>Row</div>;
+      },
+    };
+  },
 });

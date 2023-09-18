@@ -14,7 +14,8 @@ export type AnyExtension = Extension | Block;
 export type Extensions = AnyExtension[];
 
 export type EditorEvents = {
-  beforeCreate: [{ test: string }];
+  update: { editor: Editor; transaction: Transaction };
+  transaction: { editor: Editor; transaction: Transaction };
 };
 
 export type EditorOptions = {
@@ -57,9 +58,7 @@ export type ExtensionProperty = {
 export type BlockViewRendererProps = {
   editor: Editor;
   block: BlockModel;
-  Children: (props: {
-    id: BlockModel['id'];
-  }) => React.ReactNode | React.ReactNode[];
+  children: React.ReactNode | React.ReactNode[];
 };
 
 export type BlockViewRenderer = (

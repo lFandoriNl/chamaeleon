@@ -24,15 +24,8 @@
     "check-types": "tsc --noEmit",
     "test": "vitest"
   },
-  "dependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "clsx": "2.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/react": "18.2.15",
-    "@types/react-dom": "18.2.7",
-    "tsconfig": "workspace:*",
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   }
