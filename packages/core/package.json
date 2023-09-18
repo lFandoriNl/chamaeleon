@@ -1,9 +1,7 @@
 {
   "name": "@chameleon/core",
+  "private": true,
   "version": "0.0.0",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "Chameleon core",
   "license": "MIT",
   "main": "./dist/index.js",

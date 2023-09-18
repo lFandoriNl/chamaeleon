@@ -1,1 +1,2 @@
-export { EditorProvider, useEditor } from './react-editor';
+export { EditorProvider, useEditor } from './context';
+export { EditorContent } from './editor-content';

@@ -7,7 +7,7 @@ export type PanelButtonProps = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export function PanelButton(props: PanelButtonProps) {
+export function PanelButton(props: PanelButtonProps): React.ReactNode {
   return (
     <button
       className={clsx(

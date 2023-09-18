@@ -8,7 +8,7 @@ export type SwitchProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-export function Switch(props: SwitchProps) {
+export function Switch(props: SwitchProps): React.ReactNode {
   const [checked, setChecked] = useState(false);
 
   const handleChecked = (event: React.ChangeEvent<HTMLInputElement>) => {

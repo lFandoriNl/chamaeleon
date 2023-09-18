@@ -1,6 +1,9 @@
+import React from 'react';
+
 import { BlockConfig, Commands, ExtensionConfig } from '.';
 import { Extension } from './extension';
 import { Block } from './block';
+import { Block as BlockModel } from './model';
 import { Editor } from './editor';
 import { Blocks, EditorState } from './state/editor-state';
 import { Transaction } from './state/transaction';
@@ -49,6 +52,24 @@ export type ExtensionProperty = {
   type: string;
   name: string;
   property: Required<Property>;
+};
+
+export type BlockViewRendererProps = {
+  editor: Editor;
+  block: BlockModel;
+  Children: (props: {
+    id: BlockModel['id'];
+  }) => React.ReactNode | React.ReactNode[];
+};
+
+export type BlockViewRenderer = (
+  props: BlockViewRendererProps,
+) => React.ReactNode;
+
+export type BlockViewRendererPack = {
+  natural: BlockViewRenderer;
+  editor: BlockViewRenderer;
+  palette: BlockViewRenderer;
 };
 
 export type UnionToIntersection<U> = (

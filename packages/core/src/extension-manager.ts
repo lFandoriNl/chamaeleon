@@ -1,5 +1,7 @@
-import { Editor } from '.';
+import { BlockConfig, Editor } from '.';
+import { Block } from './block';
 import { getSchemaByResolvedExtensions } from './helpers/get-schema-by-resolved-extensions';
+import { splitExtensions } from './helpers/split-extensions';
 import { Schema } from './model/schema';
 import { Plugin } from './state/plugin';
 import { Extensions, RawCommands } from './types';
@@ -46,5 +48,26 @@ export class ExtensionManager {
         return [];
       })
       .flat();
+  }
+
+  get blockViews(): Record<
+    Block['name'],
+    ReturnType<NonNullable<BlockConfig['addBlockViews']>>
+  > {
+    const { blockExtensions } = splitExtensions(this.extensions);
+
+    return Object.fromEntries(
+      blockExtensions
+        .filter((extension) => Boolean(extension.config.addBlockViews))
+        .map((extension) => {
+          const { addBlockViews } = extension.config;
+
+          if (!addBlockViews) return [];
+
+          const blockViews = addBlockViews();
+
+          return [extension.name, blockViews];
+        }),
+    );
   }
 }

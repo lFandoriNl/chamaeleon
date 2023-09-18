@@ -7,7 +7,7 @@ export type IconButtonProps = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export function IconButton(props: IconButtonProps) {
+export function IconButton(props: IconButtonProps): React.ReactNode {
   return (
     <button
       className={clsx(

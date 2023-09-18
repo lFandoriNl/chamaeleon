@@ -1,6 +1,6 @@
 import sharedConfig from 'tailwind-config/tailwind.config';
 
+/** @type {import('tailwindcss').Config} */
 export default {
-  // prefix ui lib classes to avoid conflicting with the app
-  ...sharedConfig,
+  presets: [sharedConfig],
 };

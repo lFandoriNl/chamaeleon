@@ -1,12 +1,12 @@
 import { nanoid } from 'nanoid';
 
 import { Fragment } from './fragment';
-import { BlockType, Schema } from './schema';
+import { BlockType, Props, Schema } from './schema';
 
 export class Block {
   constructor(
     readonly type: BlockType,
-    readonly props: BlockType['props'],
+    readonly props: Props,
     readonly children: Fragment,
     readonly id: string = nanoid(10),
   ) {}

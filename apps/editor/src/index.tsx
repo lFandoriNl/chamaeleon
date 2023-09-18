@@ -9,7 +9,7 @@ import {
 
 import { PageEditor } from './pages/page-editor';
 
-import './index.css';
+import './styles/global.css';
 
 const App = () => {
   return (

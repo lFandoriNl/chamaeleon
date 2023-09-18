@@ -25,6 +25,9 @@
     "kill-port": "2.0.1",
     "typescript": "^5.2.2",
     "vitest": "^0.34.4",
-    "happy-dom": "^11.2.0"
+    "happy-dom": "^11.2.0",
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.29",
+    "tailwindcss": "^3.3.3"
   }
 }

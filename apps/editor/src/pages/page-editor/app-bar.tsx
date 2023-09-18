@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 
-import { Switch } from '@chameleon/uikit/components/switch';
+import { Switch } from '@chameleon/uikit';
 import { useEditor } from '@chameleon/react-editor';
 
 export const AppBar = observer(() => {
@@ -11,7 +11,7 @@ export const AppBar = observer(() => {
       <div>AppBar</div>
 
       <div className="flex items-center">
-        <Switch
+        {/* <Switch
           className="mb-0"
           label={
             editor.ui.renderMode === 'preview' ? 'Preview on' : 'Preview off'
@@ -22,7 +22,7 @@ export const AppBar = observer(() => {
               event.target.checked ? 'preview' : 'editor',
             )
           }
-        />
+        /> */}
       </div>
     </div>
   );

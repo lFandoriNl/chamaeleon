@@ -1,7 +1,7 @@
 import { BlockConfig } from '.';
 import { BlockSpec } from './model/schema';
 import { Plugin } from './state/plugin';
-import { Properties, RawCommands } from './types';
+import { BlockViewRendererPack, Properties, RawCommands } from './types';
 
 declare module '.' {
   interface BlockConfig<Options = any> {
@@ -20,6 +20,8 @@ declare module '.' {
       | (() => BlockSpec['allowContent']);
 
     addProperties?: () => Properties;
+
+    addBlockViews?: () => BlockViewRendererPack;
   }
 }
 

@@ -38,4 +38,18 @@ export const Page = Block.create({
       },
     };
   },
+
+  addBlockViews() {
+    return {
+      natural: ({ block, Children }) => {
+        return <Children id={block.id} />;
+      },
+      editor: ({ block, Children }) => {
+        return <Children id={block.id} />;
+      },
+      palette: () => {
+        return <div>Page</div>;
+      },
+    };
+  },
 });

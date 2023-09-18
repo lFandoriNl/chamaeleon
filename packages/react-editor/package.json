@@ -2,8 +2,22 @@
   "name": "@chameleon/react-editor",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
-  "main": "src/index.ts",
+  "description": "Chameleon react editor",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "module": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -17,6 +31,7 @@
   "devDependencies": {
     "@types/react": "18.2.15",
     "tsconfig": "workspace:*",
+    "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   }
 }
