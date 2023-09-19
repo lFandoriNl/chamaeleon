@@ -1,4 +1,4 @@
-import { ExtensionConfig } from '.';
+import { Editor, ExtensionConfig } from '.';
 import { Plugin } from './state/plugin';
 import { RawCommands } from './types';
 
@@ -12,7 +12,7 @@ declare module '.' {
 
     addCommands?: () => Partial<RawCommands>;
 
-    addPlugins?: () => Plugin[];
+    addPlugins?: (this: { editor: Editor; options: Options }) => Plugin[];
   }
 }
 

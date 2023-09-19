@@ -20,6 +20,7 @@ export type EditorEvents = {
 
 export type EditorOptions = {
   blocks: Blocks;
+  extensions: Extensions;
 };
 
 export type MaybeReturnType<T> = T extends (...args: any) => any

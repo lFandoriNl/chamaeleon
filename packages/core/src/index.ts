@@ -1,6 +1,14 @@
 export { Editor } from './editor';
 export { Extension } from './extension';
 export * as extensions from './extensions';
+export { EditorView } from './view';
+export {
+  EditorState,
+  Plugin,
+  PluginKey,
+  Transaction,
+  type PluginView,
+} from './state';
 export { Block } from './model';
 export * as commands from './commands';
 export type {

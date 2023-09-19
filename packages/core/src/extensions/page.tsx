@@ -45,6 +45,10 @@ export const Page = Block.create({
         return children;
       },
       editor: ({ block, children }) => {
+        if (block.children.isEmpty) {
+          return <div>Add root block for page</div>;
+        }
+
         return children;
       },
       palette: () => {

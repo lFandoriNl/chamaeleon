@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 
 import { Editor, EditorEvents } from '@chameleon/core';
 
@@ -6,8 +6,8 @@ import { useEditor } from './context';
 
 export const useEditorSelector = <T>(
   selector: (dataUpdated: EditorEvents['update']) => T,
-): T => {
-  const [_, rerender] = useState(0);
+): [T, Editor] => {
+  const [_, rerender] = useReducer((i) => i + 1, 0);
 
   const editor = useEditor();
 
@@ -20,7 +20,7 @@ export const useEditorSelector = <T>(
       const value = selector(dataUpdated);
 
       if (selectorResultRef.current !== value) {
-        rerender((i) => i + 1);
+        rerender();
       }
 
       selectorResultRef.current = value;
@@ -33,5 +33,5 @@ export const useEditorSelector = <T>(
     };
   }, []);
 
-  return selectorResultRef.current;
+  return [selectorResultRef.current, editor];
 };

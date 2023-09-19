@@ -5,13 +5,12 @@ import { ExtensionManager } from './extension-manager';
 import { CommandManager } from './command-manager';
 import { EventEmitter } from './event-emitter';
 
-import { Commands } from './extensions/commands';
 import { Page } from './extensions/page';
 
 import { Schema } from './model/schema';
 
 import { EditorEvents, EditorOptions, SingleCommands } from './types';
-import { Row, Column, Text } from './extensions';
+import { Commands, History, Row, Column, Text } from './extensions';
 import { Transaction } from './state';
 
 export class Editor extends EventEmitter<EditorEvents> {
@@ -25,6 +24,7 @@ export class Editor extends EventEmitter<EditorEvents> {
 
   options: EditorOptions = {
     blocks: {},
+    extensions: [],
   };
 
   constructor(options: Partial<EditorOptions> = {}) {
@@ -59,9 +59,11 @@ export class Editor extends EventEmitter<EditorEvents> {
   }
 
   private createExtensionManager() {
-    const coreExtensions = [Commands, Page, Row, Column, Text];
+    const coreExtensions = [Commands, History, Page, Row, Column, Text];
 
-    this.extensionManager = new ExtensionManager(coreExtensions, this);
+    const allExtensions = [...coreExtensions, ...this.options.extensions];
+
+    this.extensionManager = new ExtensionManager(allExtensions, this);
   }
 
   private createView() {

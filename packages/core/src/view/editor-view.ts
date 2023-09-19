@@ -1,5 +1,6 @@
+import React from 'react';
 import { Block } from '../model';
-import { EditorState, Transaction } from '../state';
+import { EditorState, Plugin, PluginView, Transaction } from '../state';
 import { AnyExtension, BlockViewRendererPack } from '../types';
 
 export type EditorViewOptions = {
@@ -15,6 +16,11 @@ export class EditorView {
 
   private _props: EditorViewOptions;
 
+  pluginViews: Array<{
+    view: PluginView;
+    portal?: React.ReactPortal;
+  }> = [];
+
   constructor(container: HTMLElement, props: EditorViewOptions) {
     this.container = container;
 
@@ -23,6 +29,8 @@ export class EditorView {
     this.state = props.state;
 
     this.dispatch = this.dispatch.bind(this);
+
+    this.updatePluginViews();
   }
 
   get props() {
@@ -47,9 +55,11 @@ export class EditorView {
   }
 
   updateState(state: EditorState) {
-    // rerender editor and plugins
+    const prevState = this.state;
 
     this.state = state;
+
+    this.updatePluginViews(prevState);
   }
 
   setProps(props: Partial<EditorViewOptions>) {
@@ -66,5 +76,36 @@ export class EditorView {
       );
 
     return this.props.blockViews[name];
+  }
+
+  private updatePluginViews(prevState?: EditorState) {
+    if (!prevState || prevState.plugins != this.state.plugins) {
+      this.destroyPluginViews();
+
+      this.state.plugins.forEach((plugin) => {
+        if (plugin.spec.view) {
+          this.pluginViews.push({
+            view: plugin.spec.view(this),
+          });
+        }
+      });
+    } else {
+      this.pluginViews = this.pluginViews.map(({ view }) => {
+        return {
+          view,
+          portal: view.update?.(this, prevState),
+        };
+      });
+    }
+  }
+
+  private destroyPluginViews() {
+    this.pluginViews.reverse().forEach(({ view }) => {
+      if (view.destroy) {
+        view.destroy();
+      }
+    });
+
+    this.pluginViews = [];
   }
 }

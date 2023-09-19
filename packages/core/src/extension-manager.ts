@@ -41,8 +41,13 @@ export class ExtensionManager {
       .map((extension) => {
         const { addPlugins } = extension.config;
 
+        const context = {
+          editor: this.editor,
+          options: extension.options,
+        };
+
         if (addPlugins) {
-          return addPlugins();
+          return addPlugins.call(context);
         }
 
         return [];

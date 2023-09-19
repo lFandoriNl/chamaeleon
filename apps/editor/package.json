@@ -15,6 +15,7 @@
     "@chameleon/uikit": "workspace:^",
     "@chameleon/react-editor": "workspace:^",
     "@chameleon/core": "workspace:^",
+    "@chameleon/extension-configure-menu-drawer": "workspace:^",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "5.2.0"

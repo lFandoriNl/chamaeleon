@@ -75,6 +75,9 @@ importers:
       '@chameleon/core':
         specifier: workspace:^
         version: link:../../packages/core
+      '@chameleon/extension-configure-menu-drawer':
+        specifier: workspace:^
+        version: link:../../packages/extension-configure-menu-drawer
       '@chameleon/react-editor':
         specifier: workspace:^
         version: link:../../packages/react-editor
@@ -125,6 +128,34 @@ importers:
       '@types/react':
         specifier: ^18.2.21
         version: 18.2.21
+      tailwind-config:
+        specifier: workspace:*
+        version: link:../tailwind-config
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.29)(typescript@5.2.2)
+
+  packages/extension-configure-menu-drawer:
+    dependencies:
+      '@chameleon/core':
+        specifier: workspace:*
+        version: link:../core
+      '@chameleon/uikit':
+        specifier: workspace:*
+        version: link:../uikit
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+      '@types/react-dom':
+        specifier: 18.2.7
+        version: 18.2.7
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config

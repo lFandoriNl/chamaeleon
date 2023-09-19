@@ -4,6 +4,10 @@ import { Schema } from './schema';
 export class Fragment {
   constructor(readonly children: Block['id'][]) {}
 
+  get isEmpty() {
+    return this.children.length === 0;
+  }
+
   extend(block: Block) {
     return new Fragment([...this.children, block.id]);
   }
