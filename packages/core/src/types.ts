@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { BlockConfig, Commands, ExtensionConfig } from '.';
+import { BlockExtensionConfig, Commands, ExtensionConfig } from '.';
 import { Extension } from './extension';
-import { Block } from './block';
+import { BlockExtension } from './block-extension';
 import { Block as BlockModel } from './model';
 import { Editor } from './editor';
 import { Blocks, EditorState } from './state/editor-state';
 import { Transaction } from './state/transaction';
 import { EditorView } from './view/editor-view';
 
-export type AnyConfig = ExtensionConfig | BlockConfig;
-export type AnyExtension = Extension | Block;
+export type AnyConfig = ExtensionConfig | BlockExtensionConfig;
+export type AnyExtension = Extension | BlockExtension;
 export type Extensions = AnyExtension[];
 
 export type EditorEvents = {

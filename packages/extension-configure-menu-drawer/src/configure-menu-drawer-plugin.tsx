@@ -16,11 +16,11 @@ import {
 import { Drawer } from './drawer';
 import clsx from 'clsx';
 
-type BlockPropertiesWidgetProps = {
+type BlockConfigurationProps = {
   extra?: React.ReactNode;
 };
 
-const BlockPropertiesWidget = ({ extra }: BlockPropertiesWidgetProps) => {
+const BlockConfiguration = ({ extra }: BlockConfigurationProps) => {
   return (
     <div>
       <div className="p-4 flex items-center justify-between border-b border-gray-300">
@@ -53,7 +53,7 @@ const ConfigurationDrawer = ({ open, editor }: ConfigurationDrawerProps) => {
       direction={direction}
       enableOverlay={true}
     >
-      <BlockPropertiesWidget
+      <BlockConfiguration
         extra={
           <div>
             <IconButton
@@ -132,6 +132,8 @@ export const ConfigureMenuDrawerPlugin = (
 
   return new Plugin<{ open: boolean }>({
     key: pluginKey,
+
+    type: 'common',
 
     view: () =>
       new ConfigureMenuDrawerView({

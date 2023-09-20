@@ -1,5 +1,5 @@
 import { Extension } from '../extension';
-import { Block } from '../block';
+import { BlockExtension } from '../block-extension';
 import { Extensions } from '../types';
 
 export function splitExtensions(extensions: Extensions) {
@@ -9,7 +9,7 @@ export function splitExtensions(extensions: Extensions) {
 
   const blockExtensions = extensions.filter(
     (extension) => extension.type === 'block',
-  ) as Block[];
+  ) as BlockExtension[];
 
   return {
     baseExtensions,

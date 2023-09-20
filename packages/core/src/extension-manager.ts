@@ -1,5 +1,5 @@
-import { BlockConfig, Editor } from '.';
-import { Block } from './block';
+import { BlockExtensionConfig, Editor } from '.';
+import { BlockExtension } from './block-extension';
 import { getSchemaByResolvedExtensions } from './helpers/get-schema-by-resolved-extensions';
 import { splitExtensions } from './helpers/split-extensions';
 import { Schema } from './model/schema';
@@ -56,8 +56,8 @@ export class ExtensionManager {
   }
 
   get blockViews(): Record<
-    Block['name'],
-    ReturnType<NonNullable<BlockConfig['addBlockViews']>>
+    BlockExtension['name'],
+    ReturnType<NonNullable<BlockExtensionConfig['addBlockViews']>>
   > {
     const { blockExtensions } = splitExtensions(this.extensions);
 

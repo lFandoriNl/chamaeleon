@@ -1,5 +1,6 @@
 export { Editor } from './editor';
 export { Extension } from './extension';
+export { BlockExtension } from './block-extension';
 export * as extensions from './extensions';
 export { EditorView } from './view';
 export {
@@ -24,4 +25,4 @@ export interface Commands<ReturnType = any> {}
 export interface ExtensionConfig<Options = any> {}
 
 // eslint-disable-next-line
-export interface BlockConfig<Options = any> {}
+export interface BlockExtensionConfig<Options = any> {}
