@@ -4,8 +4,8 @@ import { Editor, Block, BlockViewRendererPack } from '@chameleon/core';
 import { useBlock } from './use-block';
 
 type ChildrenRendererProps = {
-  editor: Editor;
   block: Block;
+  editor: Editor;
   componentType: keyof BlockViewRendererPack;
 };
 
@@ -27,8 +27,8 @@ const ChildrenRenderer = ({
 };
 
 type RendererProps = {
-  editor: Editor;
   block: Block;
+  editor: Editor;
   componentType: keyof BlockViewRendererPack;
 };
 
@@ -36,8 +36,6 @@ export const Renderer = (props: RendererProps): React.ReactNode => {
   const { editor, componentType } = props;
 
   const block = useBlock(props.block);
-
-  console.log(block);
 
   const Component = editor.view.getBlockViews(block.type.name)[componentType];
 

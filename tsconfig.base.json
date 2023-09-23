@@ -15,6 +15,7 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
+    "stripInternal": true,
 
     // react
     "lib": ["DOM", "es2019"],

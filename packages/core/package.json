@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "description": "Chameleon core",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist/**/*"
@@ -13,9 +14,9 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "module": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js",
+      "module": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "scripts": {
@@ -30,7 +31,8 @@
     "immer": "^10.0.2"
   },
   "dependencies": {
-    "nanoid": "4.0.2"
+    "nanoid": "4.0.2",
+    "@chameleon/uikit": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.21",

@@ -1,6 +1,7 @@
 import { Blocks, EditorState } from './editor-state';
 import { Transform } from '../transform';
 import { Plugin, PluginKey } from './plugin';
+import { Block } from '../model';
 import { Step } from '../transform/step';
 
 export class Transaction extends Transform {
@@ -20,7 +21,7 @@ export class Transaction extends Transform {
     return this.blocks[this.activeId];
   }
 
-  select() {
+  select(target?: Block['id']) {
     if (this.lastModifiedBlock) {
       this.activeId = this.lastModifiedBlock;
     }

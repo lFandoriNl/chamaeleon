@@ -5,9 +5,13 @@ import { splitExtensions } from './split-extensions';
 import { callOrReturn } from '../utilities/call-or-return';
 
 import { Extensions } from '../types';
+import { type Editor } from '..';
 
-export function getSchemaByResolvedExtensions(extensions: Extensions): Schema {
-  const allProperties = getPropertiesFromExtensions(extensions);
+export function getSchemaByResolvedExtensions(
+  extensions: Extensions,
+  editor: Editor,
+): Schema {
+  const allProperties = getPropertiesFromExtensions(extensions, editor);
   const { blockExtensions } = splitExtensions(extensions);
 
   const blocks = Object.fromEntries(
@@ -18,6 +22,10 @@ export function getSchemaByResolvedExtensions(extensions: Extensions): Schema {
 
       const schema: BlockSpec = {
         allowContent: callOrReturn(extension.config.allowContent),
+        withValue: callOrReturn(extension.config.withValue),
+        withChildren: callOrReturn(extension.config.withChildren),
+        rootable: callOrReturn(extension.config.rootable),
+        structural: callOrReturn(extension.config.structural),
         props: Object.fromEntries(
           extensionProperties.map((extensionProperty) => {
             return [

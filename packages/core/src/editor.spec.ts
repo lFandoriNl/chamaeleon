@@ -40,4 +40,20 @@ describe('EditorState', () => {
 
     expect(editor.state.activeBlock!.props.title).toBe('Nested page');
   });
+
+  it('should chain commands', () => {
+    editor.chain.addPage(null).select().run();
+
+    expect(editor.state.activeBlock!.props.title).toBe(
+      editor.schema.blockType('page').defaultProps!.title,
+    );
+    expect(editor.state.activeId).toBe(editor.state.activeBlock!.id);
+  });
+
+  it('should chain commands without apply', () => {
+    editor.chain.addPage(null).select();
+
+    expect(editor.state.blocks).toEqual({});
+    expect(editor.state.activeId).toEqual(null);
+  });
 });

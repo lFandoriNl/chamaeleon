@@ -1,30 +1,26 @@
-import { Block } from '../block';
-import { Block as BlockModel } from '../model';
+import clsx from 'clsx';
+import { BlockExtension } from '../block-extension';
+import { Block } from '../model';
 import { JSONContent } from '../types';
 
 declare module '..' {
   interface Commands<ReturnType> {
     column: {
       addColumn: (
-        target: BlockModel['id'],
+        target: Block['id'],
         props?: JSONContent['props'],
       ) => ReturnType;
     };
   }
 }
 
-export const Column = Block.create({
+export const Column = BlockExtension.create({
   name: 'column',
 
-  allowContent: [],
+  allowContent: {},
 
   addProperties() {
-    return {
-      columns: {
-        default: 2,
-        isRequired: true,
-      },
-    };
+    return {};
   },
 
   addCommands() {
@@ -43,10 +39,27 @@ export const Column = Block.create({
   addBlockViews() {
     return {
       natural: ({ block, children }) => {
-        return <div className="e-column md:w-1/2">{children}</div>;
+        return <div className={clsx('e-column')}>{children}</div>;
       },
       editor: ({ block, children }) => {
-        return <div className="e-column md:w-1/2">{children}</div>;
+        return (
+          <div
+            tabIndex={1}
+            className={clsx(
+              'e-column',
+              block.children.isEmpty &&
+                'min-h-[64px] p-4 flex items-center justify-center rounded-xl text-white bg-gray-300',
+              block.children.isEmpty &&
+                'hover:cursor-pointer hover:bg-gray-400 focus:relative focus:ring focus:ring-blue-600',
+            )}
+          >
+            {block.children.isEmpty ? (
+              <p className="text-base">Click to insert blocks</p>
+            ) : (
+              children
+            )}
+          </div>
+        );
       },
       palette: () => {
         return <div>Row</div>;

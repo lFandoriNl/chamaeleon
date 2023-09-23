@@ -11,6 +11,6 @@ declare module '..' {
 
 export const changeTitle: RawCommands['changeTitle'] =
   (target, title) =>
-  ({ tr }) => {
-    tr.changeProperty(target, 'title', title);
+  ({ commands }) => {
+    commands.changeProperty(target, 'title', title);
   };

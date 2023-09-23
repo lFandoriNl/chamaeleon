@@ -1,17 +1,23 @@
-import { EditorView } from './view/editor-view';
-import { EditorState } from './state/editor-state';
+import { EditorView, EditorViewOptions } from './view';
+import { EditorState, Blocks, Transaction } from './state';
 
 import { ExtensionManager } from './extension-manager';
 import { CommandManager } from './command-manager';
 import { EventEmitter } from './event-emitter';
 
-import { Page } from './extensions/page';
+import { Commands, History, Page, Row, Column, Text } from './extensions';
 
 import { Schema } from './model/schema';
 
-import { EditorEvents, EditorOptions, SingleCommands } from './types';
-import { Commands, History, Row, Column, Text } from './extensions';
-import { Transaction } from './state';
+import { EditorEvents, Extensions, SingleCommands } from './types';
+
+export type EditorOptions = Pick<
+  EditorViewOptions,
+  'propertyConfigurationRender' | 'ui'
+> & {
+  blocks: Blocks;
+  extensions: Extensions;
+};
 
 export class Editor extends EventEmitter<EditorEvents> {
   private commandManager: CommandManager;
@@ -51,11 +57,22 @@ export class Editor extends EventEmitter<EditorEvents> {
     return this.commandManager.commands;
   }
 
+  get chain() {
+    return this.commandManager.chain();
+  }
+
   setOptions(options: Partial<EditorOptions> = {}) {
     this.options = {
       ...this.options,
       ...options,
     };
+
+    if (this.view) {
+      this.view.setOptions({
+        propertyConfigurationRender: this.options.propertyConfigurationRender,
+        ui: this.options.ui,
+      });
+    }
   }
 
   private createExtensionManager() {
@@ -67,20 +84,22 @@ export class Editor extends EventEmitter<EditorEvents> {
   }
 
   private createView() {
-    this.view = new EditorView(document.body, {
+    this.view = new EditorView({
       state: EditorState.create({
         schema: this.schema,
         blocks: this.options.blocks,
         plugins: this.extensionManager.plugins,
       }),
       dispatchTransaction: this.dispatchTransaction.bind(this),
+      propertyConfigurationRender: this.options.propertyConfigurationRender,
+      ui: this.options.ui,
     });
 
     this.createBlockViews();
   }
 
   private createBlockViews() {
-    this.view.setProps({
+    this.view.setOptions({
       blockViews: this.extensionManager.blockViews,
     });
   }
@@ -92,8 +111,6 @@ export class Editor extends EventEmitter<EditorEvents> {
 
     const state = this.state.apply(transaction);
     this.view.updateState(state);
-
-    console.log('update', transaction);
 
     this.emit('transaction', {
       editor: this,

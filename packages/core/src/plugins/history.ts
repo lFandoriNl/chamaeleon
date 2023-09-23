@@ -9,6 +9,8 @@ export function history(options: HistoryOptions) {
   return new Plugin({
     key: new PluginKey('history'),
 
+    type: 'common',
+
     state: {
       init() {
         const changes = new Map<

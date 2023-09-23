@@ -1,5 +1,14 @@
 import { Editor } from './editor';
-import { CommandProps, RawCommands, SingleCommands } from './types';
+import { Transaction } from './state';
+
+import { createChainableState } from './helpers/create-chainable-state';
+
+import {
+  ChainedCommands,
+  CommandProps,
+  RawCommands,
+  SingleCommands,
+} from './types';
 
 export class CommandManager {
   editor: Editor;
@@ -27,7 +36,9 @@ export class CommandManager {
   }
 
   get commands(): SingleCommands {
-    const props = this.buildProps();
+    const { view, state } = this.editor;
+
+    const props = this.buildProps(state.tr);
 
     return Object.fromEntries(
       Object.entries(this.rawCommands).map(([name, command]) => {
@@ -35,7 +46,7 @@ export class CommandManager {
           // @ts-expect-error
           const callback = command(...args)(props);
 
-          this.editor.view.dispatch(props.tr);
+          view.dispatch(props.tr);
 
           return callback;
         };
@@ -43,27 +54,48 @@ export class CommandManager {
         return [name, method];
       }),
     ) as unknown as SingleCommands;
+  }
 
-    // const { rawCommands, editor, state } = this;
-    // const { view } = editor;
-    // const { tr } = state;
-    // const props = this.buildProps(tr);
+  get chain(): () => ChainedCommands {
+    return () => this.createChain();
+  }
 
-    // return Object.fromEntries(
-    //   Object.entries(rawCommands).map(([name, command]) => {
-    //     const method = (...args: any[]) => {
-    //       const callback = command(...args)(props);
+  private createChain(startTr?: Transaction): ChainedCommands {
+    const { rawCommands, editor } = this;
+    const { view } = editor;
 
-    //       if (!tr.getMeta('preventDispatch') && !this.hasCustomState) {
-    //         view.dispatch(tr);
-    //       }
+    const hasStartTransaction = Boolean(startTr);
+    const tr = startTr || editor.state.tr;
 
-    //       return callback;
-    //     };
+    const callbacks: void[] = [];
 
-    //     return [name, method];
-    //   }),
-    // ) as unknown as SingleCommands;
+    const run = () => {
+      if (!hasStartTransaction) {
+        view.dispatch(tr);
+      }
+    };
+
+    const chain = {
+      ...Object.fromEntries(
+        Object.entries(rawCommands).map(([name, command]) => {
+          const chainedCommand = (...args: never[]) => {
+            const props = this.buildProps(tr);
+
+            // @ts-expect-error
+            const callback = command(...args)(props);
+
+            callbacks.push(callback);
+
+            return chain;
+          };
+
+          return [name, chainedCommand];
+        }),
+      ),
+      run,
+    } as unknown as ChainedCommands;
+
+    return chain;
   }
 
   // execute(str: string) {
@@ -110,15 +142,22 @@ export class CommandManager {
   //   this.canUndo = this.changes.has(this.currentVersion);
   // }
 
-  buildProps(): CommandProps {
+  buildProps(tr: Transaction): CommandProps {
+    const self = this;
+
     const { rawCommands, editor } = this;
-    const { tr } = editor.state;
 
     const props: CommandProps = {
       tr,
       editor,
       view: editor.view,
-      state: editor.state,
+      state: createChainableState({
+        state: editor.state,
+        transaction: tr,
+      }),
+      get chain() {
+        return self.createChain(tr);
+      },
       get commands() {
         return Object.fromEntries(
           Object.entries(rawCommands).map(([name, command]) => {

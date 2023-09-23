@@ -94,7 +94,10 @@ export class EditorState {
 
   lastModifiedBlock!: Block['id'] | null;
 
-  constructor(readonly config: Configuration) {}
+  constructor(
+    /// @internal
+    readonly config: Configuration,
+  ) {}
 
   get schema(): Schema {
     return this.config.schema;
@@ -102,6 +105,12 @@ export class EditorState {
 
   get plugins(): readonly Plugin[] {
     return this.config.plugins;
+  }
+
+  get propertyConfigurationPlugins() {
+    return this.plugins.filter(
+      (plugin) => plugin.spec.type === 'property-configuration',
+    );
   }
 
   get activeBlock() {
@@ -129,7 +138,8 @@ export class EditorState {
     return this.applyTransaction(tr).state;
   }
 
-  private filterTransaction(tr: Transaction, ignore = -1) {
+  /// @internal
+  filterTransaction(tr: Transaction, ignore = -1) {
     for (let i = 0; i < this.config.plugins.length; i++) {
       if (i != ignore) {
         const plugin = this.config.plugins[i];
@@ -146,7 +156,8 @@ export class EditorState {
     return true;
   }
 
-  private applyTransaction(rootTr: Transaction): {
+  /// @internal
+  applyTransaction(rootTr: Transaction): {
     state: EditorState;
     transactions: readonly Transaction[];
   } {
@@ -216,7 +227,8 @@ export class EditorState {
     return new Transaction(this);
   }
 
-  private applyInner(tr: Transaction) {
+  /// @internal
+  applyInner(tr: Transaction) {
     // check has transactions some patches
     // if (!tr.before.eq(this.blocks))
     //   throw new RangeError('Applying a mismatched transaction');

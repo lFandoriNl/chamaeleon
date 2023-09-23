@@ -1,5 +1,5 @@
 import { Editor, ExtensionConfig } from '.';
-import { Plugin } from './state/plugin';
+import { Plugin, Transaction } from './state';
 import { RawCommands } from './types';
 
 declare module '.' {
@@ -10,9 +10,24 @@ declare module '.' {
 
     addOptions?: () => Options;
 
-    addCommands?: () => Partial<RawCommands>;
+    addCommands?: (this: {
+      editor: Editor;
+      options: Options;
+    }) => Partial<RawCommands>;
 
     addPlugins?: (this: { editor: Editor; options: Options }) => Plugin[];
+
+    onUpdate?: (this: { options: Options; editor: Editor }) => void;
+
+    onTransaction?: (
+      this: {
+        options: Options;
+        editor: Editor;
+      },
+      props: {
+        transaction: Transaction;
+      },
+    ) => void;
   }
 }
 

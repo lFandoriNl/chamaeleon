@@ -18,7 +18,24 @@ export class ExtensionManager {
 
     this.extensions = extensions;
 
-    this.schema = getSchemaByResolvedExtensions(this.extensions);
+    this.schema = getSchemaByResolvedExtensions(this.extensions, this.editor);
+
+    this.extensions.forEach((extension) => {
+      const context = {
+        options: extension.options,
+        editor: this.editor,
+      };
+
+      const { onTransaction, onUpdate } = extension.config;
+
+      if (onTransaction) {
+        this.editor.on('transaction', onTransaction.bind(context));
+      }
+
+      if (onUpdate) {
+        this.editor.on('update', onUpdate.bind(context));
+      }
+    });
   }
 
   get commands(): RawCommands {
@@ -29,9 +46,14 @@ export class ExtensionManager {
         return commands;
       }
 
+      const context = {
+        editor: this.editor,
+        options: extension.options,
+      };
+
       return {
         ...commands,
-        ...addCommands(),
+        ...addCommands.call(context),
       };
     }, {} as RawCommands);
   }

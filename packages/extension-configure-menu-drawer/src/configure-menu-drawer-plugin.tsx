@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import clsx from 'clsx';
 
 import { AiOutlineBorderLeft, AiOutlineBorderRight } from 'react-icons/ai';
 import { IoMdClose } from 'react-icons/io';
@@ -13,26 +14,36 @@ import {
   EditorView,
   Editor,
 } from '@chameleon/core';
+
 import { Drawer } from './drawer';
-import clsx from 'clsx';
+
+const capitalize = (str: string) => {
+  return str.charAt(0).toLocaleUpperCase() + str.slice(1);
+};
+
+type PluginState = {
+  open: boolean;
+};
 
 type BlockConfigurationProps = {
+  view: EditorView;
   extra?: React.ReactNode;
 };
 
-const BlockConfiguration = ({ extra }: BlockConfigurationProps) => {
+const BlockConfiguration = ({ view, extra }: BlockConfigurationProps) => {
+  if (!view.state.activeBlock) throw new RangeError('');
+
   return (
     <div>
-      <div className="p-4 flex items-center justify-between border-b border-gray-300">
-        <div>
-          {/* {block.type.charAt(0).toLocaleUpperCase() + block.type.slice(1)}{' '} */}
-          properties
-        </div>
+      <div className="p-4 flex items-center justify-between text-xl border-b border-gray-300">
+        <div>{capitalize(view.state.activeBlock.type.name)} properties</div>
 
         {extra}
       </div>
 
-      <div className="p-4">content</div>
+      <div className="p-4">
+        <view.propertyConfiguration.Render view={view} />
+      </div>
     </div>
   );
 };
@@ -49,11 +60,13 @@ const ConfigurationDrawer = ({ open, editor }: ConfigurationDrawerProps) => {
     <Drawer
       className="top-[40%]"
       open={open}
+      size="500px"
       onClose={editor.commands.closeConfiguration}
       direction={direction}
       enableOverlay={true}
     >
       <BlockConfiguration
+        view={editor.view}
         extra={
           <div>
             <IconButton
@@ -94,7 +107,7 @@ type ConfigureMenuDrawerViewOptions = {
 };
 
 class ConfigureMenuDrawerView implements PluginView {
-  private pluginKey!: PluginKey<{ open: boolean }>;
+  private pluginKey!: PluginKey<PluginState>;
 
   private editor: Editor;
 
@@ -107,7 +120,7 @@ class ConfigureMenuDrawerView implements PluginView {
   }
 
   update(view: EditorView) {
-    const open = this.pluginKey.getState(view.state)?.open || false;
+    const { open } = this.pluginKey.getState(view.state);
 
     return ReactDOM.createPortal(
       <ConfigurationDrawer open={open} editor={this.editor} />,
@@ -130,7 +143,7 @@ export const ConfigureMenuDrawerPlugin = (
       ? new PluginKey(options.pluginKey)
       : options.pluginKey;
 
-  return new Plugin<{ open: boolean }>({
+  return new Plugin<PluginState>({
     key: pluginKey,
 
     type: 'common',
@@ -148,7 +161,11 @@ export const ConfigureMenuDrawerPlugin = (
           open: false,
         };
       },
-      apply(tr) {
+      apply(tr, value) {
+        if (!Boolean(tr.getMeta(pluginKey))) {
+          return value;
+        }
+
         return {
           open: tr.getMeta(pluginKey)?.open === true,
         };

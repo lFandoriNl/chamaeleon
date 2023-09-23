@@ -1,51 +1,92 @@
 import React from 'react';
+
+import { PropertyConfigurationRender } from './property-configuration-render';
+
 import { Block } from '../model';
-import { EditorState, Plugin, PluginView, Transaction } from '../state';
+import { EditorState, PluginView, Transaction } from '../state';
 import { AnyExtension, BlockViewRendererPack } from '../types';
+
+import { BlockTooltip } from './ui/block-tooltip';
+import { ActionButton } from './ui/action-button';
+import { ActionAddBlockButton } from './ui/action-add-block-button';
+import { ActionSettingsButton } from './ui/action-settings-button';
+
+type Props<T extends keyof EditorView['rawUI']> = Omit<
+  Parameters<EditorView['rawUI'][T]>[0],
+  'view'
+>;
 
 export type EditorViewOptions = {
   state: EditorState;
   blockViews?: Record<AnyExtension['name'], BlockViewRendererPack>;
   dispatchTransaction?: (tr: Transaction) => void;
+  propertyConfigurationRender?: React.FunctionComponent<{ view: EditorView }>;
+  ui?: Partial<EditorView['rawUI']>;
 };
 
 export class EditorView {
-  private container: HTMLElement;
-
   state: EditorState;
 
-  private _props: EditorViewOptions;
+  private _options: EditorViewOptions;
+
+  propertyConfiguration: {
+    element: HTMLElement | null;
+    Render: React.FunctionComponent<{ view: EditorView }>;
+  } = {
+    element: null,
+    Render: PropertyConfigurationRender,
+  };
 
   pluginViews: Array<{
     view: PluginView;
-    portal?: React.ReactPortal;
+    portal?: React.ReactPortal | null;
   }> = [];
 
-  constructor(container: HTMLElement, props: EditorViewOptions) {
-    this.container = container;
+  private rawUI = {
+    BlockTooltip,
+    ActionButton,
+    ActionAddBlockButton,
+    ActionSettingsButton,
+  };
 
-    this._props = props;
+  ui!: {
+    [name in keyof EditorView['rawUI']]: React.FunctionComponent<Props<name>>;
+  };
 
-    this.state = props.state;
+  constructor(options: EditorViewOptions) {
+    this._options = options;
+
+    if (options.propertyConfigurationRender) {
+      this.propertyConfiguration.Render = options.propertyConfigurationRender;
+    }
+
+    this.rawUI = {
+      ...this.rawUI,
+      ...options.ui,
+    };
+
+    this.injectViewToUI();
+
+    this.state = options.state;
 
     this.dispatch = this.dispatch.bind(this);
 
     this.updatePluginViews();
   }
 
-  get props() {
-    if (this._props.state != this.state) {
-      this._props = {
-        ...this._props,
+  get options() {
+    if (this._options.state != this.state) {
+      this._options = {
+        ...this._options,
         state: this.state,
       };
     }
 
-    return this._props;
+    return this._options;
   }
 
   dispatch(tr: Transaction) {
-    const { dispatchTransaction } = this._props;
+    const { dispatchTransaction } = this._options;
 
     if (dispatchTransaction) {
       dispatchTransaction.call(this, tr);
@@ -62,20 +103,51 @@ export class EditorView {
     this.updatePluginViews(prevState);
   }
 
-  setProps(props: Partial<EditorViewOptions>) {
-    this._props = {
-      ...this._props,
-      ...props,
+  setOptions(options: Partial<EditorViewOptions>) {
+    this._options = {
+      ...this._options,
+      ...options,
+      ui: {
+        ...this._options,
+        ...options.ui,
+      },
     };
+
+    this.rawUI = {
+      ...this.rawUI,
+      ...this._options.ui,
+    };
+
+    this.injectViewToUI();
   }
 
   getBlockViews(name: Block['type']['name']) {
-    if (!this.props.blockViews || !this.props.blockViews[name])
+    if (!this.options.blockViews || !this.options.blockViews[name])
       throw new RangeError(
         `BlockViews for "Block.type.name=${name}" does not exist.`,
       );
 
-    return this.props.blockViews[name];
+    return this.options.blockViews[name];
+  }
+
+  setPropertyConfigurationElement(element: HTMLElement) {
+    this.propertyConfiguration.element = element;
+  }
+
+  private injectViewToUI() {
+    this.ui = (Object.entries(this.rawUI) as any[]).reduce(
+      (ui, [name, Component]) => {
+        ui[name] = (props: any) => {
+          return React.createElement(Component, {
+            ...props,
+            view: this,
+          });
+        };
+
+        return ui;
+      },
+      {} as EditorView['ui'],
+    );
   }
 
   private updatePluginViews(prevState?: EditorState) {

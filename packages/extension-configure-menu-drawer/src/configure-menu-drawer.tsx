@@ -1,10 +1,10 @@
-import { Extension, PluginKey } from '@chameleon/core';
+import { Block, Extension, PluginKey } from '@chameleon/core';
 import { ConfigureMenuDrawerPlugin } from './configure-menu-drawer-plugin';
 
 declare module '@chameleon/core' {
   interface Commands<ReturnType> {
     configureMenuDrawer: {
-      openConfiguration: () => ReturnType;
+      openConfiguration: (target?: Block['id']) => ReturnType;
       closeConfiguration: () => ReturnType;
     };
   }
@@ -28,9 +28,11 @@ export const ConfigureMenuDrawer = Extension.create<ConfigureMenuDrawerOptions>(
 
     addCommands() {
       return {
-        openConfiguration: () => {
+        openConfiguration: (target) => {
           return ({ tr }) => {
-            tr.setMeta(ConfigureMenuDrawerPluginKey, { open: true });
+            tr.select(target).setMeta(ConfigureMenuDrawerPluginKey, {
+              open: true,
+            });
           };
         },
         closeConfiguration: () => {
@@ -49,6 +51,14 @@ export const ConfigureMenuDrawer = Extension.create<ConfigureMenuDrawerOptions>(
           element: this.options.element || document.body,
         }),
       ];
+    },
+
+    onTransaction({ transaction }) {
+      const intention = transaction.getMeta('intention');
+
+      if (intention?.type === 'change-properties') {
+        this.editor.commands.openConfiguration(intention.target);
+      }
     },
   },
 );

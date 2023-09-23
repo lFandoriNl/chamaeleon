@@ -1,8 +1,10 @@
+import { type Editor } from '..';
 import { ExtensionProperty, Extensions, Property } from '../types';
 import { splitExtensions } from './split-extensions';
 
 export function getPropertiesFromExtensions(
   extensions: Extensions,
+  editor: Editor,
 ): ExtensionProperty[] {
   const extensionProperties: ExtensionProperty[] = [];
 
@@ -20,7 +22,12 @@ export function getPropertiesFromExtensions(
       return;
     }
 
-    const properties = addProperties();
+    const context = {
+      editor,
+      options: extension.options,
+    };
+
+    const properties = addProperties.call(context);
 
     Object.entries(properties).forEach(([name, property]) => {
       const mergedProperty = {

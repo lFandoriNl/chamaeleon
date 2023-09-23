@@ -69,8 +69,18 @@ class Property {
 }
 
 export interface BlockSpec {
-  allowContent?: Block['type']['name'][];
+  allowContent?: {
+    name?: Block['type']['name'][];
+    withValue?: boolean;
+    withChildren?: boolean;
+    rootable?: boolean;
+    structural?: boolean;
+  };
   props?: { [name: string]: PropertySpec };
+  withValue?: boolean;
+  withChildren?: boolean;
+  rootable?: boolean;
+  structural?: boolean;
 }
 
 export class BlockType {
@@ -105,6 +115,16 @@ export class BlockType {
       Fragment.from(content),
       id,
     );
+  }
+
+  validContent(content: Fragment) {
+    // TODO:
+    return true;
+  }
+
+  checkContent(content: Fragment) {
+    if (!this.validContent(content))
+      throw new RangeError(`Invalid content for block: ${this.name}`);
   }
 
   static compile<Blocks extends string>(
@@ -172,6 +192,44 @@ export class Schema<Blocks extends string = any> {
     if (!found) throw new Error('Unknown block type: ' + name);
 
     return found;
+  }
+
+  getAllowContent(allowContent: NonNullable<BlockSpec['allowContent']>) {
+    return Object.values(this.blocks).filter((blockType) => {
+      if (allowContent.name && allowContent.name.includes(blockType.name)) {
+        return true;
+      }
+
+      if (
+        allowContent.withValue &&
+        allowContent.withValue === blockType.spec.withValue
+      ) {
+        return true;
+      }
+
+      if (
+        allowContent.withChildren &&
+        allowContent.withChildren === blockType.spec.withChildren
+      ) {
+        return true;
+      }
+
+      if (
+        allowContent.rootable &&
+        allowContent.rootable === blockType.spec.rootable
+      ) {
+        return true;
+      }
+
+      if (
+        allowContent.structural &&
+        allowContent.structural === blockType.spec.structural
+      ) {
+        return true;
+      }
+
+      return false;
+    });
   }
 
   blockFromJSON(json: any): Block {

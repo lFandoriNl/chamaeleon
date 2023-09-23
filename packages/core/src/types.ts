@@ -3,7 +3,7 @@ import React from 'react';
 import { BlockExtensionConfig, Commands, ExtensionConfig } from '.';
 import { Extension } from './extension';
 import { BlockExtension } from './block-extension';
-import { Block as BlockModel } from './model';
+import { Block } from './model';
 import { Editor } from './editor';
 import { Blocks, EditorState } from './state/editor-state';
 import { Transaction } from './state/transaction';
@@ -16,11 +16,6 @@ export type Extensions = AnyExtension[];
 export type EditorEvents = {
   update: { editor: Editor; transaction: Transaction };
   transaction: { editor: Editor; transaction: Transaction };
-};
-
-export type EditorOptions = {
-  blocks: Blocks;
-  extensions: Extensions;
 };
 
 export type MaybeReturnType<T> = T extends (...args: any) => any
@@ -58,7 +53,7 @@ export type ExtensionProperty = {
 
 export type BlockViewRendererProps = {
   editor: Editor;
-  block: BlockModel;
+  block: Block;
   children: React.ReactNode | React.ReactNode[];
 };
 
@@ -87,7 +82,7 @@ export type CommandProps = {
   tr: Transaction;
   commands: SingleCommands;
   // can: () => CanCommands;
-  // chain: () => ChainedCommands;
+  chain: ChainedCommands;
   state: EditorState;
   view: EditorView;
   // dispatch: ((args?: any) => any) | undefined;
@@ -107,4 +102,10 @@ export type RawCommands = {
 
 export type SingleCommands = {
   [Item in keyof UnionCommands]: UnionCommands<void>[Item];
+};
+
+export type ChainedCommands = {
+  [Item in keyof UnionCommands]: UnionCommands<ChainedCommands>[Item];
+} & {
+  run: () => void;
 };

@@ -1,22 +1,24 @@
-import { Block } from '../block';
-import { Block as BlockModel } from '../model';
+import { BlockExtension } from '../block-extension';
+import { Block } from '../model';
 import { JSONContent } from '../types';
 
 declare module '..' {
   interface Commands<ReturnType> {
     text: {
       addText: (
-        target: BlockModel['id'],
+        target: Block['id'],
         props?: JSONContent['props'],
       ) => ReturnType;
     };
   }
 }
 
-export const Text = Block.create({
+export const Text = BlockExtension.create({
   name: 'text',
 
-  allowContent: [],
+  allowContent: {},
+
+  withValue: true,
 
   addProperties() {
     return {

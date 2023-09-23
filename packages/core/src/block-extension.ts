@@ -1,6 +1,6 @@
-import { BlockExtensionConfig } from '.';
-import { BlockSpec } from './model/schema';
-import { Plugin } from './state/plugin';
+import { BlockExtensionConfig, type Editor } from '.';
+import { BlockSpec } from './model';
+import { Plugin, Transaction } from './state';
 import { BlockViewRendererPack, Properties, RawCommands } from './types';
 
 declare module '.' {
@@ -11,9 +11,24 @@ declare module '.' {
 
     addOptions?: () => Options;
 
-    addCommands?: () => Partial<RawCommands>;
+    addCommands?: (this: {
+      editor: Editor;
+      options: Options;
+    }) => Partial<RawCommands>;
 
-    addPlugins?: () => Plugin[];
+    addPlugins?: (this: { editor: Editor; options: Options }) => Plugin[];
+
+    onUpdate?: (this: { options: Options; editor: Editor }) => void;
+
+    onTransaction?: (
+      this: {
+        options: Options;
+        editor: Editor;
+      },
+      props: {
+        transaction: Transaction;
+      },
+    ) => void;
 
     allowContent?:
       | BlockSpec['allowContent']
@@ -25,9 +40,11 @@ declare module '.' {
       | BlockSpec['withChildren']
       | (() => BlockSpec['withChildren']);
 
+    rootable?: BlockSpec['rootable'] | (() => BlockSpec['rootable']);
+
     structural?: BlockSpec['structural'] | (() => BlockSpec['structural']);
 
-    addProperties?: () => Properties;
+    addProperties?: (this: { editor: Editor; options: Options }) => Properties;
 
     addBlockViews?: () => BlockViewRendererPack;
   }

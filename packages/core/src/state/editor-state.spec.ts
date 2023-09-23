@@ -22,7 +22,7 @@ describe('EditorState', () => {
       schema: new Schema({
         blocks: {
           page: {
-            allowContent: [],
+            allowContent: {},
             props: {
               title: {
                 default: 'Enter your page title',
@@ -71,9 +71,11 @@ describe('EditorState', () => {
     state = state.reconfigure({
       plugins: [
         new Plugin({
+          type: 'common',
           appendTransaction: appendedTransactionFirst,
         }),
         new Plugin({
+          type: 'common',
           appendTransaction: appendedTransactionSecond,
         }),
       ],

@@ -6,6 +6,7 @@ import {
   useEditor,
   EditorContent,
 } from '@chameleon/react-editor';
+import { AddBlockMenu } from '@chameleon/extension-add-block-menu';
 import { ConfigureMenuDrawer } from '@chameleon/extension-configure-menu-drawer';
 
 import { Sidebar } from './sidebar';
@@ -36,20 +37,57 @@ const Content = observer(() => {
 Content.displayName = 'Content';
 
 const editor = new Editor({
-  extensions: [ConfigureMenuDrawer],
+  extensions: [AddBlockMenu, ConfigureMenuDrawer],
+  ui: {
+    // ActionButton(props) {
+    //   return (
+    //     <button
+    //       className={clsx(
+    //         'ui-icon-button',
+    //         'p-2 rounded-full shadow-xl',
+    //         'bg-green-300 hover:bg-slate-300',
+    //         'focus:outline-none focus:relative focus:ring focus:ring-blue-600',
+    //         props.className,
+    //       )}
+    //       onClick={props.onClick}
+    //     >
+    //       {props.children}
+    //     </button>
+    //   );
+    // },
+  },
 });
 
-// editor.commands.addPage(null);
-// editor.commands.select();
+editor.on('update', ({ transaction }) => {
+  console.log('update', {
+    activeId: transaction.activeId,
+    activeBlock: {
+      id: transaction.activeBlock.id,
+      name: transaction.activeBlock.type.name,
+      children: transaction.activeBlock.children.children,
+    },
+    blocks: Object.values(transaction.blocks).map((block) => ({
+      id: block.id,
+      name: block.type.name,
+      children: block.children,
+    })),
+  });
+});
 
-// editor.commands.addRow(editor.state.activeId!);
-// editor.commands.select();
+editor.chain.addPage(null).select().run();
 
-// editor.commands.addColumn(editor.state.activeId!);
-// editor.commands.select();
+// editor.chain.addRow(editor.state.activeId!).select().run();
 
-// editor.commands.addText(editor.state.activeId!, { value: 'Some Text' });
-// editor.commands.select();
+// setTimeout(() => {
+//   editor.commands.openConfiguration();
+// }, 100);
+
+// editor.chain.addColumn(editor.state.activeId!).select().run();
+
+// editor.chain
+//   .addText(editor.state.activeId!, { value: 'Some Text' })
+//   .select()
+//   .run();
 
 // @ts-expect-error
 window.editor = editor;

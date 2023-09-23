@@ -1,0 +1,39 @@
+{
+  "name": "@chameleon/extension-add-block-menu",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Chameleon react editor",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "module": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "check-types": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@chameleon/core": "workspace:*",
+    "@chameleon/uikit": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7",
+    "tailwind-config": "workspace:*",
+    "tsup": "^7.2.0"
+  }
+}

@@ -11,6 +11,6 @@ declare module '..' {
 
 export const changeValue: RawCommands['changeValue'] =
   (target, value) =>
-  ({ tr }) => {
-    tr.changeProperty(target, 'value', value);
+  ({ commands }) => {
+    commands.changeProperty(target, 'value', value);
   };

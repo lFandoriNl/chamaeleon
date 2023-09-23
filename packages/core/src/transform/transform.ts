@@ -2,6 +2,7 @@ import { Block, Fragment } from '../model';
 import { Blocks } from '../state/editor-state';
 import { InsertStep } from './insert-step';
 import { PropertyStep } from './property-step';
+import { RemoveStep } from './remove-step';
 import { Step } from './step';
 
 class TransformError extends Error {
@@ -24,6 +25,14 @@ export class Transform {
     this.step(new InsertStep(target, block));
 
     this.lastModifiedBlock = block.id;
+
+    return this;
+  }
+
+  removeContent(target: Block['id'], blockIds?: Array<Block['id']>) {
+    this.step(new RemoveStep(target, blockIds));
+
+    this.lastModifiedBlock = target;
 
     return this;
   }

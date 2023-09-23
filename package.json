@@ -15,27 +15,28 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "react": "18.2.0",
+    "@popperjs/core": "^2.11.8",
+    "clsx": "2.0.0",
     "mobx": "6.10.2",
     "mobx-react-lite": "4.0.4",
-    "react-icons": "4.11.0",
-    "clsx": "2.0.0"
+    "react": "18.2.0",
+    "react-icons": "4.11.0"
   },
   "devDependencies": {
-    "@types/react": "18.2.15",
     "@originjs/vite-plugin-federation": "1.2.3",
+    "@types/react": "18.2.15",
     "@typescript-eslint/eslint-plugin": "6.4.1",
     "@typescript-eslint/parser": "6.4.1",
+    "autoprefixer": "^10.4.15",
     "eslint": "8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react": "^7.33.2",
-    "kill-port": "2.0.1",
-    "typescript": "^5.2.2",
-    "vitest": "^0.34.4",
     "happy-dom": "^11.2.0",
-    "autoprefixer": "^10.4.15",
+    "kill-port": "2.0.1",
     "postcss": "^8.4.29",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.4"
   }
 }

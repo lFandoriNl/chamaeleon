@@ -1,22 +1,25 @@
-import { Block } from '../block';
-import { Block as BlockModel } from '../model';
+import { PanelButton } from '@chameleon/uikit';
+import { BlockExtension } from '../block-extension';
+import { Block } from '../model';
 import { JSONContent } from '../types';
 
 declare module '..' {
   interface Commands<ReturnType> {
     page: {
       addPage: (
-        target: BlockModel['id'] | null,
+        target: Block['id'] | null,
         props?: JSONContent['props'],
       ) => ReturnType;
     };
   }
 }
 
-export const Page = Block.create({
+export const Page = BlockExtension.create({
   name: 'page',
 
-  allowContent: ['page'],
+  allowContent: {
+    rootable: true,
+  },
 
   addProperties() {
     return {
@@ -44,9 +47,44 @@ export const Page = Block.create({
       natural: ({ block, children }) => {
         return children;
       },
-      editor: ({ block, children }) => {
+      editor: ({ block, children, editor }) => {
         if (block.children.isEmpty) {
-          return <div>Add root block for page</div>;
+          return (
+            <editor.view.ui.BlockTooltip
+              components={[
+                {
+                  placement: 'top-end',
+                  component: (
+                    <editor.view.ui.ActionSettingsButton
+                      onClick={(event) => {
+                        editor.commands.intention(
+                          block.id,
+                          'change-properties',
+                          event.nativeEvent,
+                        );
+                      }}
+                    />
+                  ),
+                },
+                {
+                  placement: 'left',
+                  component: (
+                    <editor.view.ui.ActionAddBlockButton
+                      onClick={(event) => {
+                        editor.commands.intention(
+                          block.id,
+                          'add-block',
+                          event.nativeEvent,
+                        );
+                      }}
+                    />
+                  ),
+                },
+              ]}
+            >
+              <PanelButton>Add root block for page</PanelButton>
+            </editor.view.ui.BlockTooltip>
+          );
         }
 
         return children;

@@ -8,8 +8,6 @@ const EditorContentPortals = () => {
   // rerender after each state update
   const [_, editor] = useEditorSelector(() => ({}));
 
-  console.log(editor.view.pluginViews);
-
   return (
     <div className="editor-content-portals">
       {editor.view.pluginViews.map(({ portal }) => portal)}
@@ -34,7 +32,7 @@ export const EditorContent = ({ editor }: EditorContentProps) => {
               editor.commands.select();
             }}
           >
-            Add root block
+            Add first page
           </PanelButton>
         </div>
 
