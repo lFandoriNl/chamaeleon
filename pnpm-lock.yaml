@@ -228,31 +228,6 @@ importers:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.29)(typescript@5.2.2)
 
-  packages/renderer:
-    dependencies:
-      '@chameleon/react-editor':
-        specifier: workspace:^
-        version: link:../react-editor
-      react:
-        specifier: 18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: 18.2.0
-        version: 18.2.0(react@18.2.0)
-    devDependencies:
-      '@types/react':
-        specifier: 18.2.21
-        version: 18.2.21
-      '@types/react-dom':
-        specifier: 18.2.7
-        version: 18.2.7
-      '@vitejs/plugin-react':
-        specifier: 4.0.4
-        version: 4.0.4(vite@4.4.9)
-      vite:
-        specifier: 4.4.9
-        version: 4.4.9(@types/node@20.5.6)
-
   packages/tailwind-config: {}
 
   packages/uikit:

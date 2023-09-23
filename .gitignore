@@ -3,6 +3,9 @@
 /.pnp
 .pnp.js
 
+# turbo
+.turbo
+
 node_modules
 packages/*/node_modules
 apps/*/node_modules
@@ -32,9 +35,6 @@ yarn.lock
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# vscode
-.vscode
 
 dist/**
 /dist

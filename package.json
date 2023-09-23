@@ -6,12 +6,11 @@
     "packages/*"
   ],
   "scripts": {
-    "app-editor": "pnpm --filter editor dev",
-    "packages": "pnpm --parallel --filter \"./packages/**\" dev",
-    "build": "pnpm --parallel --filter \"./**\" build",
-    "preview": "pnpm --parallel --filter \"./**\" preview",
-    "stop": "kill-port --port 5000,5001",
-    "lint": "eslint .",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "clean": "turbo clean",
     "format": "prettier --write ."
   },
   "dependencies": {

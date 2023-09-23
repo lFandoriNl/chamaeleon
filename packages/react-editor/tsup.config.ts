@@ -8,7 +8,6 @@ export default defineConfig((options: Options) => ({
   format: ['cjs', 'esm'],
   dts: true,
   sourcemap: true,
-  clean: true,
   minify: false,
   external: [
     'react',

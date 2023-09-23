@@ -26,6 +26,7 @@ To run the app locally, you can run the following commands:
 
 ```
 pnpm i
-pnpm packages
-pnpm app-editor
+pnpm dev
 ```
+
+- Note: the first time you run .d.ts files will not be successfully generated for all packages, this is because turbo does not support task dependencies with the --watch flag, just run `pnpm dev` several times until type errors will disappear
