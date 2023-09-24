@@ -31,6 +31,7 @@ export const AddBlockMenu = Extension.create<AddBlockMenuOptions>({
         return ({ tr }) => {
           tr.select(target).setMeta(AddBlockMenuPluginKey, {
             open: true,
+            target,
             event,
           });
         };
@@ -57,7 +58,12 @@ export const AddBlockMenu = Extension.create<AddBlockMenuOptions>({
     const intention = transaction.getMeta('intention');
 
     if (intention?.type === 'add-block') {
-      this.editor.commands.openAddBlockMenu(intention.target, intention.event);
+      Promise.resolve().then(() =>
+        this.editor.commands.openAddBlockMenu(
+          intention.target,
+          intention.event,
+        ),
+      );
     }
   },
 });

@@ -23,7 +23,7 @@ export class Transaction extends Transform {
 
   select(target?: Block['id']) {
     if (this.lastModifiedBlock) {
-      this.activeId = this.lastModifiedBlock;
+      this.activeId = target || this.lastModifiedBlock;
     }
 
     return this;

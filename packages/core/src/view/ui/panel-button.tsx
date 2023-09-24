@@ -1,14 +1,18 @@
-import clsx from 'clsx';
 import React, { HTMLAttributes, forwardRef } from 'react';
+import clsx from 'clsx';
+
+import { EditorView } from '../editor-view';
 
 export type PanelButtonProps = HTMLAttributes<HTMLButtonElement> & {
   className?: string;
   children?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+} & {
+  view: EditorView;
 };
 
 export const PanelButton = forwardRef<HTMLButtonElement, PanelButtonProps>(
-  ({ className, onClick, ...props }, ref) => {
+  ({ className, onClick, view, ...props }, ref) => {
     return (
       <button
         ref={ref}
@@ -27,3 +31,5 @@ export const PanelButton = forwardRef<HTMLButtonElement, PanelButtonProps>(
     );
   },
 );
+
+PanelButton.displayName = 'PanelButton';

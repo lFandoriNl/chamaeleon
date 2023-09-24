@@ -8,6 +8,8 @@ const EditorContentPortals = () => {
   // rerender after each state update
   const [_, editor] = useEditorSelector(() => ({}));
 
+  // console.log(editor.view.pluginViews[1].portal);
+
   return (
     <div className="editor-content-portals">
       {editor.view.pluginViews.map(({ portal }) => portal)}
@@ -42,7 +44,7 @@ export const EditorContent = ({ editor }: EditorContentProps) => {
   }
 
   return (
-    <div className="editor-root">
+    <div className="editor-root px-5">
       <Renderer block={rootPage} editor={editor} componentType="editor" />
 
       <EditorContentPortals />

@@ -6,7 +6,9 @@ import { Block } from '../model';
 import { EditorState, PluginView, Transaction } from '../state';
 import { AnyExtension, BlockViewRendererPack } from '../types';
 
-import { BlockTooltip } from './ui/block-tooltip';
+import { ActionsTooltip } from './ui/actions-tooltip';
+import { PanelButton } from './ui/panel-button';
+import { AddExtraBlock } from './ui/add-extra-block';
 import { ActionButton } from './ui/action-button';
 import { ActionAddBlockButton } from './ui/action-add-block-button';
 import { ActionSettingsButton } from './ui/action-settings-button';
@@ -43,7 +45,9 @@ export class EditorView {
   }> = [];
 
   private rawUI = {
-    BlockTooltip,
+    ActionsTooltip,
+    PanelButton,
+    AddExtraBlock,
     ActionButton,
     ActionAddBlockButton,
     ActionSettingsButton,
@@ -108,7 +112,7 @@ export class EditorView {
       ...this._options,
       ...options,
       ui: {
-        ...this._options,
+        ...this._options.ui,
         ...options.ui,
       },
     };
@@ -137,12 +141,17 @@ export class EditorView {
   private injectViewToUI() {
     this.ui = (Object.entries(this.rawUI) as any[]).reduce(
       (ui, [name, Component]) => {
-        ui[name] = (props: any) => {
+        ui[name] = React.forwardRef<HTMLElement>((props, ref) => {
           return React.createElement(Component, {
             ...props,
             view: this,
+            ref,
           });
-        };
+        });
+
+        ui[name].displayName =
+          (Component.displayName || Component.name || 'Unknown') +
+          '.InjectView';
 
         return ui;
       },

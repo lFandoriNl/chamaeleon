@@ -1,6 +1,8 @@
 import clsx from 'clsx';
+
 import { BlockExtension } from '../block-extension';
 import { Block } from '../model';
+
 import { JSONContent } from '../types';
 
 declare module '..' {
@@ -17,7 +19,11 @@ declare module '..' {
 export const Column = BlockExtension.create({
   name: 'column',
 
-  allowContent: {},
+  allowContent: {
+    structural: true,
+    withChildren: true,
+    withValue: true,
+  },
 
   addProperties() {
     return {};
@@ -41,28 +47,52 @@ export const Column = BlockExtension.create({
       natural: ({ block, children }) => {
         return <div className={clsx('e-column')}>{children}</div>;
       },
-      editor: ({ block, children }) => {
+      editor: ({ block, children, editor }) => {
+        const { ui } = editor.view;
+
         return (
-          <div
-            tabIndex={1}
-            className={clsx(
-              'e-column',
-              block.children.isEmpty &&
-                'min-h-[64px] p-4 flex items-center justify-center rounded-xl text-white bg-gray-300',
-              block.children.isEmpty &&
-                'hover:cursor-pointer hover:bg-gray-400 focus:relative focus:ring focus:ring-blue-600',
-            )}
+          <ui.ActionsTooltip
+            components={[
+              {
+                placement: 'top-end',
+                component: (
+                  <ui.ActionSettingsButton
+                    onClick={(event) => {
+                      editor.commands.intention(
+                        block.id,
+                        'change-properties',
+                        event.nativeEvent,
+                      );
+                    }}
+                  />
+                ),
+              },
+              {
+                placement: 'left',
+                component: (
+                  <ui.ActionAddBlockButton
+                    onClick={(event) => {
+                      editor.commands.intention(
+                        block.id,
+                        'add-block',
+                        event.nativeEvent,
+                      );
+                    }}
+                  />
+                ),
+              },
+            ]}
           >
             {block.children.isEmpty ? (
-              <p className="text-base">Click to insert blocks</p>
+              <ui.PanelButton>Empty column</ui.PanelButton>
             ) : (
-              children
+              <div className={clsx('e-column')}>{children}</div>
             )}
-          </div>
+          </ui.ActionsTooltip>
         );
       },
       palette: () => {
-        return <div>Row</div>;
+        return <div>Column</div>;
       },
     };
   },

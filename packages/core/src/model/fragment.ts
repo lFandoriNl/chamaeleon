@@ -8,6 +8,10 @@ export class Fragment {
     return this.children.length === 0;
   }
 
+  get isNotEmpty() {
+    return this.children.length !== 0;
+  }
+
   remove(ids: Array<Block['id']>) {
     return new Fragment(this.children.filter((id) => !ids.includes(id)));
   }

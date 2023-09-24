@@ -7,7 +7,7 @@ import {
   EditorContent,
 } from '@chameleon/react-editor';
 import { AddBlockMenu } from '@chameleon/extension-add-block-menu';
-import { ConfigureMenuDrawer } from '@chameleon/extension-configure-menu-drawer';
+import { ConfigureDrawer } from '@chameleon/extension-configure-drawer';
 
 import { Sidebar } from './sidebar';
 import { AppBar } from './app-bar';
@@ -16,7 +16,7 @@ const Content = observer(() => {
   const editor = useEditor();
 
   return (
-    <div className="border">
+    <div>
       {/* {engine.pagesArray.map((page) => (
         <h1 key={page.id} className="text-3xl font-semibold mb-4">
           {page.title}
@@ -37,7 +37,7 @@ const Content = observer(() => {
 Content.displayName = 'Content';
 
 const editor = new Editor({
-  extensions: [AddBlockMenu, ConfigureMenuDrawer],
+  extensions: [AddBlockMenu, ConfigureDrawer],
   ui: {
     // ActionButton(props) {
     //   return (
@@ -58,8 +58,18 @@ const editor = new Editor({
   },
 });
 
+// @ts-expect-error
+const devTools = window.__REDUX_DEVTOOLS_EXTENSION__.connect({});
+
+// devTools.init({ value: 'initial state' });
+
+editor.on('transaction', function test({ transaction }) {
+  devTools.send('transaction', transaction);
+});
+
 editor.on('update', ({ transaction }) => {
   console.log('update', {
+    transaction,
     activeId: transaction.activeId,
     activeBlock: {
       id: transaction.activeBlock.id,
@@ -69,14 +79,26 @@ editor.on('update', ({ transaction }) => {
     blocks: Object.values(transaction.blocks).map((block) => ({
       id: block.id,
       name: block.type.name,
+      props: block.props,
       children: block.children,
     })),
   });
+
+  console.log(
+    Object.values(transaction.blocks)
+      .filter((block) => block.type.name === 'row')
+      .map((block) => ({
+        id: block.id,
+        name: block.type.name,
+        props: block.props,
+        children: block.children,
+      })),
+  );
 });
 
 editor.chain.addPage(null).select().run();
 
-// editor.chain.addRow(editor.state.activeId!).select().run();
+editor.chain.addRow(editor.state.activeId!).select().run();
 
 // setTimeout(() => {
 //   editor.commands.openConfiguration();

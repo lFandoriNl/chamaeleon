@@ -13,13 +13,14 @@ import {
   PluginView,
   EditorView,
   Editor,
-  EditorState,
+  Block,
 } from '@chameleon/core';
 
 import { Menu } from './menu';
 
 type PluginState = {
   open: boolean;
+  target?: Block['id'];
   event?: Event;
 };
 
@@ -36,8 +37,6 @@ class AddBlockMenuView implements PluginView {
 
   private element: HTMLElement;
 
-  private anchorEl!: HTMLElement;
-
   constructor(options: AddBlockMenuViewOptions) {
     this.pluginKey = options.pluginKey;
     this.editor = options.editor;
@@ -45,15 +44,43 @@ class AddBlockMenuView implements PluginView {
   }
 
   update(view: EditorView) {
-    const { open, event } = this.pluginKey.getState(view.state);
+    const { state } = view;
 
-    if (!this.anchorEl && event?.target instanceof HTMLElement) {
-      this.anchorEl = event.target;
-    }
+    const { open, target, event } = this.pluginKey.getState(state);
 
-    const children = open ? <Menu anchorEl={this.anchorEl} /> : null;
+    if (!open) return ReactDOM.createPortal(null, this.element);
 
-    return ReactDOM.createPortal(children, this.element);
+    if (!target) throw new RangeError(`There is no target id.`);
+
+    const allowContent = state.getBlock(target).type.spec.allowContent || {};
+
+    const allowedBlocksItems = state.schema
+      .getAllowContent(allowContent)
+      .map((blockType) => {
+        const Component = view.getBlockViews(blockType.name)['palette'];
+
+        return {
+          id: blockType.name,
+          name: blockType.name,
+          component: <Component />,
+        };
+      });
+
+    const anchorEl = event?.target instanceof HTMLElement ? event.target : null;
+
+    return ReactDOM.createPortal(
+      <Menu
+        anchorEl={anchorEl}
+        items={allowedBlocksItems}
+        onClick={({ name }) => {
+          this.editor.commands.insertContent(target, {
+            type: name,
+          });
+        }}
+        onClose={() => this.editor.commands.closeAddBlockMenu()}
+      />,
+      this.element,
+    );
   }
 }
 
@@ -97,6 +124,7 @@ export const AddBlockMenuPlugin = (options: AddBlockMenuPluginOptions) => {
         if (meta.open) {
           return {
             open: true,
+            target: meta.target,
             event: meta.event,
           };
         }

@@ -1,13 +1,17 @@
+import React, { HTMLAttributes } from 'react';
 import clsx from 'clsx';
-import React from 'react';
 
-export type IconButtonProps = {
+export type IconButtonProps = HTMLAttributes<HTMLDivElement> & {
   className?: string;
   children?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export function IconButton(props: IconButtonProps): React.ReactNode {
+export function IconButton({
+  className,
+  children,
+  onClick,
+}: IconButtonProps): React.ReactNode {
   return (
     <button
       className={clsx(
@@ -16,11 +20,11 @@ export function IconButton(props: IconButtonProps): React.ReactNode {
         'border bg-white hover:bg-slate-100 active:bg-slate-200',
         'focus:outline-none focus:relative focus:ring focus:ring-blue-600',
         '[&>svg]:pointer-events-none',
-        props.className,
+        className,
       )}
-      onClick={props.onClick}
+      onClick={onClick}
     >
-      {props.children}
+      {children}
     </button>
   );
 }

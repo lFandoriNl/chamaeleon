@@ -1,11 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@chameleon/core": ["./src/index"]
-    }
-  },
+  "compilerOptions": {},
   "include": ["./src"],
   "exclude": ["dist", "build", "node_modules"]
 }

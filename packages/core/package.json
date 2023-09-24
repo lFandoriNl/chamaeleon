@@ -24,7 +24,8 @@
     "dev": "tsup --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "test": "vitest"
+    "test": "vitest",
+    "clean": "rm -r dist && rm -r .turbo"
   },
   "peerDependencies": {
     "react": "^18.2.0",

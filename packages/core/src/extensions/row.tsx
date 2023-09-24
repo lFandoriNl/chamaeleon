@@ -45,7 +45,7 @@ export const Row = BlockExtension.create({
   addProperties() {
     return {
       columns: {
-        default: 0,
+        default: 2,
         isRequired: true,
       },
     };
@@ -54,8 +54,8 @@ export const Row = BlockExtension.create({
   addCommands() {
     return {
       addRow: (target, props) => {
-        return ({ chain }) => {
-          chain.insertContent(target, {
+        return ({ commands }) => {
+          commands.insertContent(target, {
             type: Row.name,
             props,
           });
@@ -76,24 +76,62 @@ export const Row = BlockExtension.create({
         );
       },
       editor: ({ block, children, editor }) => {
-        if (block.children.isEmpty) {
-          return (
-            <PanelButton
-              onClick={() => {
-                editor.commands.intention(block.id, 'change-properties');
-              }}
-            >
-              Click to open settings
-            </PanelButton>
-          );
-        }
+        const { ui } = editor.view;
 
         return (
-          <div
-            className={clsx('e-row grid gap-4', columnMap[block.props.columns])}
+          <ui.ActionsTooltip
+            className="row"
+            components={[
+              {
+                placement: 'top-end',
+                component: (
+                  <ui.ActionSettingsButton
+                    onClick={(event) => {
+                      editor.commands.intention(
+                        block.id,
+                        'change-properties',
+                        event.nativeEvent,
+                      );
+                    }}
+                  />
+                ),
+              },
+              {
+                show: block.children.isEmpty,
+                placement: 'left',
+                component: (
+                  <ui.ActionAddBlockButton
+                    onClick={(event) => {
+                      editor.commands.intention(
+                        block.id,
+                        'add-block',
+                        event.nativeEvent,
+                      );
+                    }}
+                  />
+                ),
+              },
+            ]}
           >
-            {children}
-          </div>
+            {block.children.isEmpty ? (
+              <ui.PanelButton className="w-full">Empty row</ui.PanelButton>
+            ) : (
+              <div
+                className={clsx(
+                  'e-row w-full grid gap-4 hover:bg-slate-100',
+                  columnMap[block.props.columns],
+                )}
+              >
+                {children}
+
+                <ui.AddExtraBlock
+                  onClick={() => editor.commands.addColumn(block.id)}
+                >
+                  Add column
+                </ui.AddExtraBlock>
+              </div>
+            )}
+          </ui.ActionsTooltip>
         );
       },
       palette: () => {
@@ -125,20 +163,7 @@ export const Row = BlockExtension.create({
             const handleChangeColumnCount = (count: number) => {
               if (!state.activeId) return;
 
-              editor.chain
-                .removeContent(state.activeId)
-                .command(({ commands }) => {
-                  Array(count)
-                    .fill(0)
-                    .forEach(() => {
-                      if (!state.activeId) return;
-
-                      commands.addColumn(state.activeId);
-                    });
-                })
-                .changeProperty(state.activeId, 'columns', count)
-                .select()
-                .run();
+              editor.commands.changeProperty(state.activeId, 'columns', count);
             };
 
             return ReactDOM.createPortal(

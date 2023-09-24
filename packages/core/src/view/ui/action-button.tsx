@@ -1,9 +1,13 @@
-import { IconButton, IconButtonProps } from '@chameleon/uikit';
 import clsx from 'clsx';
+import { IconButton, IconButtonProps } from '@chameleon/uikit';
 
-export type ActionButtonProps = IconButtonProps;
+import { EditorView } from '../editor-view';
 
-export function ActionButton(props: ActionButtonProps) {
+export type ActionButtonProps = IconButtonProps & {
+  view: EditorView;
+};
+
+export function ActionButton({ view, ...props }: ActionButtonProps) {
   return (
     <IconButton {...props} className={clsx(props.className, 'rounded-lg')} />
   );

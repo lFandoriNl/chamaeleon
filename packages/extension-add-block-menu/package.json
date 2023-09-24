@@ -23,13 +23,15 @@
     "dev": "tsup --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "test": "vitest"
+    "test": "vitest",
+    "clean": "rm -r dist && rm -r .turbo"
   },
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "@chameleon/core": "workspace:*",
-    "@chameleon/uikit": "workspace:*"
+    "@chameleon/uikit": "workspace:*",
+    "@chameleon/hooks": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "18.2.15",

@@ -1,6 +1,5 @@
-import { createBlocksFromContent } from '../helpers/create-block-from-content';
 import { Block } from '../model';
-import { Content, RawCommands } from '../types';
+import { RawCommands } from '../types';
 
 declare module '..' {
   interface Commands<ReturnType> {

@@ -1,4 +1,4 @@
-import { Block } from '../model/block';
+import { Block } from '../model';
 import { RawCommands } from '../types';
 
 declare module '..' {

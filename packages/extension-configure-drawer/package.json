@@ -1,8 +1,8 @@
 {
-  "name": "@chameleon/uikit",
+  "name": "@chameleon/extension-configure-drawer",
   "private": true,
   "version": "0.0.0",
-  "description": "Chameleon uikit",
+  "description": "Chameleon react editor",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -23,11 +23,17 @@
     "dev": "tsup --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "test": "vitest",
-    "clean": "rm -r dist && rm -r .turbo"
+    "test": "vitest"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@chameleon/core": "workspace:*",
+    "@chameleon/uikit": "workspace:*"
+  },
   "devDependencies": {
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7",
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   }

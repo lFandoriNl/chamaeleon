@@ -1,4 +1,3 @@
-import { PanelButton } from '@chameleon/uikit';
 import { BlockExtension } from '../block-extension';
 import { Block } from '../model';
 import { JSONContent } from '../types';
@@ -48,46 +47,51 @@ export const Page = BlockExtension.create({
         return children;
       },
       editor: ({ block, children, editor }) => {
+        const { ui } = editor.view;
+
         if (block.children.isEmpty) {
           return (
-            <editor.view.ui.BlockTooltip
-              components={[
-                {
-                  placement: 'top-end',
-                  component: (
-                    <editor.view.ui.ActionSettingsButton
-                      onClick={(event) => {
-                        editor.commands.intention(
-                          block.id,
-                          'change-properties',
-                          event.nativeEvent,
-                        );
-                      }}
-                    />
-                  ),
-                },
-                {
-                  placement: 'left',
-                  component: (
-                    <editor.view.ui.ActionAddBlockButton
-                      onClick={(event) => {
-                        editor.commands.intention(
-                          block.id,
-                          'add-block',
-                          event.nativeEvent,
-                        );
-                      }}
-                    />
-                  ),
-                },
-              ]}
+            <ui.ActionsTooltip
+              placement="left"
+              component={
+                <ui.ActionAddBlockButton
+                  onClick={(event) => {
+                    editor.commands.intention(
+                      block.id,
+                      'add-block',
+                      event.nativeEvent,
+                    );
+                  }}
+                />
+              }
             >
-              <PanelButton>Add root block for page</PanelButton>
-            </editor.view.ui.BlockTooltip>
+              <ui.PanelButton>Add root block for page</ui.PanelButton>
+            </ui.ActionsTooltip>
           );
         }
 
-        return children;
+        return (
+          <>
+            {children}
+
+            <ui.ActionsTooltip
+              placement="left"
+              component={
+                <ui.ActionAddBlockButton
+                  onClick={(event) => {
+                    editor.commands.intention(
+                      block.id,
+                      'add-block',
+                      event.nativeEvent,
+                    );
+                  }}
+                />
+              }
+            >
+              <ui.AddExtraBlock className="mt-4" />
+            </ui.ActionsTooltip>
+          </>
+        );
       },
       palette: () => {
         return <div>Page</div>;

@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { BlockExtensionConfig, Commands, ExtensionConfig } from '.';
+import {
+  BlockExtensionConfig,
+  Commands,
+  ExtensionConfig,
+} from '@chameleon/core';
 import { Extension } from './extension';
 import { BlockExtension } from './block-extension';
 import { Block } from './model';
@@ -64,7 +68,7 @@ export type BlockViewRenderer = (
 export type BlockViewRendererPack = {
   natural: BlockViewRenderer;
   editor: BlockViewRenderer;
-  palette: BlockViewRenderer;
+  palette: () => React.ReactNode;
 };
 
 export type UnionToIntersection<U> = (

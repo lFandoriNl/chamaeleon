@@ -1,26 +1,32 @@
+import React, { HTMLAttributes } from 'react';
 import clsx from 'clsx';
-import React from 'react';
+
 import { ButtonProps } from '../button';
 
-export type ButtonGroupProps = {
+export type ButtonGroupProps = HTMLAttributes<HTMLDivElement> & {
   className?: string;
   color?: ButtonProps['color'];
   size?: ButtonProps['size'];
   children?: React.ReactNode | React.ReactNode[];
 };
 
-export function ButtonGroup(props: ButtonGroupProps): React.ReactNode {
+export function ButtonGroup({
+  className,
+  color,
+  size,
+  children,
+  ...props
+}: ButtonGroupProps): React.ReactNode {
   return (
-    <div className={clsx('ui-button-group', props.className)}>
-      {React.Children.map(props.children, (child, index) => {
+    <div className={clsx('ui-button-group', className)} {...props}>
+      {React.Children.map(children, (child, index) => {
         if (React.isValidElement(child)) {
           let className = '';
 
-          if (Array.isArray(props.children)) {
-            const isFirst = props.children.length > 1 && index === 0;
+          if (Array.isArray(children)) {
+            const isFirst = children.length > 1 && index === 0;
 
-            const isLast =
-              props.children.length > 1 && index === props.children.length - 1;
+            const isLast = children.length > 1 && index === children.length - 1;
 
             const isMiddle = !isFirst && !isLast;
 
@@ -37,8 +43,8 @@ export function ButtonGroup(props: ButtonGroupProps): React.ReactNode {
           return React.cloneElement(child, {
             ...child.props,
             className,
-            color: props.color,
-            size: props.size,
+            color,
+            size,
           });
         }
 
