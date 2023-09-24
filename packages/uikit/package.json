@@ -1,0 +1,34 @@
+{
+  "name": "@chameleon/uikit",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Chameleon uikit",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "module": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "test": "vitest",
+    "clean": "rm -r dist && rm -r .turbo"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tailwind-config": "workspace:*",
+    "tsup": "^7.2.0"
+  }
+}

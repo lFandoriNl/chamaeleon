@@ -1,20 +1,41 @@
 {
-  "name": "vite-template-solid",
-  "version": "0.0.0",
-  "description": "",
+  "name": "chameleon",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "clean": "turbo clean",
+    "format": "prettier --write ."
   },
-  "license": "MIT",
   "dependencies": {
-    "solid-js": "^1.5.1"
+    "@popperjs/core": "^2.11.8",
+    "clsx": "2.0.0",
+    "mobx": "6.10.2",
+    "mobx-react-lite": "4.0.4",
+    "react": "18.2.0",
+    "react-icons": "4.11.0"
   },
   "devDependencies": {
-    "typescript": "^4.8.2",
-    "vite": "^3.0.9",
-    "vite-plugin-solid": "^2.3.0"
+    "@originjs/vite-plugin-federation": "1.2.3",
+    "@types/react": "18.2.15",
+    "@typescript-eslint/eslint-plugin": "6.4.1",
+    "@typescript-eslint/parser": "6.4.1",
+    "autoprefixer": "^10.4.15",
+    "eslint": "8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "happy-dom": "^11.2.0",
+    "kill-port": "2.0.1",
+    "postcss": "^8.4.29",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.4"
   }
 }

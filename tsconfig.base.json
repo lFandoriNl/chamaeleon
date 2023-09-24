@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    // base
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "stripInternal": true,
+
+    // react
+    "lib": ["DOM", "es2019"],
+    "module": "ESNext",
+    "target": "ES6",
+    "jsx": "react-jsx",
+
+    "baseUrl": "./",
+    "paths": {
+      "@chameleon/*": ["./packages/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

@@ -1,34 +1,32 @@
-## Usage
+# Chameleon
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Local setup](#local-setup)
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+## Prerequisites
 
-```bash
-$ npm install # or pnpm install or yarn install
+This project is a monorepository that uses **pnpm** for managing packages. **pnpm** is a fast, disk space efficient package manager that helps to work with monorepos.
+
+Before you begin, ensure you have met the following requirements:
+
+Installing **pnpm**
+
+`npm install -g pnpm`
+
+## Installation
+
+The package cannot be installed yet 🥲
+
+## Local setup
+
+To set up Chameleon locally, you'll need to clone the repository.
+
+To run the app locally, you can run the following commands:
+
+```
+pnpm i
+pnpm dev
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm dev` or `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+- Note: the first time you run .d.ts files will not be successfully generated for all packages, this is because turbo does not support task dependencies with the --watch flag, just run `pnpm dev` several times until type errors will disappear
