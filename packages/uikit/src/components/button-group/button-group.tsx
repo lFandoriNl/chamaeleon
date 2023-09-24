@@ -16,7 +16,7 @@ export function ButtonGroup({
   size,
   children,
   ...props
-}: ButtonGroupProps): React.ReactNode {
+}: ButtonGroupProps) {
   return (
     <div className={clsx('ui-button-group', className)} {...props}>
       {React.Children.map(children, (child, index) => {
@@ -43,7 +43,7 @@ export function ButtonGroup({
           return React.cloneElement(child, {
             ...child.props,
             className,
-            color,
+            color: child.props.color ? child.props.color : color,
             size,
           });
         }

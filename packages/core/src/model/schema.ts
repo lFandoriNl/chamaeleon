@@ -76,7 +76,9 @@ export interface BlockSpec {
     rootable?: boolean;
     structural?: boolean;
   };
+
   props?: { [name: string]: PropertySpec };
+
   withValue?: boolean;
   withChildren?: boolean;
   rootable?: boolean;

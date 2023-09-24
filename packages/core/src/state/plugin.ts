@@ -44,35 +44,38 @@ export type StateField<T> = {
   fromJSON?: (config: EditorStateConfig, value: any, state: EditorState) => T;
 };
 
-export type PluginSpec<PluginState> =
-  | {
-      key?: PluginKey;
-      type: 'common';
-      state?: StateField<PluginState>;
-      view?: (view: EditorView) => PluginView;
-      filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
-      appendTransaction?: (
-        transactions: readonly Transaction[],
-        oldState: EditorState,
-        newState: EditorState,
-      ) => Transaction | null | undefined;
-    }
-  | {
-      key?: PluginKey;
-      type: 'property-configuration';
-      property: {
-        name: string;
-        applicable: BlockSpec['allowContent'];
-      };
-      state?: StateField<PluginState>;
-      view?: (view: EditorView) => PluginView;
-      filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
-      appendTransaction?: (
-        transactions: readonly Transaction[],
-        oldState: EditorState,
-        newState: EditorState,
-      ) => Transaction | null | undefined;
+type PluginType = 'common' | 'property-configuration';
+
+export type PluginSpec<PluginState, T extends PluginType = PluginType> = {
+  common: {
+    key?: PluginKey;
+    type: 'common';
+    state?: StateField<PluginState>;
+    view?: (view: EditorView) => PluginView;
+    filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
+    appendTransaction?: (
+      transactions: readonly Transaction[],
+      oldState: EditorState,
+      newState: EditorState,
+    ) => Transaction | null | undefined;
+  };
+  'property-configuration': {
+    key?: PluginKey;
+    type: 'property-configuration';
+    property: {
+      name: string;
+      applicable: BlockSpec['allowContent'];
     };
+    state?: StateField<PluginState>;
+    view?: (view: EditorView) => PluginView;
+    filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
+    appendTransaction?: (
+      transactions: readonly Transaction[],
+      oldState: EditorState,
+      newState: EditorState,
+    ) => Transaction | null | undefined;
+  };
+}[T];
 
 export interface PluginView {
   update?: (
@@ -82,14 +85,18 @@ export interface PluginView {
   destroy?: () => void;
 }
 
-export class Plugin<PluginState = any> {
+export class Plugin<PluginState = any, T extends PluginType = PluginType> {
   key: string;
 
-  constructor(readonly spec: PluginSpec<PluginState>) {
+  constructor(readonly spec: PluginSpec<PluginState, T>) {
     this.key = spec.key ? spec.key.key : createKey('plugin');
   }
 
   getState(state: EditorState): PluginState {
     return (state as any)[this.key];
+  }
+
+  is<U extends T>(type: U): this is Plugin<PluginState, U> {
+    return this.spec.type === type;
   }
 }

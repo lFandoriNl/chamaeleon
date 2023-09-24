@@ -148,9 +148,9 @@ export const Row = BlockExtension.create({
         key: new PluginKey('SelectCountColumn'),
         type: 'property-configuration',
         property: {
-          name: 'children',
+          name: 'columns',
           applicable: {
-            name: ['column'],
+            name: ['row'],
           },
         },
 
@@ -177,6 +177,10 @@ export const Row = BlockExtension.create({
                       .map((_, i) => (
                         <Button
                           key={i}
+                          className={clsx({
+                            'brightness-125':
+                              state.activeBlock?.props.columns === i + 1,
+                          })}
                           onClick={() => handleChangeColumnCount(i + 1)}
                         >
                           {i + 1}

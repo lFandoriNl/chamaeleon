@@ -22,6 +22,7 @@ export function Button({
       className={clsx(
         className,
         'ui-button',
+        color,
         'rounded-xl',
         'focus:outline-none focus:relative focus:ring focus:ring-blue-600',
         {

@@ -83,17 +83,6 @@ editor.on('update', ({ transaction }) => {
       children: block.children,
     })),
   });
-
-  console.log(
-    Object.values(transaction.blocks)
-      .filter((block) => block.type.name === 'row')
-      .map((block) => ({
-        id: block.id,
-        name: block.type.name,
-        props: block.props,
-        children: block.children,
-      })),
-  );
 });
 
 editor.chain.addPage(null).select().run();

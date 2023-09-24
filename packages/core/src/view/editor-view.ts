@@ -3,7 +3,7 @@ import React from 'react';
 import { PropertyConfigurationRender } from './property-configuration-render';
 
 import { Block } from '../model';
-import { EditorState, PluginView, Transaction } from '../state';
+import { EditorState, Plugin, PluginView, Transaction } from '../state';
 import { AnyExtension, BlockViewRendererPack } from '../types';
 
 import { ActionsTooltip } from './ui/actions-tooltip';
@@ -39,10 +39,17 @@ export class EditorView {
     Render: PropertyConfigurationRender,
   };
 
-  pluginViews: Array<{
-    view: PluginView;
-    portal?: React.ReactPortal | null;
-  }> = [];
+  pluginViews: Map<
+    string,
+    {
+      plugin: Plugin;
+      renderRules: {
+        conditionals: Array<() => boolean>;
+      };
+      updateParams: () => Parameters<NonNullable<PluginView['update']>>;
+      view: PluginView;
+    }
+  > = new Map();
 
   private rawUI = {
     ActionsTooltip,
@@ -75,7 +82,7 @@ export class EditorView {
 
     this.dispatch = this.dispatch.bind(this);
 
-    this.updatePluginViews();
+    // this.updatePluginViews();
   }
 
   get options() {
@@ -159,34 +166,62 @@ export class EditorView {
     );
   }
 
-  private updatePluginViews(prevState?: EditorState) {
-    if (!prevState || prevState.plugins != this.state.plugins) {
+  private updatePluginViews(prevState: EditorState) {
+    // if (!prevState || prevState.plugins != this.state.plugins) {
+    if (prevState.plugins != this.state.plugins) {
       this.destroyPluginViews();
-
-      this.state.plugins.forEach((plugin) => {
-        if (plugin.spec.view) {
-          this.pluginViews.push({
-            view: plugin.spec.view(this),
-          });
-        }
-      });
-    } else {
-      this.pluginViews = this.pluginViews.map(({ view }) => {
-        return {
-          view,
-          portal: view.update?.(this, prevState),
-        };
-      });
     }
+
+    this.state.plugins.forEach((plugin) => {
+      if (!plugin.spec.view) return;
+
+      if (plugin.is('property-configuration')) {
+        this.pluginViews.set(plugin.key, {
+          plugin,
+          renderRules: {
+            conditionals: [
+              () => {
+                const { property } = plugin.spec;
+                const { state } = this;
+                const { activeBlock } = state;
+
+                if (!activeBlock) return false;
+
+                if (activeBlock.type.props[property.name]) {
+                  const allowBlocks = state.schema
+                    .getAllowContent(property.applicable || {})
+                    .map((blockType) => blockType.name);
+
+                  return allowBlocks.includes(activeBlock.type.name);
+                }
+
+                return false;
+              },
+            ],
+          },
+          updateParams: () => [this, prevState],
+          view: plugin.spec.view(this),
+        });
+      } else {
+        this.pluginViews.set(plugin.key, {
+          plugin,
+          renderRules: {
+            conditionals: [],
+          },
+          updateParams: () => [this, prevState],
+          view: plugin.spec.view(this),
+        });
+      }
+    });
   }
 
   private destroyPluginViews() {
-    this.pluginViews.reverse().forEach(({ view }) => {
-      if (view.destroy) {
-        view.destroy();
-      }
-    });
+    Array.from(this.pluginViews)
+      .reverse()
+      .forEach(([_, { view }]) => {
+        view.destroy?.();
+      });
 
-    this.pluginViews = [];
+    this.pluginViews.clear();
   }
 }

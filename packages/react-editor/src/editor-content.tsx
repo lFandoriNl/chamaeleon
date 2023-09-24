@@ -8,11 +8,17 @@ const EditorContentPortals = () => {
   // rerender after each state update
   const [_, editor] = useEditorSelector(() => ({}));
 
-  // console.log(editor.view.pluginViews[1].portal);
-
   return (
     <div className="editor-content-portals">
-      {editor.view.pluginViews.map(({ portal }) => portal)}
+      {Array.from(editor.view.pluginViews)
+        .filter(([_, { plugin, renderRules }]) => {
+          if (plugin.is('property-configuration')) return false;
+
+          return renderRules.conditionals.map((cond) => cond()).every(Boolean);
+        })
+        .map(([_, { updateParams, view }]) => {
+          return view.update?.(...updateParams());
+        })}
     </div>
   );
 };
