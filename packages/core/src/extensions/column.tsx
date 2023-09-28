@@ -11,6 +11,7 @@ declare module '..' {
       addColumn: (
         target: Block['id'],
         props?: JSONContent['props'],
+        style?: JSONContent['style'],
       ) => ReturnType;
     };
   }
@@ -25,17 +26,26 @@ export const Column = BlockExtension.create({
     withValue: true,
   },
 
+  addStyle() {
+    return {
+      root: {
+        marginLeft: {},
+      },
+    };
+  },
+
   addProperties() {
     return {};
   },
 
   addCommands() {
     return {
-      addColumn: (target, props) => {
+      addColumn: (target, props, style) => {
         return ({ commands }) => {
           commands.insertContent(target, {
             type: Column.name,
             props,
+            style,
           });
         };
       },
@@ -45,7 +55,11 @@ export const Column = BlockExtension.create({
   addBlockViews() {
     return {
       natural: ({ block, children }) => {
-        return <div className={clsx('e-column')}>{children}</div>;
+        return (
+          <div className={clsx('e-column')} style={block.style.root}>
+            {children}
+          </div>
+        );
       },
       editor: ({ block, children, editor }) => {
         const { ui } = editor.view;
@@ -84,9 +98,13 @@ export const Column = BlockExtension.create({
             ]}
           >
             {block.children.isEmpty ? (
-              <ui.PanelButton>Empty column</ui.PanelButton>
+              <ui.PanelButton style={block.style.root}>
+                Empty column
+              </ui.PanelButton>
             ) : (
-              <div className={clsx('e-column')}>{children}</div>
+              <div className={clsx('e-column')} style={block.style.root}>
+                {children}
+              </div>
             )}
           </ui.ActionsTooltip>
         );

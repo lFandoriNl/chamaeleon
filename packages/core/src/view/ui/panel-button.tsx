@@ -12,7 +12,7 @@ export type PanelButtonProps = HTMLAttributes<HTMLButtonElement> & {
 };
 
 export const PanelButton = forwardRef<HTMLButtonElement, PanelButtonProps>(
-  ({ className, onClick, view, ...props }, ref) => {
+  ({ className, onClick, view: _, ...props }, ref) => {
     return (
       <button
         ref={ref}

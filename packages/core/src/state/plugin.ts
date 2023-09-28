@@ -1,4 +1,4 @@
-import { BlockSpec } from '../model';
+import { BlockSpec, Style } from '../model';
 import { EditorView } from '../view';
 import { EditorState, EditorStateConfig } from './editor-state';
 import { Transaction } from './transaction';
@@ -44,7 +44,10 @@ export type StateField<T> = {
   fromJSON?: (config: EditorStateConfig, value: any, state: EditorState) => T;
 };
 
-type PluginType = 'common' | 'property-configuration';
+export type PluginType =
+  | 'common'
+  | 'property-configuration'
+  | 'style-configuration';
 
 export type PluginSpec<PluginState, T extends PluginType = PluginType> = {
   common: {
@@ -67,7 +70,23 @@ export type PluginSpec<PluginState, T extends PluginType = PluginType> = {
       applicable: BlockSpec['allowContent'];
     };
     state?: StateField<PluginState>;
-    view?: (view: EditorView) => PluginView;
+    view: (view: EditorView) => PluginView;
+    filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
+    appendTransaction?: (
+      transactions: readonly Transaction[],
+      oldState: EditorState,
+      newState: EditorState,
+    ) => Transaction | null | undefined;
+  };
+  'style-configuration': {
+    key?: PluginKey;
+    type: 'style-configuration';
+    cssProperty: {
+      some?: Array<keyof NonNullable<BlockSpec['style']>['root']>;
+      every?: Array<keyof NonNullable<BlockSpec['style']>['root']>;
+    };
+    state?: StateField<PluginState>;
+    view: (view: EditorView) => StylePluginView;
     filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
     appendTransaction?: (
       transactions: readonly Transaction[],
@@ -82,6 +101,15 @@ export interface PluginView {
     view: EditorView,
     prevState: EditorState,
   ) => React.ReactPortal | null;
+  destroy?: () => void;
+}
+
+export interface StylePluginView {
+  update?: (
+    element: keyof Style,
+    view: EditorView,
+    prevState: EditorState,
+  ) => React.ReactNode;
   destroy?: () => void;
 }
 

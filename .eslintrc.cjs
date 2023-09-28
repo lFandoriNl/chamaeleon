@@ -17,15 +17,19 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'react'],
+  ignorePatterns: ['**/dist/*'],
   rules: {
-    '@typescript-eslint/no-explicit-any': 0,
-    '@typescript-eslint/ban-ts-comment': 0,
+    'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
-        varsIgnorePattern: ['^_', 'React'],
+        varsIgnorePattern: '^_',
+        argsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
       },
     ],
+    '@typescript-eslint/ban-ts-comment': 0,
+    '@typescript-eslint/no-explicit-any': 0,
   },
   overrides: [
     {

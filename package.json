@@ -10,24 +10,23 @@
     "dev": "turbo dev",
     "test": "turbo test",
     "lint": "turbo lint",
+    "check-types": "turbo check-types",
     "clean": "turbo clean",
     "format": "prettier --write ."
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "clsx": "2.0.0",
-    "mobx": "6.10.2",
-    "mobx-react-lite": "4.0.4",
     "react": "18.2.0",
     "react-icons": "4.11.0"
   },
   "devDependencies": {
     "@originjs/vite-plugin-federation": "1.2.3",
     "@types/react": "18.2.15",
-    "@typescript-eslint/eslint-plugin": "6.4.1",
-    "@typescript-eslint/parser": "6.4.1",
+    "@typescript-eslint/eslint-plugin": "6.7.3",
+    "@typescript-eslint/parser": "6.7.3",
     "autoprefixer": "^10.4.15",
-    "eslint": "8.47.0",
+    "eslint": "8.50.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react": "^7.33.2",

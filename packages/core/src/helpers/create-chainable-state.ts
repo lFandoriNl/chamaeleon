@@ -6,7 +6,8 @@ export function createChainableState(config: {
 }): EditorState {
   const { state, transaction } = config;
 
-  let { blocks, activeId, lastModifiedBlock } = transaction;
+  const { activeId, lastModifiedBlock } = transaction;
+  let { blocks } = transaction;
 
   return {
     ...state,
@@ -21,7 +22,6 @@ export function createChainableState(config: {
     },
     schema: state.schema,
     plugins: state.plugins,
-    propertyConfigurationPlugins: state.propertyConfigurationPlugins,
     activeBlock: state.activeBlock,
     blocksArray: state.blocksArray,
     rootPage: state.rootPage,

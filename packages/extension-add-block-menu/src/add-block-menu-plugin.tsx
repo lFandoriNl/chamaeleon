@@ -1,12 +1,4 @@
-import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import clsx from 'clsx';
-
-import { AiOutlineBorderLeft, AiOutlineBorderRight } from 'react-icons/ai';
-import { IoMdClose } from 'react-icons/io';
-
-import { IconButton } from '@chameleon/uikit';
-
 import {
   Plugin,
   PluginKey,

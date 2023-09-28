@@ -1,6 +1,6 @@
 import { Block } from '@chameleon/core';
 
-import { useEditorSelector } from './use-editor-subscribe';
+import { useEditorSelector } from './use-editor-selector';
 
 export const useBlock = (block: Block) => {
   return useEditorSelector(({ editor }) => {

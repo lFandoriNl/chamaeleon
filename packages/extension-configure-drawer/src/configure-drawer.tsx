@@ -42,22 +42,22 @@ export const ConfigureDrawer = Extension.create<ConfigureDrawerOptions>({
     };
   },
 
-  addPlugins() {
+  addPlugins({ editor, options }) {
     return [
       ConfigureDrawerPlugin({
         pluginKey: ConfigureDrawerPluginKey,
-        editor: this.editor,
-        element: this.options.element || document.body,
+        editor,
+        element: options.element || document.body,
       }),
     ];
   },
 
-  onTransaction({ transaction }) {
+  onTransaction({ editor }, { transaction }) {
     const intention = transaction.getMeta('intention');
 
     if (intention?.type === 'change-properties') {
       Promise.resolve().then(() =>
-        this.editor.commands.openConfiguration(intention.target),
+        editor.commands.openConfiguration(intention.target),
       );
     }
   },

@@ -1,7 +1,11 @@
+import { CSSProperties } from 'react';
 import { Block } from './block';
 import { Fragment } from './fragment';
+import { Entries } from '../types';
 
-export type Props = { readonly [prop: string]: any };
+export type Props = {
+  readonly [prop: string]: any;
+};
 
 function defaultProps(props: Props) {
   const defaults: Record<string, any> = {};
@@ -38,8 +42,8 @@ function computeProps(props: Props, value: Props | null) {
   return built;
 }
 
-function initProps(props?: { [name: string]: PropertySpec }) {
-  const result: { [name: string]: Property } = {};
+function initProps(props: BlockSpec['props']) {
+  const result: BlockType['props'] = {};
 
   if (props) {
     for (const name in props) {
@@ -68,6 +72,84 @@ class Property {
   }
 }
 
+export type Style = Partial<{
+  readonly root: Partial<CSSProperties>;
+  readonly [element: string]: Partial<CSSProperties>;
+}>;
+
+function computeStyle(style: BlockType['style'], value: Style | null) {
+  const built: Style = {};
+
+  Object.entries(style).forEach(([element, cssProperties]) => {
+    if (!cssProperties) return;
+
+    Object.entries(cssProperties).forEach(([name, cssProperty]) => {
+      // @ts-expect-error
+      let given = value && value[element] && value[element][name];
+
+      if (given === undefined) {
+        given = cssProperty.default;
+      }
+
+      if (!built[element]) {
+        built[element] = {};
+      }
+
+      // @ts-expect-error
+      built[element][name] = given;
+    });
+  });
+
+  return built;
+}
+
+function initStyle(style: BlockSpec['style']) {
+  const result: BlockType['style'] = {
+    root: {},
+  };
+
+  if (style) {
+    Object.entries(style).forEach(([element, cssPropertiesSpec]) => {
+      (
+        Object.entries(cssPropertiesSpec) as Entries<{
+          [name in keyof CSSProperties & unknown]: {
+            default?: CSSProperties[name];
+          };
+        }>
+      ).forEach(([name, cssPropertySpec]) => {
+        if (!result[element]) {
+          result[element] = {};
+        }
+
+        // @ts-expect-error
+        result[element][name] = new CSSProperty<CSSProperties[typeof name]>(
+          cssPropertySpec,
+        );
+      });
+    });
+  }
+
+  return result;
+}
+
+export type CSSPropertySpec<T = any> = {
+  default?: T;
+};
+
+class CSSProperty<T = any> {
+  default?: T;
+
+  constructor(options: CSSPropertySpec<T>) {
+    this.default = options.default;
+  }
+}
+
+// Helper type for getting [element: 'root' | string] keys
+type Elements = {
+  readonly root: any;
+  readonly [element: string]: any;
+};
+
 export interface BlockSpec {
   allowContent?: {
     name?: Block['type']['name'][];
@@ -78,6 +160,13 @@ export interface BlockSpec {
   };
 
   props?: { [name: string]: PropertySpec };
+  style?: {
+    [element in keyof Elements]: {
+      [name in keyof CSSProperties]: {
+        default?: CSSProperties[name];
+      };
+    };
+  };
 
   withValue?: boolean;
   withChildren?: boolean;
@@ -89,6 +178,12 @@ export class BlockType {
   props: { [name: string]: Property };
   defaultProps: Props | null;
 
+  style: {
+    [element in keyof Elements]: {
+      [name in keyof CSSProperties]: CSSProperty<CSSProperties[name]>;
+    };
+  };
+
   constructor(
     readonly name: string,
     readonly schema: Schema,
@@ -96,6 +191,8 @@ export class BlockType {
   ) {
     this.props = initProps(spec.props);
     this.defaultProps = defaultProps(this.props);
+
+    this.style = initStyle(spec.style);
   }
 
   computeProps(props: Props | null): Props {
@@ -106,20 +203,30 @@ export class BlockType {
     return computeProps(this.props, props);
   }
 
+  computeStyle(style: Style | null): Props {
+    if (!style) {
+      return {};
+    }
+
+    return computeStyle(this.style, style);
+  }
+
   create(
     props: Props | null = null,
+    style: Style | null = null,
     content?: Fragment | Block | readonly Block[] | null,
     id?: Block['id'],
   ) {
     return new Block(
       this,
       this.computeProps(props),
+      this.computeStyle(style),
       Fragment.from(content),
       id,
     );
   }
 
-  validContent(content: Fragment) {
+  validContent(_content: Fragment) {
     // TODO:
     return true;
   }
@@ -171,8 +278,9 @@ export class Schema<Blocks extends string = any> {
   }
 
   block(
-    type: string | BlockType,
+    type: BlockType | string,
     props: Props | null = null,
+    style: Style | null = null,
     content?: Fragment | Block | readonly Block[],
   ) {
     if (typeof type == 'string') {
@@ -185,7 +293,7 @@ export class Schema<Blocks extends string = any> {
       );
     }
 
-    return type.create(props, content);
+    return type.create(props, style, content);
   }
 
   blockType(name: string) {

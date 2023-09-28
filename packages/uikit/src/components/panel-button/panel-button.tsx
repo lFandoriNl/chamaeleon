@@ -27,3 +27,5 @@ export const PanelButton = forwardRef<HTMLButtonElement, PanelButtonProps>(
     );
   },
 );
+
+PanelButton.displayName = 'PanelButton';

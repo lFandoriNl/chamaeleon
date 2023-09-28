@@ -1,4 +1,4 @@
-import { Block, Fragment } from '../model';
+import { Block } from '../model';
 import { Blocks } from '../state/editor-state';
 import { InsertStep } from './insert-step';
 import { PropertyStep } from './property-step';

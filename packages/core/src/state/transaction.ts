@@ -9,7 +9,7 @@ export class Transaction extends Transform {
 
   private meta: { [name: string]: any } = {};
 
-  constructor(private state: EditorState) {
+  constructor(state: EditorState) {
     super(state.blocks, state.lastModifiedBlock);
 
     this.activeId = state.activeId;

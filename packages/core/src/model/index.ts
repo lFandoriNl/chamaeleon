@@ -7,4 +7,5 @@ export {
   type BlockSpec,
   type Props,
   type PropertySpec,
+  type Style,
 } from './schema';

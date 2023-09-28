@@ -16,6 +16,7 @@ export class RemoveStep extends Step {
       if (this.blockIds) {
         draft[this.target] = draft[this.target].type.create(
           draft[this.target].props,
+          draft[this.target].style,
           draft[this.target].children.remove(this.blockIds),
           draft[this.target].id,
         );
@@ -30,6 +31,7 @@ export class RemoveStep extends Step {
 
         draft[this.target] = draft[this.target].type.create(
           draft[this.target].props,
+          draft[this.target].style,
           Fragment.empty,
           draft[this.target].id,
         );

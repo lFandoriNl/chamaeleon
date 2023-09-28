@@ -5,13 +5,13 @@ import {
   Commands,
   ExtensionConfig,
 } from '@chameleon/core';
+import { Editor } from './editor';
+import { EditorView } from './view';
+import { EditorState, Transaction } from './state';
+import { Block, BlockSpec } from './model';
+
 import { Extension } from './extension';
 import { BlockExtension } from './block-extension';
-import { Block } from './model';
-import { Editor } from './editor';
-import { Blocks, EditorState } from './state/editor-state';
-import { Transaction } from './state/transaction';
-import { EditorView } from './view/editor-view';
 
 export type AnyConfig = ExtensionConfig | BlockExtensionConfig;
 export type AnyExtension = Extension | BlockExtension;
@@ -34,7 +34,8 @@ export type Entries<T> = {
 
 export type JSONContent = {
   type: string;
-  props?: Record<string, any>;
+  props?: Block['props'];
+  style?: Block['style'];
   content?: JSONContent[];
 };
 
@@ -50,9 +51,14 @@ export type Properties = {
 };
 
 export type ExtensionProperty = {
-  type: string;
+  type: Extension['name'];
   name: string;
   property: Required<Property>;
+};
+
+export type ExtensionStyle = {
+  type: Extension['name'];
+  style: BlockSpec['style'];
 };
 
 export type BlockViewRendererProps = {

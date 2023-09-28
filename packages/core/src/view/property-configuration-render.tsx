@@ -14,16 +14,19 @@ export const PropertyConfigurationRender = ({
         ref && view.setPropertyConfigurationElement(ref);
       }}
     >
-      {Array.from(view.pluginViews)
-        .filter(([_, { plugin, renderRules }]) => {
-          return (
-            plugin.is('property-configuration') &&
-            renderRules.conditionals.map((cond) => cond()).every(Boolean)
-          );
-        })
-        .map(([_, { updateParams, view }]) => {
-          return view.update?.(...updateParams());
-        })}
+      {Array.from(view.pluginViews).map(([_, pluginView]) => {
+        if (pluginView.type !== 'property-configuration') return null;
+
+        const { renderRules, view, updateParams } = pluginView;
+
+        const canRender = renderRules.conditionals
+          .map((cond) => cond())
+          .every(Boolean);
+
+        if (!canRender) return null;
+
+        return view.update?.(...updateParams());
+      })}
     </div>
   );
 };

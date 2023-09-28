@@ -2,7 +2,7 @@ import { Editor } from '@chameleon/core';
 import { PanelButton } from '@chameleon/uikit';
 
 import { Renderer } from './renderer';
-import { useEditorSelector } from './use-editor-subscribe';
+import { useEditorSelector } from './use-editor-selector';
 
 const EditorContentPortals = () => {
   // rerender after each state update
@@ -10,15 +10,19 @@ const EditorContentPortals = () => {
 
   return (
     <div className="editor-content-portals">
-      {Array.from(editor.view.pluginViews)
-        .filter(([_, { plugin, renderRules }]) => {
-          if (plugin.is('property-configuration')) return false;
+      {Array.from(editor.view.pluginViews).map(([_, pluginView]) => {
+        if (pluginView.type !== 'common') return null;
 
-          return renderRules.conditionals.map((cond) => cond()).every(Boolean);
-        })
-        .map(([_, { updateParams, view }]) => {
-          return view.update?.(...updateParams());
-        })}
+        const { renderRules, updateParams, view } = pluginView;
+
+        const canRender = renderRules.conditionals
+          .map((cond) => cond())
+          .every(Boolean);
+
+        if (!canRender) return null;
+
+        return view.update?.(...updateParams());
+      })}
     </div>
   );
 };
@@ -36,8 +40,7 @@ export const EditorContent = ({ editor }: EditorContentProps) => {
         <div className="flex justify-center">
           <PanelButton
             onClick={() => {
-              editor.commands.addPage(null);
-              editor.commands.select();
+              editor.chain.addPage(null).select().run();
             }}
           >
             Add first page

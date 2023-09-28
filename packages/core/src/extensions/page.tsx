@@ -43,7 +43,7 @@ export const Page = BlockExtension.create({
 
   addBlockViews() {
     return {
-      natural: ({ block, children }) => {
+      natural: ({ children }) => {
         return children;
       },
       editor: ({ block, children, editor }) => {

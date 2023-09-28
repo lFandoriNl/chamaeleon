@@ -18,6 +18,7 @@ export class InsertStep extends Step {
 
         draft[this.target] = draft[this.target].type.create(
           draft[this.target].props,
+          draft[this.target].style,
           draft[this.target].children.extend(this.block),
           draft[this.target].id,
         );

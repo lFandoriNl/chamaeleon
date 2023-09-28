@@ -8,6 +8,7 @@ declare module '..' {
       addText: (
         target: Block['id'],
         props?: JSONContent['props'],
+        style?: JSONContent['style'],
       ) => ReturnType;
     };
   }
@@ -30,11 +31,12 @@ export const Text = BlockExtension.create({
 
   addCommands() {
     return {
-      addText: (target, props) => {
+      addText: (target, props, style) => {
         return ({ commands }) => {
           commands.insertContent(target, {
             type: Text.name,
             props,
+            style,
           });
         };
       },
@@ -44,7 +46,11 @@ export const Text = BlockExtension.create({
   addBlockViews() {
     return {
       natural: ({ block }) => {
-        return <p className="e-text">{block.props.value}</p>;
+        return (
+          <p className="e-text" style={block.style.root}>
+            {block.props.value}
+          </p>
+        );
       },
       editor: ({ block, editor }) => {
         return (
@@ -52,6 +58,7 @@ export const Text = BlockExtension.create({
             className="e-text"
             placeholder="Enter your text"
             value={block.props.value}
+            style={block.style.root}
             onChange={(event) => {
               editor.commands.changeValue(block.id, event.target.value);
             }}

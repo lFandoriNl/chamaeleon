@@ -44,25 +44,22 @@ export const AddBlockMenu = Extension.create<AddBlockMenuOptions>({
     };
   },
 
-  addPlugins() {
+  addPlugins({ editor, options }) {
     return [
       AddBlockMenuPlugin({
         pluginKey: AddBlockMenuPluginKey,
-        editor: this.editor,
-        element: this.options.element || document.body,
+        editor,
+        element: options.element || document.body,
       }),
     ];
   },
 
-  onTransaction({ transaction }) {
+  onTransaction({ editor }, { transaction }) {
     const intention = transaction.getMeta('intention');
 
     if (intention?.type === 'add-block') {
       Promise.resolve().then(() =>
-        this.editor.commands.openAddBlockMenu(
-          intention.target,
-          intention.event,
-        ),
+        editor.commands.openAddBlockMenu(intention.target, intention.event),
       );
     }
   },

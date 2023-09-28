@@ -14,7 +14,7 @@ export type AddExtraBlockProps = HTMLAttributes<HTMLButtonElement> & {
 export const AddExtraBlock = React.forwardRef<
   HTMLButtonElement,
   AddExtraBlockProps
->(({ className, children, onClick, view, ...props }, ref) => {
+>(({ className, children, onClick, view: _, ...props }, ref) => {
   return (
     <button
       ref={ref}

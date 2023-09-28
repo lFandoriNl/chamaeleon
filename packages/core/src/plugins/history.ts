@@ -24,9 +24,18 @@ export function history(options: HistoryOptions) {
         const canUndo = false;
         const canRedo = false;
 
-        return { changes, canUndo, canRedo };
+        const currentVersion = -1;
+        const supportedVersions = options.limit;
+
+        return {
+          currentVersion,
+          supportedVersions,
+          changes,
+          canUndo,
+          canRedo,
+        };
       },
-      apply(tr, value, oldState, newState) {},
+      apply() {},
     },
   });
 }

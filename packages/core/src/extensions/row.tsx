@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import clsx from 'clsx';
 
-import { Button, ButtonGroup, PanelButton } from '@chameleon/uikit';
+import { Button, ButtonGroup } from '@chameleon/uikit';
 
 import { BlockExtension } from '../block-extension';
 import { Block } from '../model';
@@ -26,7 +26,11 @@ const columnMap = {
 declare module '..' {
   interface Commands<ReturnType> {
     row: {
-      addRow: (target: Block['id'], props?: JSONContent['props']) => ReturnType;
+      addRow: (
+        target: Block['id'],
+        props?: JSONContent['props'],
+        style?: JSONContent['style'],
+      ) => ReturnType;
     };
   }
 }
@@ -51,13 +55,26 @@ export const Row = BlockExtension.create({
     };
   },
 
+  addStyle() {
+    return {
+      root: {
+        margin: {},
+        marginTop: {},
+        marginRight: {},
+        marginBottom: {},
+        marginLeft: {},
+      },
+    };
+  },
+
   addCommands() {
     return {
-      addRow: (target, props) => {
+      addRow: (target, props, style) => {
         return ({ commands }) => {
           commands.insertContent(target, {
             type: Row.name,
             props,
+            style,
           });
         };
       },
@@ -70,6 +87,7 @@ export const Row = BlockExtension.create({
         return (
           <div
             className={clsx('e-row grid gap-4', columnMap[block.props.columns])}
+            style={block.style.root}
           >
             {children}
           </div>
@@ -80,7 +98,6 @@ export const Row = BlockExtension.create({
 
         return (
           <ui.ActionsTooltip
-            className="row"
             components={[
               {
                 placement: 'top-end',
@@ -114,13 +131,16 @@ export const Row = BlockExtension.create({
             ]}
           >
             {block.children.isEmpty ? (
-              <ui.PanelButton className="w-full">Empty row</ui.PanelButton>
+              <ui.PanelButton className="w-full" style={block.style.root}>
+                Empty row
+              </ui.PanelButton>
             ) : (
               <div
                 className={clsx(
                   'e-row w-full grid gap-4 hover:bg-slate-100',
                   columnMap[block.props.columns],
                 )}
+                style={block.style.root}
               >
                 {children}
 
@@ -140,9 +160,7 @@ export const Row = BlockExtension.create({
     };
   },
 
-  addPlugins() {
-    const { editor } = this;
-
+  addPlugins({ editor }) {
     return [
       new Plugin({
         key: new PluginKey('SelectCountColumn'),

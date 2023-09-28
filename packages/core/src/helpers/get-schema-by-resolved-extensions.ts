@@ -1,24 +1,23 @@
-import { BlockSpec, Schema } from '../model/schema';
+import { Editor } from '..';
+import { BlockSpec, Schema } from '../model';
 
-import { getPropertiesFromExtensions } from './get-properties-from-extensions';
+import { getPropertiesFromExtension } from './get-properties-from-extensions';
+import { getStyleFromExtension } from './get-style-from-extension';
 import { splitExtensions } from './split-extensions';
 import { callOrReturn } from '../utilities/call-or-return';
 
 import { Extensions } from '../types';
-import { type Editor } from '..';
 
 export function getSchemaByResolvedExtensions(
   extensions: Extensions,
   editor: Editor,
 ): Schema {
-  const allProperties = getPropertiesFromExtensions(extensions, editor);
   const { blockExtensions } = splitExtensions(extensions);
 
   const blocks = Object.fromEntries(
     blockExtensions.map((extension) => {
-      const extensionProperties = allProperties.filter(
-        (property) => property.type === extension.name,
-      );
+      const extensionProperties = getPropertiesFromExtension(extension, editor);
+      const extensionStyle = getStyleFromExtension(extension, editor);
 
       const schema: BlockSpec = {
         allowContent: callOrReturn(extension.config.allowContent),
@@ -34,6 +33,7 @@ export function getSchemaByResolvedExtensions(
             ];
           }),
         ),
+        style: extensionStyle?.style,
       };
 
       return [extension.name, schema];

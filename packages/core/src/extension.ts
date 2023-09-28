@@ -10,17 +10,17 @@ declare module '.' {
 
     addOptions?: () => Options;
 
-    addCommands?: (this: {
+    addCommands?: (context: {
       editor: Editor;
       options: Options;
     }) => Partial<RawCommands>;
 
-    addPlugins?: (this: { editor: Editor; options: Options }) => Plugin[];
+    addPlugins?: (context: { editor: Editor; options: Options }) => Plugin[];
 
-    onUpdate?: (this: { options: Options; editor: Editor }) => void;
+    onUpdate?: (context: { options: Options; editor: Editor }) => void;
 
     onTransaction?: (
-      this: {
+      context: {
         options: Options;
         editor: Editor;
       },

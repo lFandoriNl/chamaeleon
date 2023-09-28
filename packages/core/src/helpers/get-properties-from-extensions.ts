@@ -1,53 +1,50 @@
-import { type Editor } from '..';
-import { ExtensionProperty, Extensions, Property } from '../types';
-import { splitExtensions } from './split-extensions';
+import { Editor } from '..';
+import { AnyExtension, ExtensionProperty, Property } from '../types';
 
-export function getPropertiesFromExtensions(
-  extensions: Extensions,
+export function getPropertiesFromExtension(
+  extension: AnyExtension,
   editor: Editor,
 ): ExtensionProperty[] {
   const extensionProperties: ExtensionProperty[] = [];
 
-  const { blockExtensions } = splitExtensions(extensions);
+  if (extension.type !== 'block') return extensionProperties;
 
   const defaultProperty: Required<Property> = {
     default: null,
     isRequired: false,
   };
 
-  blockExtensions.forEach((extension) => {
-    const { addProperties } = extension.config;
+  const { addProperties } = extension.config;
 
-    if (!addProperties) {
-      return;
-    }
+  if (!addProperties) {
+    return extensionProperties;
+  }
 
-    const context = {
-      editor,
-      options: extension.options,
+  const context = {
+    editor,
+    options: extension.options,
+  };
+
+  const properties = addProperties(context);
+
+  Object.entries(properties).forEach(([name, property]) => {
+    const mergedProperty = {
+      ...defaultProperty,
+      ...property,
     };
 
-    const properties = addProperties.call(context);
+    if (typeof mergedProperty?.default === 'function') {
+      mergedProperty.default = mergedProperty.default();
+    }
 
-    Object.entries(properties).forEach(([name, property]) => {
-      const mergedProperty = {
-        ...defaultProperty,
-        ...property,
-      };
+    if (mergedProperty?.isRequired && mergedProperty?.default === undefined) {
+      delete mergedProperty.default;
+    }
 
-      if (typeof mergedProperty?.default === 'function') {
-        mergedProperty.default = mergedProperty.default();
-      }
-
-      if (mergedProperty?.isRequired && mergedProperty?.default === undefined) {
-        delete mergedProperty.default;
-      }
-
-      extensionProperties.push({
-        type: extension.name,
-        name,
-        property: mergedProperty,
-      });
+    extensionProperties.push({
+      type: extension.name,
+      name,
+      property: mergedProperty,
     });
   });
 

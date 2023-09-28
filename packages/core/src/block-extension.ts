@@ -11,17 +11,17 @@ declare module '.' {
 
     addOptions?: () => Options;
 
-    addCommands?: (this: {
+    addCommands?: (context: {
       editor: Editor;
       options: Options;
     }) => Partial<RawCommands>;
 
-    addPlugins?: (this: { editor: Editor; options: Options }) => Plugin[];
+    addPlugins?: (context: { editor: Editor; options: Options }) => Plugin[];
 
-    onUpdate?: (this: { options: Options; editor: Editor }) => void;
+    onUpdate?: (context: { options: Options; editor: Editor }) => void;
 
     onTransaction?: (
-      this: {
+      context: {
         options: Options;
         editor: Editor;
       },
@@ -44,7 +44,15 @@ declare module '.' {
 
     structural?: BlockSpec['structural'] | (() => BlockSpec['structural']);
 
-    addProperties?: (this: { editor: Editor; options: Options }) => Properties;
+    addProperties?: (context: {
+      editor: Editor;
+      options: Options;
+    }) => Properties;
+
+    addStyle?: (context: {
+      editor: Editor;
+      options: Options;
+    }) => BlockSpec['style'];
 
     addBlockViews?: () => BlockViewRendererPack;
   }

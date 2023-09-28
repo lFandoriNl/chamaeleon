@@ -15,20 +15,6 @@ export class CommandManager {
 
   rawCommands: RawCommands;
 
-  // changes = new Map<
-  //   number,
-  //   {
-  //     redo: Patch[];
-  //     undo: Patch[];
-  //   }
-  // >();
-
-  // private currentVersion = -1;
-  // private supportedVersions = 10;
-
-  // canRedo = false;
-  // canUndo = false;
-
   constructor(props: { editor: Editor }) {
     this.editor = props.editor;
 
@@ -143,6 +129,7 @@ export class CommandManager {
   // }
 
   buildProps(tr: Transaction): CommandProps {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
     const { rawCommands, editor } = this;

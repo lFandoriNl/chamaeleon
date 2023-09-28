@@ -107,12 +107,6 @@ export class EditorState {
     return this.config.plugins;
   }
 
-  get propertyConfigurationPlugins() {
-    return this.plugins.filter(
-      (plugin) => plugin.spec.type === 'property-configuration',
-    );
-  }
-
   get activeBlock() {
     if (!this.activeId) return null;
 

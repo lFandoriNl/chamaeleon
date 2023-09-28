@@ -1,9 +1,16 @@
 import React from 'react';
 
 import { PropertyConfigurationRender } from './property-configuration-render';
+import { StyleConfigurationRender } from './style-configuration-render';
 
 import { Block } from '../model';
-import { EditorState, Plugin, PluginView, Transaction } from '../state';
+import {
+  EditorState,
+  Plugin,
+  PluginType,
+  PluginView,
+  Transaction,
+} from '../state';
 import { AnyExtension, BlockViewRendererPack } from '../types';
 
 import { ActionsTooltip } from './ui/actions-tooltip';
@@ -23,6 +30,7 @@ export type EditorViewOptions = {
   blockViews?: Record<AnyExtension['name'], BlockViewRendererPack>;
   dispatchTransaction?: (tr: Transaction) => void;
   propertyConfigurationRender?: React.FunctionComponent<{ view: EditorView }>;
+  styleConfigurationRender?: React.FunctionComponent<{ view: EditorView }>;
   ui?: Partial<EditorView['rawUI']>;
 };
 
@@ -39,16 +47,25 @@ export class EditorView {
     Render: PropertyConfigurationRender,
   };
 
+  styleConfiguration: {
+    Render: React.FunctionComponent<{ view: EditorView }>;
+  } = {
+    Render: StyleConfigurationRender,
+  };
+
   pluginViews: Map<
-    string,
+    Plugin['key'],
     {
-      plugin: Plugin;
-      renderRules: {
-        conditionals: Array<() => boolean>;
+      [type in PluginType]: {
+        type: type;
+        plugin: Plugin<any, type>;
+        renderRules: {
+          conditionals: Array<() => boolean>;
+        };
+        updateParams: () => Parameters<NonNullable<PluginView['update']>>;
+        view: ReturnType<NonNullable<Plugin<any, type>['spec']['view']>>;
       };
-      updateParams: () => Parameters<NonNullable<PluginView['update']>>;
-      view: PluginView;
-    }
+    }[PluginType]
   > = new Map();
 
   private rawUI = {
@@ -148,17 +165,21 @@ export class EditorView {
   private injectViewToUI() {
     this.ui = (Object.entries(this.rawUI) as any[]).reduce(
       (ui, [name, Component]) => {
-        ui[name] = React.forwardRef<HTMLElement>((props, ref) => {
-          return React.createElement(Component, {
-            ...props,
-            view: this,
-            ref,
-          });
-        });
+        const ComponentWithViewInjected = React.forwardRef<HTMLElement>(
+          (props, ref) => {
+            return React.createElement(Component, {
+              ...props,
+              view: this,
+              ref,
+            });
+          },
+        );
 
-        ui[name].displayName =
+        ComponentWithViewInjected.displayName =
           (Component.displayName || Component.name || 'Unknown') +
           '.InjectView';
+
+        ui[name] = ComponentWithViewInjected;
 
         return ui;
       },
@@ -175,8 +196,21 @@ export class EditorView {
     this.state.plugins.forEach((plugin) => {
       if (!plugin.spec.view) return;
 
+      if (plugin.is('common')) {
+        this.pluginViews.set(plugin.key, {
+          type: 'common',
+          plugin,
+          renderRules: {
+            conditionals: [],
+          },
+          updateParams: () => [this, prevState],
+          view: plugin.spec.view(this),
+        });
+      }
+
       if (plugin.is('property-configuration')) {
         this.pluginViews.set(plugin.key, {
+          type: 'property-configuration',
           plugin,
           renderRules: {
             conditionals: [
@@ -202,11 +236,14 @@ export class EditorView {
           updateParams: () => [this, prevState],
           view: plugin.spec.view(this),
         });
-      } else {
+      }
+
+      if (plugin.is('style-configuration')) {
         this.pluginViews.set(plugin.key, {
+          type: 'style-configuration',
           plugin,
           renderRules: {
-            conditionals: [],
+            conditionals: [() => Boolean(this.state.activeBlock)],
           },
           updateParams: () => [this, prevState],
           view: plugin.spec.view(this),

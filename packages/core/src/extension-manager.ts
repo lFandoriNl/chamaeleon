@@ -29,11 +29,11 @@ export class ExtensionManager {
       const { onTransaction, onUpdate } = extension.config;
 
       if (onTransaction) {
-        this.editor.on('transaction', onTransaction.bind(context));
+        this.editor.on('transaction', (event) => onTransaction(context, event));
       }
 
       if (onUpdate) {
-        this.editor.on('update', onUpdate.bind(context));
+        this.editor.on('update', () => onUpdate(context));
       }
     });
   }
@@ -53,7 +53,7 @@ export class ExtensionManager {
 
       return {
         ...commands,
-        ...addCommands.call(context),
+        ...addCommands(context),
       };
     }, {} as RawCommands);
   }
@@ -69,7 +69,7 @@ export class ExtensionManager {
         };
 
         if (addPlugins) {
-          return addPlugins.call(context);
+          return addPlugins(context);
         }
 
         return [];

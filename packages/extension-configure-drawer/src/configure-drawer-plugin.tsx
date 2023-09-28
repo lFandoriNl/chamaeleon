@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ReactDOM from 'react-dom';
 import clsx from 'clsx';
 
@@ -43,6 +43,8 @@ const BlockConfiguration = ({ view, extra }: BlockConfigurationProps) => {
 
       <div className="p-4">
         <view.propertyConfiguration.Render view={view} />
+
+        <view.styleConfiguration.Render view={view} />
       </div>
     </div>
   );
@@ -162,7 +164,7 @@ export const ConfigureDrawerPlugin = (
         };
       },
       apply(tr, value) {
-        if (!Boolean(tr.getMeta(pluginKey))) {
+        if (!tr.getMeta(pluginKey)) {
           return value;
         }
 

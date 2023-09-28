@@ -24,6 +24,7 @@ export class PropertyStep extends Step {
           ...block.props,
           [this.property]: this.value,
         },
+        block.style,
         block.children,
         draft[this.target].id,
       );

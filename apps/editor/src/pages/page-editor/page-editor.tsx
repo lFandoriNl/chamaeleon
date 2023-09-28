@@ -1,5 +1,3 @@
-import { observer } from 'mobx-react-lite';
-
 import { Editor } from '@chameleon/core';
 import {
   EditorProvider,
@@ -12,50 +10,14 @@ import { ConfigureDrawer } from '@chameleon/extension-configure-drawer';
 import { Sidebar } from './sidebar';
 import { AppBar } from './app-bar';
 
-const Content = observer(() => {
+const Content = () => {
   const editor = useEditor();
 
-  return (
-    <div>
-      {/* {engine.pagesArray.map((page) => (
-        <h1 key={page.id} className="text-3xl font-semibold mb-4">
-          {page.title}
-        </h1>
-      ))} */}
-
-      <EditorContent editor={editor} />
-
-      {/* {editor.ui.renderMode === 'preview' ? (
-        <Renderer engine={engine} />
-      ) : (
-        <EditorRenderer editor={editor} engine={engine} />
-      )} */}
-    </div>
-  );
-});
-
-Content.displayName = 'Content';
+  return <EditorContent editor={editor} />;
+};
 
 const editor = new Editor({
   extensions: [AddBlockMenu, ConfigureDrawer],
-  ui: {
-    // ActionButton(props) {
-    //   return (
-    //     <button
-    //       className={clsx(
-    //         'ui-icon-button',
-    //         'p-2 rounded-full shadow-xl',
-    //         'bg-green-300 hover:bg-slate-300',
-    //         'focus:outline-none focus:relative focus:ring focus:ring-blue-600',
-    //         props.className,
-    //       )}
-    //       onClick={props.onClick}
-    //     >
-    //       {props.children}
-    //     </button>
-    //   );
-    // },
-  },
 });
 
 // @ts-expect-error
@@ -72,36 +34,23 @@ editor.on('update', ({ transaction }) => {
     transaction,
     activeId: transaction.activeId,
     activeBlock: {
-      id: transaction.activeBlock.id,
-      name: transaction.activeBlock.type.name,
-      children: transaction.activeBlock.children.children,
+      id: transaction.activeBlock?.id,
+      name: transaction.activeBlock?.type.name,
+      children: transaction.activeBlock?.children.children,
     },
     blocks: Object.values(transaction.blocks).map((block) => ({
       id: block.id,
       name: block.type.name,
       props: block.props,
+      style: block.style,
       children: block.children,
     })),
   });
 });
 
-editor.chain.addPage(null).select().run();
+// editor.chain.addPage(null).select().run();
 
-editor.chain.addRow(editor.state.activeId!).select().run();
-
-// setTimeout(() => {
-//   editor.commands.openConfiguration();
-// }, 100);
-
-// editor.chain.addColumn(editor.state.activeId!).select().run();
-
-// editor.chain
-//   .addText(editor.state.activeId!, { value: 'Some Text' })
-//   .select()
-//   .run();
-
-// @ts-expect-error
-window.editor = editor;
+// editor.chain.addRow(editor.state.activeId!).select().run();
 
 export const PageEditor = () => {
   return (
@@ -115,8 +64,6 @@ export const PageEditor = () => {
           <Content />
         </div>
       </div>
-
-      {/* <DrawerBlockSettingsWidget /> */}
     </EditorProvider>
   );
 };

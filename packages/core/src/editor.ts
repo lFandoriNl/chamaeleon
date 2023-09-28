@@ -5,7 +5,15 @@ import { ExtensionManager } from './extension-manager';
 import { CommandManager } from './command-manager';
 import { EventEmitter } from './event-emitter';
 
-import { Commands, History, Page, Row, Column, Text } from './extensions';
+import {
+  Commands,
+  History,
+  BaseStyle,
+  Page,
+  Row,
+  Column,
+  Text,
+} from './extensions';
 
 import { Schema } from './model/schema';
 
@@ -76,7 +84,15 @@ export class Editor extends EventEmitter<EditorEvents> {
   }
 
   private createExtensionManager() {
-    const coreExtensions = [Commands, History, Page, Row, Column, Text];
+    const coreExtensions = [
+      Commands,
+      History,
+      BaseStyle,
+      Page,
+      Row,
+      Column,
+      Text,
+    ];
 
     const allExtensions = [...coreExtensions, ...this.options.extensions];
 
