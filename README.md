@@ -2,7 +2,7 @@
 
 - [Overview](#overview)
   - [Building pages](#building-pages)
-  - [Extensible Architecture](#creating-extensions)
+  - [Extensible Architecture](#extensible-architecture)
   - [Overriding Built-in Components](#overriding-built-in-components)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
