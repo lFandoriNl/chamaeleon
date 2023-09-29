@@ -1,4 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function isFunction(value: any): value is Function {
+type Fn = (...args: any[]) => any;
+
+export function isFunction<T extends Fn>(value: any): value is T {
   return typeof value === 'function';
 }
