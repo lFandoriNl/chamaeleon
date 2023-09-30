@@ -1,7 +1,7 @@
 {
   "name": "@chameleon/extension-configure-drawer",
   "private": false,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Chameleon react editor",
   "license": "MIT",
   "main": "./dist/index.js",
