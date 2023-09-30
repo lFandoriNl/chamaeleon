@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import clsx from 'clsx';
 
-import { Button, ButtonGroup } from '@chameleon/uikit';
+import { Button, ButtonGroup } from 'uikit';
 
 import { BlockExtension } from '../block-extension';
 import { Block } from '../model';

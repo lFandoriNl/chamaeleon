@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { IconButton, IconButtonProps } from '@chameleon/uikit';
+import { IconButton, IconButtonProps } from 'uikit';
 
 import { EditorView } from '../editor-view';
 

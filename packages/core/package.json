@@ -1,6 +1,6 @@
 {
   "name": "@chameleon/core",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "description": "Chameleon core",
   "license": "MIT",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "nanoid": "4.0.2",
-    "@chameleon/uikit": "workspace:*"
+    "uikit": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.21",

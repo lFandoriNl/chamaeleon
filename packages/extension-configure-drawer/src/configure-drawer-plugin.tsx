@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { AiOutlineBorderLeft, AiOutlineBorderRight } from 'react-icons/ai';
 import { IoMdClose } from 'react-icons/io';
 
-import { IconButton } from '@chameleon/uikit';
+import { IconButton } from 'uikit';
 
 import {
   Plugin,

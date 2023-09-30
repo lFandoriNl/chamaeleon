@@ -1,14 +1,11 @@
 import { Editor } from '@chameleon/core';
-import {
-  EditorProvider,
-  useEditor,
-  EditorContent,
-} from '@chameleon/react-editor';
 import { AddBlockMenu } from '@chameleon/extension-add-block-menu';
 import { ConfigureDrawer } from '@chameleon/extension-configure-drawer';
-
-import { Sidebar } from './sidebar';
-import { AppBar } from './app-bar';
+import {
+  EditorContent,
+  EditorProvider,
+  useEditor,
+} from '@chameleon/react-editor';
 
 const Content = () => {
   const editor = useEditor();
@@ -21,13 +18,15 @@ const editor = new Editor({
 });
 
 // @ts-expect-error
-const devTools = window.__REDUX_DEVTOOLS_EXTENSION__.connect({});
+const reduxDevToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
 
-// devTools.init({ value: 'initial state' });
+if (reduxDevToolsExtension) {
+  const devTools = reduxDevToolsExtension.connect({});
 
-editor.on('transaction', function test({ transaction }) {
-  devTools.send('transaction', transaction);
-});
+  editor.on('transaction', function test({ transaction }) {
+    devTools.send('transaction', transaction);
+  });
+}
 
 editor.on('update', ({ transaction }) => {
   console.log('update', {
@@ -52,15 +51,11 @@ editor.on('update', ({ transaction }) => {
 
 // editor.chain.addRow(editor.state.activeId!).select().run();
 
-export const PageEditor = () => {
+export const Example = () => {
   return (
     <EditorProvider value={editor}>
       <div className="flex">
-        <Sidebar />
-
         <div className="w-full">
-          <AppBar />
-
           <Content />
         </div>
       </div>

@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import { createPopper } from '@popperjs/core';
 
-import { useOnClickOutside } from '@chameleon/hooks';
+import { useOnClickOutside } from 'hooks';
 
 type MenuProps = {
   anchorEl: HTMLElement | null;

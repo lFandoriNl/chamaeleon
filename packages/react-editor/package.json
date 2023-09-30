@@ -1,6 +1,6 @@
 {
   "name": "@chameleon/react-editor",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "description": "Chameleon react editor",
   "license": "MIT",
@@ -29,7 +29,7 @@
   "dependencies": {
     "react": "18.2.0",
     "@chameleon/core": "workspace:*",
-    "@chameleon/uikit": "workspace:*"
+    "uikit": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "18.2.15",
