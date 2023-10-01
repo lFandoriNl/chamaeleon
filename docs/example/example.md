@@ -37,10 +37,10 @@ This happens by passing extensions to editor options.
 
 ```ts
 import { AddBlockMenu } from '@chamaeleon/extension-add-block-menu';
-import { ConfigureDrawer } from '@chamaeleon/extension-configure-drawer';
+import { ConfigurationDrawer } from '@chamaeleon/extension-configuration-drawer';
 
 const editor = new Editor({
-  extensions: [AddBlockMenu, ConfigureDrawer],
+  extensions: [AddBlockMenu, ConfigurationDrawer],
 });
 ```
 
@@ -52,7 +52,7 @@ And the ConfigurationDrawer provides a drawer where the settings for the active 
 
 <img alt="ConfigurationDrawer" src="./configuration-drawer-demo.png" height="400">
 
-Specifically, these extensions intercept a special transaction with a meta tag - intention, which means that the user calls a certain function, like [this](../../packages/extension-configure-drawer/src/configure-drawer.tsx#L56)
+Specifically, these extensions intercept a special transaction with a meta tag - intention, which means that the user calls a certain function, like [this](../../packages/extension-configuration-drawer/src/configuration-drawer.tsx#L56)
 
 ## Overriding editor UI components
 

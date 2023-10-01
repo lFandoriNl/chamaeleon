@@ -102,20 +102,20 @@ const ConfigurationDrawer = ({ open, editor }: ConfigurationDrawerProps) => {
   );
 };
 
-type ConfigureDrawerViewOptions = {
+type ConfigurationDrawerViewOptions = {
   pluginKey: PluginKey;
   editor: Editor;
   element: HTMLElement;
 };
 
-class ConfigureDrawerView implements PluginView {
+class ConfigurationDrawerView implements PluginView {
   private pluginKey!: PluginKey<PluginState>;
 
   private editor: Editor;
 
   private element: HTMLElement;
 
-  constructor(options: ConfigureDrawerViewOptions) {
+  constructor(options: ConfigurationDrawerViewOptions) {
     this.pluginKey = options.pluginKey;
     this.editor = options.editor;
     this.element = options.element;
@@ -131,14 +131,14 @@ class ConfigureDrawerView implements PluginView {
   }
 }
 
-export type ConfigureDrawerPluginOptions = {
+export type ConfigurationDrawerPluginOptions = {
   pluginKey: PluginKey | string;
   editor: Editor;
   element: HTMLElement;
 };
 
-export const ConfigureDrawerPlugin = (
-  options: ConfigureDrawerPluginOptions,
+export const ConfigurationDrawerPlugin = (
+  options: ConfigurationDrawerPluginOptions,
 ) => {
   const pluginKey =
     typeof options.pluginKey === 'string'
@@ -151,7 +151,7 @@ export const ConfigureDrawerPlugin = (
     type: 'common',
 
     view: () =>
-      new ConfigureDrawerView({
+      new ConfigurationDrawerView({
         pluginKey,
         editor: options.editor,
         element: options.element,

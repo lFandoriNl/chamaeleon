@@ -1,6 +1,6 @@
 import { Editor } from '@chamaeleon/core';
 import { AddBlockMenu } from '@chamaeleon/extension-add-block-menu';
-import { ConfigureDrawer } from '@chamaeleon/extension-configure-drawer';
+import { ConfigurationDrawer } from '@chamaeleon/extension-configuration-drawer';
 import {
   EditorContent,
   EditorProvider,
@@ -14,7 +14,7 @@ const Content = () => {
 };
 
 const editor = new Editor({
-  extensions: [AddBlockMenu, ConfigureDrawer],
+  extensions: [AddBlockMenu, ConfigurationDrawer],
 });
 
 // @ts-expect-error

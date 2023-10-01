@@ -1,11 +1,11 @@
 {
-  "name": "@chamaeleon/extension-configure-drawer",
+  "name": "@chamaeleon/extension-configuration-drawer",
   "private": false,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Chamaeleon extension configure drawer",
+  "description": "Chamaeleon extension configuration drawer",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

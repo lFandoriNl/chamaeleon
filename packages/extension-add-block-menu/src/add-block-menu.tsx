@@ -17,7 +17,7 @@ export type AddBlockMenuOptions = {
 const AddBlockMenuPluginKey = new PluginKey('AddBlockMenuPlugin');
 
 export const AddBlockMenu = Extension.create<AddBlockMenuOptions>({
-  name: 'ConfigureMenuDrawer',
+  name: 'ConfigurationMenuDrawer',
 
   addOptions() {
     return {

@@ -1,4 +1,10 @@
-# @chamaeleon/extension-configure-drawer
+# @chamaeleon/extension-configuration-drawer
+
+## 0.0.3
+
+### Patch Changes
+
+- Initial public release
 
 ## 0.0.2
 

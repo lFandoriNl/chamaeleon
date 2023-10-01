@@ -52,7 +52,7 @@ npm i @chamaeleon/core @chamaeleon/react-editor
 If you want to connect built-in extensions for editing and adding blocks, then run:
 
 ```
-npm i @chamaeleon/extension-add-block-menu @chamaeleon/extension-configure-drawer
+npm i @chamaeleon/extension-add-block-menu @chamaeleon/extension-configuration-drawer
 ```
 
 ## Local setup

@@ -74,9 +74,9 @@ importers:
       '@chamaeleon/extension-add-block-menu':
         specifier: workspace:^
         version: link:../../packages/extension-add-block-menu
-      '@chamaeleon/extension-configure-drawer':
+      '@chamaeleon/extension-configuration-drawer':
         specifier: workspace:^
-        version: link:../../packages/extension-configure-drawer
+        version: link:../../packages/extension-configuration-drawer
       '@chamaeleon/react-editor':
         specifier: workspace:^
         version: link:../../packages/react-editor
@@ -168,7 +168,7 @@ importers:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.29)(typescript@5.2.2)
 
-  packages/extension-configure-drawer:
+  packages/extension-configuration-drawer:
     dependencies:
       '@chamaeleon/core':
         specifier: workspace:*

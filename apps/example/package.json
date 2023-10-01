@@ -16,7 +16,7 @@
     "@chamaeleon/react-editor": "workspace:^",
     "@chamaeleon/core": "workspace:^",
     "@chamaeleon/extension-add-block-menu": "workspace:^",
-    "@chamaeleon/extension-configure-drawer": "workspace:^",
+    "@chamaeleon/extension-configuration-drawer": "workspace:^",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
