@@ -4,6 +4,7 @@
   - [Building pages](#building-pages)
   - [Extensible Architecture](#extensible-architecture)
   - [Overriding Built-in Components](#overriding-built-in-components)
+- [Example](#example)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Local setup](#local-setup)
@@ -25,6 +26,10 @@ Chamaeleon is based on an extensible architecture based on extensions and plugin
 #### Overriding Built-in Components
 
 Chamaeleon provides the ability to override the editor UI components, allowing users to change the appearance and functionality of built-in components. This feature provides users with the flexibility to customize the look and feel of the editor, enhancing their web development experience.
+
+## Example
+
+[View examples](./docs/example/example.md)
 
 ## Prerequisites
 
