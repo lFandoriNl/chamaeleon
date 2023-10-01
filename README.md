@@ -38,7 +38,17 @@ Installing **pnpm**
 
 ## Installation
 
-The package cannot be installed yet 🥲
+For basic use you need to install the core and react-editor:
+
+```
+npm i @chamaeleon/core @chamaeleon/react-editor
+```
+
+If you want to connect built-in extensions for editing and adding blocks, then run:
+
+```
+npm i @chamaeleon/extension-add-block-menu @chamaeleon/extension-configure-drawer
+```
 
 ## Local setup
 
