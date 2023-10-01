@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef } from 'react';
 
-import { Editor, EditorEvents } from '@chameleon/core';
+import { Editor, EditorEvents } from '@chamaeleon/core';
 
 import { useEditor } from './context';
 

@@ -1,5 +1,9 @@
 {
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lFandoriNl/chamaeleon"
+  },
   "workspaces": [
     "packages/*"
   ],
@@ -20,7 +24,6 @@
   },
   "devDependencies": {
     "@changesets/cli": "2.26.2",
-    "@originjs/vite-plugin-federation": "1.2.3",
     "@types/react": "18.2.15",
     "@typescript-eslint/eslint-plugin": "6.7.3",
     "@typescript-eslint/parser": "6.7.3",

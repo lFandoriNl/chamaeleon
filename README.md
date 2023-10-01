@@ -1,4 +1,4 @@
-# Chameleon
+# Chamaeleon
 
 - [Overview](#overview)
   - [Building pages](#building-pages)
@@ -10,21 +10,21 @@
 
 ## Overview
 
-Chameleon is a dynamic and versatile project designed to provide a flexible and extensible platform for building web pages. It is built on architecture that supports extensions and plugins, allowing users to customize and enhance their web development experience.
+Chamaeleon is a dynamic and versatile project designed to provide a flexible and extensible platform for building web pages. It is built on architecture that supports extensions and plugins, allowing users to customize and enhance their web development experience.
 
 ### Capabilities
 
 #### Building pages
 
-Chameleon provides interface building capabilities for creating web pages. It allows users to create, edit and manage web pages with ease, providing a wide range of tools and options to customize the appearance of your pages, like [Notion](https://www.notion.so).
+Chamaeleon provides interface building capabilities for creating web pages. It allows users to create, edit and manage web pages with ease, providing a wide range of tools and options to customize the appearance of your pages, like [Notion](https://www.notion.so).
 
 #### Extensible Architecture
 
-Chameleon is based on an extensible architecture based on extensions and plugins. This design allows users to add new features and functionality to the platform, expanding its functionality to meet their specific needs, be it a new block or new ways to customize block parameter changes or block styles and more.
+Chamaeleon is based on an extensible architecture based on extensions and plugins. This design allows users to add new features and functionality to the platform, expanding its functionality to meet their specific needs, be it a new block or new ways to customize block parameter changes or block styles and more.
 
 #### Overriding Built-in Components
 
-Chameleon provides the ability to override the editor UI components, allowing users to change the appearance and functionality of built-in components. This feature provides users with the flexibility to customize the look and feel of the editor, enhancing their web development experience.
+Chamaeleon provides the ability to override the editor UI components, allowing users to change the appearance and functionality of built-in components. This feature provides users with the flexibility to customize the look and feel of the editor, enhancing their web development experience.
 
 ## Prerequisites
 
@@ -42,7 +42,7 @@ The package cannot be installed yet 🥲
 
 ## Local setup
 
-To set up Chameleon locally, you'll need to clone the repository.
+To set up Chamaeleon locally, you'll need to clone the repository.
 
 To run the app locally, you can run the following commands:
 

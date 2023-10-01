@@ -1,4 +1,4 @@
-# @chameleon/extension-configure-drawer
+# @chamaeleon/extension-configure-drawer
 
 ## 0.0.1
 
@@ -6,4 +6,4 @@
 
 - Initial public release
 - Updated dependencies
-  - @chameleon/core@0.0.1
+  - @chamaeleon/core@0.0.1

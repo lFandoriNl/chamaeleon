@@ -1,5 +1,5 @@
-import { Editor } from '@chameleon/core';
-import { PanelButton } from 'uikit';
+import { Editor } from '@chamaeleon/core';
+import { PanelButton } from '@chamaeleon/uikit';
 
 import { Renderer } from './renderer';
 import { useEditorSelector } from './use-editor-selector';

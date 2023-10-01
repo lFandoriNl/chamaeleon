@@ -1,4 +1,4 @@
-import { Block } from '@chameleon/core';
+import { Block } from '@chamaeleon/core';
 
 import { useEditorSelector } from './use-editor-selector';
 

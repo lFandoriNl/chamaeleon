@@ -1,4 +1,4 @@
-# @chameleon/core
+# @chamaeleon/core
 
 ## 0.0.1
 

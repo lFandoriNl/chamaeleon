@@ -1,8 +1,11 @@
 {
-  "name": "@chameleon/core",
+  "name": "@chamaeleon/core",
   "private": false,
   "version": "0.0.1",
-  "description": "Chameleon core",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Chamaeleon core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -34,7 +37,7 @@
   },
   "dependencies": {
     "nanoid": "4.0.2",
-    "uikit": "workspace:*"
+    "@chamaeleon/uikit": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.21",

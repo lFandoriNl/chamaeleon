@@ -1,11 +1,11 @@
-import { Editor } from '@chameleon/core';
-import { AddBlockMenu } from '@chameleon/extension-add-block-menu';
-import { ConfigureDrawer } from '@chameleon/extension-configure-drawer';
+import { Editor } from '@chamaeleon/core';
+import { AddBlockMenu } from '@chamaeleon/extension-add-block-menu';
+import { ConfigureDrawer } from '@chamaeleon/extension-configure-drawer';
 import {
   EditorContent,
   EditorProvider,
   useEditor,
-} from '@chameleon/react-editor';
+} from '@chamaeleon/react-editor';
 
 const Content = () => {
   const editor = useEditor();

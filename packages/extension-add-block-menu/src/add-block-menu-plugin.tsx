@@ -6,7 +6,7 @@ import {
   EditorView,
   Editor,
   Block,
-} from '@chameleon/core';
+} from '@chamaeleon/core';
 
 import { Menu } from './menu';
 

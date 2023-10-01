@@ -47,7 +47,7 @@ module.exports = {
   ],
   settings: {
     react: {
-      version: require('./apps/editor/package.json').dependencies.react,
+      version: require('./package.json').dependencies.react,
     },
   },
 };

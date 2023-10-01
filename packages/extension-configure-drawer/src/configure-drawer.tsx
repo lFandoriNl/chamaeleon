@@ -1,7 +1,7 @@
-import { Block, Extension, PluginKey } from '@chameleon/core';
+import { Block, Extension, PluginKey } from '@chamaeleon/core';
 import { ConfigureDrawerPlugin } from './configure-drawer-plugin';
 
-declare module '@chameleon/core' {
+declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
     configureDrawer: {
       openConfiguration: (target?: Block['id']) => ReturnType;

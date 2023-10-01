@@ -1,8 +1,8 @@
 {
-  "name": "uikit",
+  "name": "@chamaeleon/uikit",
   "private": true,
   "version": "0.0.0",
-  "description": "Chameleon uikit",
+  "description": "Chamaeleon uikit",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

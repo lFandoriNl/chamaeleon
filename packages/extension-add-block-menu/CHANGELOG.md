@@ -1,4 +1,4 @@
-# @chameleon/extension-add-block-menu
+# @chamaeleon/extension-add-block-menu
 
 ## 0.0.1
 
@@ -6,4 +6,4 @@
 
 - Initial public release
 - Updated dependencies
-  - @chameleon/core@0.0.1
+  - @chamaeleon/core@0.0.1

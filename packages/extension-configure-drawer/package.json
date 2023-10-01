@@ -1,8 +1,11 @@
 {
-  "name": "@chameleon/extension-configure-drawer",
+  "name": "@chamaeleon/extension-configure-drawer",
   "private": false,
   "version": "0.0.1",
-  "description": "Chameleon react editor",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Chamaeleon extension configure drawer",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -28,8 +31,8 @@
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@chameleon/core": "workspace:*",
-    "uikit": "workspace:*"
+    "@chamaeleon/core": "workspace:*",
+    "@chamaeleon/uikit": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "18.2.15",

@@ -1,7 +1,7 @@
-import { Block, Extension, PluginKey } from '@chameleon/core';
+import { Block, Extension, PluginKey } from '@chamaeleon/core';
 import { AddBlockMenuPlugin } from './add-block-menu-plugin';
 
-declare module '@chameleon/core' {
+declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
     addBlockMenu: {
       openAddBlockMenu: (target: Block['id'], event: Event) => ReturnType;

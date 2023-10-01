@@ -4,7 +4,7 @@ import {
   BlockExtensionConfig,
   Commands,
   ExtensionConfig,
-} from '@chameleon/core';
+} from '@chamaeleon/core';
 import { Editor } from './editor';
 import { EditorView } from './view';
 import { EditorState, Transaction } from './state';

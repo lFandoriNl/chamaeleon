@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { AiOutlineBorderLeft, AiOutlineBorderRight } from 'react-icons/ai';
 import { IoMdClose } from 'react-icons/io';
 
-import { IconButton } from 'uikit';
+import { IconButton } from '@chamaeleon/uikit';
 
 import {
   Plugin,
@@ -13,7 +13,7 @@ import {
   PluginView,
   EditorView,
   Editor,
-} from '@chameleon/core';
+} from '@chamaeleon/core';
 
 import { Drawer } from './drawer';
 

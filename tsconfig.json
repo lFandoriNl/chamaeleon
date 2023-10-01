@@ -25,7 +25,7 @@
 
     "baseUrl": "./",
     "paths": {
-      "@chameleon/*": ["./packages/*"]
+      "@chamaeleon/*": ["./packages/*"]
     }
   },
   "exclude": ["node_modules"]

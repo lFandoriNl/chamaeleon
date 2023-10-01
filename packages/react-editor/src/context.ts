@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { type Editor } from '@chameleon/core';
+import { type Editor } from '@chamaeleon/core';
 
 const editorContext = createContext<Editor | null>(null);
 
