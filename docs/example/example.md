@@ -46,13 +46,13 @@ const editor = new Editor({
 
 In this example, AddBlockMenu - expands the editor's capabilities to display and add blocks, as shown in the figure
 
-![AddBlockMenu](./add-block-menu-demo.png)
+<img alt="AddBlockMenu" src="./add-block-menu-demo.png" height="200">
 
 And the ConfigurationDrawer provides a drawer where the settings for the active block are rendered
 
-![ConfigurationDrawer](./configuration-drawer-demo.png)
+<img alt="ConfigurationDrawer" src="./configuration-drawer-demo.png" height="400">
 
-Specifically, these extensions intercept a special transaction, which means that the user calls a certain function, like [this](../../packages/extension-configure-drawer/src/configure-drawer.tsx#L56)
+Specifically, these extensions intercept a special transaction with a meta tag - intention, which means that the user calls a certain function, like [this](../../packages/extension-configure-drawer/src/configure-drawer.tsx#L56)
 
 ## Overriding editor UI components
 
