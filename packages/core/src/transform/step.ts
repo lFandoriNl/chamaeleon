@@ -1,9 +1,17 @@
 import { enablePatches, produce, Patch } from 'immer';
 import { Blocks } from '../state';
+import { Block } from '../model';
 
 enablePatches();
 
 export abstract class Step {
+  public meta: {
+    changed: Block['id'] | null;
+    changedParent?: Block['id'];
+  } = {
+    changed: null,
+  };
+
   protected inversePatches!: Patch[];
 
   abstract apply(blocks: Blocks): StepResult;

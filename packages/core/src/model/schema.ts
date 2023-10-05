@@ -251,13 +251,14 @@ export class BlockType {
 }
 
 export interface SchemaSpec<Blocks extends string = any> {
+  rootBlockId?: string;
   blocks: { [name in Blocks]: BlockSpec } | Map<Blocks, BlockSpec>;
 }
 
 export class Schema<Blocks extends string = any> {
   spec: {
+    rootBlockId: string;
     blocks: Map<Blocks, BlockSpec>;
-    // topNode?: string;
   };
 
   blocks: { readonly [name in Blocks]: BlockType } & {
@@ -265,7 +266,6 @@ export class Schema<Blocks extends string = any> {
   };
 
   constructor(spec: SchemaSpec<Blocks>) {
-    // TODO: refactor on assign
     const instanceSpec = (this.spec = {} as any);
 
     for (const prop in spec) {

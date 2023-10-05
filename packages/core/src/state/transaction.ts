@@ -21,7 +21,13 @@ export class Transaction extends Transform {
     return this.blocks[this.activeId];
   }
 
-  select(target?: Block['id']) {
+  select(target?: Block['id'] | null) {
+    if (target) {
+      this.activeId = target;
+
+      return this;
+    }
+
     if (this.lastModifiedBlock) {
       this.activeId = target || this.lastModifiedBlock;
     }
@@ -41,16 +47,5 @@ export class Transaction extends Transform {
 
   addStep(step: Step, blocks: Blocks) {
     super.addStep(step, blocks);
-  }
-
-  log() {
-    const { activeId, lastModifiedBlock, blocks } = this;
-
-    console.dir(
-      { activeId, lastModifiedBlock, blocks },
-      {
-        depth: Infinity,
-      },
-    );
   }
 }

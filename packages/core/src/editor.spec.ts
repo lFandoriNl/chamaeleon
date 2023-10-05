@@ -2,7 +2,7 @@ import { describe, it, beforeEach, expect } from 'vitest';
 
 import { Editor } from './editor';
 
-describe('EditorState', () => {
+describe('Editor', () => {
   let editor: Editor;
 
   beforeEach(() => {

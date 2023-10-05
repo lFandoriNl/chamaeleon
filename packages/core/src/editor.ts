@@ -5,15 +5,7 @@ import { ExtensionManager } from './extension-manager';
 import { CommandManager } from './command-manager';
 import { EventEmitter } from './event-emitter';
 
-import {
-  Commands,
-  History,
-  BaseStyle,
-  Page,
-  Row,
-  Column,
-  Text,
-} from './extensions';
+import { Commands, BaseStyle, Page, Row, Column, Text } from './extensions';
 
 import { Schema } from './model/schema';
 
@@ -84,15 +76,7 @@ export class Editor extends EventEmitter<EditorEvents> {
   }
 
   private createExtensionManager() {
-    const coreExtensions = [
-      Commands,
-      History,
-      BaseStyle,
-      Page,
-      Row,
-      Column,
-      Text,
-    ];
+    const coreExtensions = [Commands, BaseStyle, Page, Row, Column, Text];
 
     const allExtensions = [...coreExtensions, ...this.options.extensions];
 
@@ -126,6 +110,7 @@ export class Editor extends EventEmitter<EditorEvents> {
     // }
 
     const state = this.state.apply(transaction);
+
     this.view.updateState(state);
 
     this.emit('transaction', {

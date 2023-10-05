@@ -1,4 +1,4 @@
 {
-  "cSpell.words": ["clsx", "rootable", "tailwindcss"],
+  "cSpell.words": ["clsx", "immer", "rootable", "tailwindcss"],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

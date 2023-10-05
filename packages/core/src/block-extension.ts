@@ -1,6 +1,9 @@
 import { BlockExtensionConfig, type Editor } from '.';
-import { BlockSpec } from './model';
 import { Plugin, Transaction } from './state';
+import { BlockSpec } from './model';
+
+import { mergeDeep } from './utilities/merge-deep';
+
 import { BlockViewRendererPack, Properties, RawCommands } from './types';
 
 declare module '.' {
@@ -85,7 +88,20 @@ export class BlockExtension<Options = any> {
     }
   }
 
-  static create<O = any>(config: Partial<BlockExtensionConfig<O>> = {}) {
-    return new BlockExtension<O>(config);
+  configure(options: Partial<Options> = {}) {
+    const extension = new BlockExtension<Options>(this.config);
+
+    extension.options = mergeDeep(
+      this.options as Record<string, any>,
+      options,
+    ) as Options;
+
+    return extension;
+  }
+
+  static create<Options = any>(
+    config: Partial<BlockExtensionConfig<Options>> = {},
+  ) {
+    return new BlockExtension<Options>(config);
   }
 }

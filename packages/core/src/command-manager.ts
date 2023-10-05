@@ -26,13 +26,17 @@ export class CommandManager {
 
     const props = this.buildProps(state.tr);
 
+    const { tr } = props;
+
     return Object.fromEntries(
       Object.entries(this.rawCommands).map(([name, command]) => {
         const method = (...args: any[]) => {
           // @ts-expect-error
           const callback = command(...args)(props);
 
-          view.dispatch(props.tr);
+          if (!tr.getMeta('preventDispatch')) {
+            view.dispatch(tr);
+          }
 
           return callback;
         };
@@ -56,7 +60,7 @@ export class CommandManager {
     const callbacks: void[] = [];
 
     const run = () => {
-      if (!hasStartTransaction) {
+      if (!hasStartTransaction && !tr.getMeta('preventDispatch')) {
         view.dispatch(tr);
       }
     };

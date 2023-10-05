@@ -41,7 +41,10 @@ export class Block {
     if (!json) throw new RangeError('Invalid input for Block.fromJSON');
 
     const content = Fragment.fromJSON(schema, json.children);
-    return schema.blockType(json.type).create(json.props, json.style, content);
+
+    return schema
+      .blockType(json.type)
+      .create(json.props, json.style, content, json.id);
   }
 
   toJSON(): any {

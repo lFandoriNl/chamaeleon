@@ -28,6 +28,8 @@ export class PropertyStep extends Step {
         block.children,
         draft[this.target].id,
       );
+
+      this.meta.changed = this.target;
     });
 
     return StepResult.ok(newBlocks);

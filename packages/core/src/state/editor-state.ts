@@ -123,7 +123,7 @@ export class EditorState {
 
   getBlock(id: Block['id']) {
     if (!this.blocks[id])
-      throw new Error(`Block with id: ${id} - does not exist.`);
+      throw new RangeError(`Block with id: ${id} - does not exist.`);
 
     return this.blocks[id];
   }
@@ -284,7 +284,7 @@ export class EditorState {
       blocks: Object.values(this.blocks)
         .map((block) => block.toJSON())
         .reduce((acc, block) => {
-          acc[block.id] = block;
+          acc[block.id] = { ...block };
           return acc;
         }, {}),
     };

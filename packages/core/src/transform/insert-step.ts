@@ -5,7 +5,7 @@ import { Block } from '../model';
 
 export class InsertStep extends Step {
   constructor(
-    private target: Block['id'] | null,
+    private target: Block['id'],
     private block: Block,
   ) {
     super();
@@ -13,7 +13,7 @@ export class InsertStep extends Step {
 
   apply(blocks: Blocks) {
     const newBlocks = this.produceWithPatches(blocks, (draft) => {
-      if (this.target) {
+      if (draft[this.target]) {
         draft[this.block.id] = this.block;
 
         draft[this.target] = draft[this.target].type.create(
@@ -22,9 +22,13 @@ export class InsertStep extends Step {
           draft[this.target].children.extend(this.block),
           draft[this.target].id,
         );
+
+        this.meta.changedParent = this.target;
       } else {
-        draft[this.block.id] = this.block;
+        draft[this.target] = this.block;
       }
+
+      this.meta.changed = this.block.id;
     });
 
     return StepResult.ok(newBlocks);

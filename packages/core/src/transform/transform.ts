@@ -21,7 +21,7 @@ export class Transform {
     public lastModifiedBlock: Block['id'] | null,
   ) {}
 
-  insertContent(target: Block['id'] | null, block: Block): this {
+  insertContent(target: Block['id'], block: Block): this {
     this.step(new InsertStep(target, block));
 
     this.lastModifiedBlock = block.id;

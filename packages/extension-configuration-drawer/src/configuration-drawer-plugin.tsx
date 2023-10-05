@@ -31,7 +31,7 @@ type BlockConfigurationProps = {
 };
 
 const BlockConfiguration = ({ view, extra }: BlockConfigurationProps) => {
-  if (!view.state.activeBlock) throw new RangeError('');
+  if (!view.state.activeBlock) return null;
 
   return (
     <div>
@@ -123,6 +123,8 @@ class ConfigurationDrawerView implements PluginView {
 
   update(view: EditorView) {
     const { open } = this.pluginKey.getState(view.state);
+
+    if (!view.state.activeBlock) return null;
 
     return ReactDOM.createPortal(
       <ConfigurationDrawer open={open} editor={this.editor} />,

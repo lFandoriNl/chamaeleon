@@ -33,6 +33,7 @@ export type Entries<T> = {
 }[keyof T][];
 
 export type JSONContent = {
+  id?: string;
   type: string;
   props?: Block['props'];
   style?: Block['style'];

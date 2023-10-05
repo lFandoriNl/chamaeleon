@@ -31,11 +31,19 @@ export const Page = BlockExtension.create({
   addCommands() {
     return {
       addPage: (target, props) => {
-        return ({ commands }) => {
-          commands.insertContent(target, {
-            type: Page.name,
-            props,
-          });
+        return ({ commands, editor }) => {
+          if (target) {
+            commands.insertContent(target, {
+              type: Page.name,
+              props,
+            });
+          } else {
+            commands.insertContent(editor.schema.spec.rootBlockId, {
+              id: editor.schema.spec.rootBlockId,
+              type: Page.name,
+              props,
+            });
+          }
         };
       },
     };

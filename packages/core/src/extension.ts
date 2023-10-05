@@ -1,5 +1,8 @@
 import { Editor, ExtensionConfig } from '.';
 import { Plugin, Transaction } from './state';
+
+import { mergeDeep } from './utilities/merge-deep';
+
 import { RawCommands } from './types';
 
 declare module '.' {
@@ -58,7 +61,18 @@ export class Extension<Options = any> {
     }
   }
 
-  static create<O = any>(config: Partial<ExtensionConfig<O>> = {}) {
-    return new Extension<O>(config);
+  configure(options: Partial<Options> = {}) {
+    const extension = new Extension<Options>(this.config);
+
+    extension.options = mergeDeep(
+      this.options as Record<string, any>,
+      options,
+    ) as Options;
+
+    return extension;
+  }
+
+  static create<Options = any>(config: Partial<ExtensionConfig<Options>> = {}) {
+    return new Extension<Options>(config);
   }
 }

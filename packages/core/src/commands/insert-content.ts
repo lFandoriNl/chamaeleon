@@ -5,10 +5,7 @@ import { Content, RawCommands } from '../types';
 declare module '..' {
   interface Commands<ReturnType> {
     insertContent: {
-      insertContent: (
-        target: Block['id'] | null,
-        content: Content,
-      ) => ReturnType;
+      insertContent: (target: Block['id'], content: Content) => ReturnType;
     };
   }
 }
