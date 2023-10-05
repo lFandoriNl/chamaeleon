@@ -1,5 +1,11 @@
 # @chamaeleon/core
 
+## 0.1.0
+
+### Minor Changes
+
+- Create extension-history package
+
 ## 0.0.2
 
 ### Patch Changes
