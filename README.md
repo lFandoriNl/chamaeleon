@@ -55,6 +55,12 @@ If you want to connect built-in extensions for editing and adding blocks, then r
 npm i @chamaeleon/extension-add-block-menu @chamaeleon/extension-configuration-drawer
 ```
 
+You may also want to install an extension for the undo redo commands:
+
+```
+npm i @chamaeleon/extension-history
+```
+
 ## Local setup
 
 To set up Chamaeleon locally, you'll need to clone the repository.

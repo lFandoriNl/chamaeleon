@@ -54,6 +54,41 @@ And the ConfigurationDrawer provides a drawer where the settings for the active 
 
 Specifically, these extensions intercept a special transaction with a meta tag - intention, which means that the user calls a certain function, like [this](../../packages/extension-configuration-drawer/src/configuration-drawer.tsx#L56)
 
+## Undo redo commands
+
+```ts
+import { History } from '@chamaeleon/extension-history';
+
+const editor = new Editor({
+  extensions: [History],
+});
+```
+
+By default, the history limit is 100 commands, you can configure the extension to increase or decrease this limit
+
+```ts
+import { History } from '@chamaeleon/extension-history';
+
+const editor = new Editor({
+  extensions: [History.configure({ limit: 10 })],
+});
+```
+
+Usage:
+
+```ts
+const Example = () => {
+  const editor = useEditor();
+
+  return (
+    <>
+      <button onClick={() => editor.commands.undo()}>Undo</button>
+      <button onClick={() => editor.commands.redo()}>Redo</button>
+    </>
+  );
+};
+```
+
 ## Overriding editor UI components
 
 ## Writing your own extensions
