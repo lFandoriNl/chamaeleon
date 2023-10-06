@@ -89,6 +89,42 @@ const Example = () => {
 };
 ```
 
+## Persist state
+
+```ts
+import { Persist } from '@chamaeleon/extension-persist';
+
+const editor = new Editor({
+  extensions: [Persist],
+});
+```
+
+You can pass your own storage and expireIn timestamp to clean up the stale state
+
+```ts
+const editor = new Editor({
+  extensions: [
+    Persist.configure({
+      // one hour
+      expireIn: 1 * 60 * 60 * 1000,
+      storage: myStorage,
+    }),
+  ],
+});
+```
+
+You can use the **persist** command to force a save:
+
+```ts
+editor.commands.persist();
+```
+
+And the **clearPersisted** command to clear the persisted state:
+
+```ts
+editor.commands.clearPersisted();
+```
+
 ## Overriding editor UI components
 
 ## Writing your own extensions

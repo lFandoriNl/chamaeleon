@@ -42,6 +42,19 @@ const Content = () => {
             History stack: {historyState.historyTransactions.length}
           </p>
         </div>
+
+        <div className="space-x-2">
+          <Button color="secondary" onClick={() => editor.commands.persist()}>
+            Persist
+          </Button>
+
+          <Button
+            color="secondary"
+            onClick={() => editor.commands.clearPersisted()}
+          >
+            Clear
+          </Button>
+        </div>
       </div>
 
       <EditorContent editor={editor} />

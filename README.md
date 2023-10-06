@@ -39,7 +39,9 @@ Before you begin, ensure you have met the following requirements:
 
 Installing **pnpm**
 
-`npm install -g pnpm`
+```
+npm install -g pnpm
+```
 
 ## Installation
 
@@ -59,6 +61,12 @@ You may also want to install an extension for the undo redo commands:
 
 ```
 npm i @chamaeleon/extension-history
+```
+
+If you need support persisted state:
+
+```
+npm i @chamaeleon/extension-persist
 ```
 
 ## Local setup
