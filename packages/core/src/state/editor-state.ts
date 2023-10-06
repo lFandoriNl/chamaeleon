@@ -1,8 +1,9 @@
 import { Transaction } from './transaction';
 import { Plugin, StateField } from './plugin';
 
-import { Block } from '../model/block';
-import { Schema } from '../model/schema';
+import { Block, Fragment, Schema } from '../model';
+
+import { JSONContent } from '../types';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 function bind<T extends Function>(f: T, self?: any): T {
@@ -26,7 +27,20 @@ class FieldDesc<T> {
 const baseFields = [
   new FieldDesc<EditorState['blocks']>('blocks', {
     init(config) {
-      return config.blocks;
+      return Object.fromEntries(
+        Object.entries(config.blocks).map(([id, rawBlock]) => {
+          return [
+            id,
+            config.schema.block(
+              rawBlock.type,
+              rawBlock.props,
+              rawBlock.style,
+              Fragment.fromJSON(config.schema, rawBlock.content),
+              rawBlock.id,
+            ),
+          ];
+        }),
+      );
     },
     apply(tr) {
       return tr.blocks;
@@ -79,11 +93,13 @@ class Configuration {
   }
 }
 
+export type RawBlocks = Record<Block['id'], JSONContent>;
+
 export type Blocks = Record<Block['id'], Block>;
 
 export type EditorStateConfig = {
   schema: Schema;
-  blocks: Blocks;
+  blocks: RawBlocks;
   readonly plugins?: Plugin[];
 };
 
@@ -113,12 +129,8 @@ export class EditorState {
     return this.blocks[this.activeId];
   }
 
-  get blocksArray() {
-    return Object.values(this.blocks);
-  }
-
   get rootPage() {
-    return this.blocksArray.find((block) => block.type.name === 'page');
+    return this.blocks[this.schema.spec.rootBlockId];
   }
 
   getBlock(id: Block['id']) {
@@ -270,11 +282,34 @@ export class EditorState {
       (instance as any)[name] = Object.prototype.hasOwnProperty.call(this, name)
         ? (this as any)[name]
         : fields[i].init(
-            { ...config, blocks: instance.blocks, schema: instance.schema },
+            {
+              ...config,
+              blocks: instance.toJSON().blocks,
+              schema: instance.schema,
+            },
             instance,
           );
     }
     return instance;
+  }
+
+  fromJSON(
+    json: any,
+  ): { success: true; state: EditorState } | { success: false } {
+    try {
+      return {
+        success: true,
+        state: EditorState.create({
+          blocks: json.blocks,
+          schema: this.config.schema,
+          plugins: this.config.plugins,
+        }),
+      };
+    } catch (error) {
+      return {
+        success: false,
+      };
+    }
   }
 
   toJSON(): any {
@@ -284,7 +319,7 @@ export class EditorState {
       blocks: Object.values(this.blocks)
         .map((block) => block.toJSON())
         .reduce((acc, block) => {
-          acc[block.id] = { ...block };
+          acc[block.id] = block;
           return acc;
         }, {}),
     };

@@ -20,6 +20,11 @@ declare module '.' {
 
     addPlugins?: (context: { editor: Editor; options: Options }) => Plugin[];
 
+    init?: (context: {
+      editor: Editor;
+      options: Options;
+    }) => void | Promise<void>;
+
     onUpdate?: (context: { options: Options; editor: Editor }) => void;
 
     onTransaction?: (

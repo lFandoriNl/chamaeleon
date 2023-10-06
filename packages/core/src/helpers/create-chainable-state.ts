@@ -23,7 +23,6 @@ export function createChainableState(config: {
     schema: state.schema,
     plugins: state.plugins,
     activeBlock: state.activeBlock,
-    blocksArray: state.blocksArray,
     rootPage: state.rootPage,
     getBlock: state.getBlock.bind({ ...state, blocks }),
     apply: state.apply.bind(state),

@@ -38,6 +38,26 @@ export class ExtensionManager {
     });
   }
 
+  async init() {
+    const promises = this.extensions.map((extension) => {
+      const { init } = extension.config;
+
+      if (!init) return;
+
+      return () =>
+        init({
+          editor: this.editor,
+          options: extension.options,
+        });
+    });
+
+    for (const promise of promises) {
+      if (promise) {
+        await promise();
+      }
+    }
+  }
+
   get commands(): RawCommands {
     return this.extensions.reduce((commands, extension) => {
       const { addCommands } = extension.config;

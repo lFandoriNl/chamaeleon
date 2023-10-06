@@ -53,7 +53,7 @@ export class Block {
       type: this.type.name,
       props: this.props,
       style: this.style,
-      children: this.children.toJSON(),
+      content: this.children.toJSON(),
     };
 
     return obj;

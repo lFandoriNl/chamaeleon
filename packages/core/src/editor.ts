@@ -1,5 +1,5 @@
 import { EditorView, EditorViewOptions } from './view';
-import { EditorState, Blocks, Transaction } from './state';
+import { EditorState, RawBlocks, Transaction } from './state';
 
 import { ExtensionManager } from './extension-manager';
 import { CommandManager } from './command-manager';
@@ -15,7 +15,7 @@ export type EditorOptions = Pick<
   EditorViewOptions,
   'propertyConfigurationRender' | 'ui'
 > & {
-  blocks: Blocks;
+  blocks: RawBlocks;
   extensions: Extensions;
 };
 
@@ -47,6 +47,14 @@ export class Editor extends EventEmitter<EditorEvents> {
     });
 
     this.createView();
+
+    this.initExtensions();
+  }
+
+  private async initExtensions() {
+    await this.extensionManager.init();
+
+    this.emit('ready', { editor: this });
   }
 
   get state() {

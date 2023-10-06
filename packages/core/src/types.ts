@@ -18,6 +18,7 @@ export type AnyExtension = Extension | BlockExtension;
 export type Extensions = AnyExtension[];
 
 export type EditorEvents = {
+  ready: { editor: Editor };
   update: { editor: Editor; transaction: Transaction };
   transaction: { editor: Editor; transaction: Transaction };
 };
@@ -37,7 +38,7 @@ export type JSONContent = {
   type: string;
   props?: Block['props'];
   style?: Block['style'];
-  content?: JSONContent[];
+  content?: JSONContent['id'][];
 };
 
 export type Content = JSONContent | JSONContent[];

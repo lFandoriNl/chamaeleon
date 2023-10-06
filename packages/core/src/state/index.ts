@@ -2,6 +2,7 @@ export {
   EditorState,
   type EditorStateConfig,
   type Blocks,
+  type RawBlocks,
 } from './editor-state';
 export {
   Plugin,

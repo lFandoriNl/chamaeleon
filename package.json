@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "turbo dev --concurrency 20",
     "test": "turbo test",
     "lint": "turbo lint",
     "check-types": "turbo check-types",
@@ -37,6 +37,6 @@
     "postcss": "^8.4.29",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.4"
+    "vitest": "^0.34.6"
   }
 }

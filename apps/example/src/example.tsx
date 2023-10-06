@@ -2,6 +2,7 @@ import { Editor } from '@chamaeleon/core';
 import { History, HistoryKey } from '@chamaeleon/extension-history';
 import { AddBlockMenu } from '@chamaeleon/extension-add-block-menu';
 import { ConfigurationDrawer } from '@chamaeleon/extension-configuration-drawer';
+import { Persist } from '@chamaeleon/extension-persist';
 import {
   EditorContent,
   EditorProvider,
@@ -53,6 +54,9 @@ const editor = new Editor({
     History.configure({ limit: 10 }),
     AddBlockMenu,
     ConfigurationDrawer,
+    Persist.configure({
+      expireIn: 1 * 60 * 1000,
+    }),
   ],
 });
 

@@ -272,6 +272,10 @@ export class Schema<Blocks extends string = any> {
       instanceSpec[prop] = (spec as any)[prop];
     }
 
+    if (!instanceSpec.rootBlockId) {
+      instanceSpec.rootBlockId = 'root';
+    }
+
     instanceSpec.blocks = new Map(Object.entries(spec.blocks));
 
     this.blocks = BlockType.compile(this.spec.blocks, this);
@@ -282,6 +286,7 @@ export class Schema<Blocks extends string = any> {
     props: Props | null = null,
     style: Style | null = null,
     content?: Fragment | Block | readonly Block[],
+    id?: Block['id'],
   ) {
     if (typeof type == 'string') {
       type = this.blockType(type);
@@ -293,7 +298,7 @@ export class Schema<Blocks extends string = any> {
       );
     }
 
-    return type.create(props, style, content);
+    return type.create(props, style, content, id);
   }
 
   blockType(name: string) {
