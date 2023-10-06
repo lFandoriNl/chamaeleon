@@ -1,5 +1,11 @@
 # @chamaeleon/core
 
+## 0.2.0
+
+### Minor Changes
+
+- Added serialization and deserialization of state for extension-persist package
+
 ## 0.1.0
 
 ### Minor Changes
