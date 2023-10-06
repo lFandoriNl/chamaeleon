@@ -4,7 +4,7 @@ import { StorageAdapter } from './storege-adapter';
 
 declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
-    history: {
+    persist: {
       persist: () => ReturnType;
       clearPersisted: () => ReturnType;
     };
