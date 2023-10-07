@@ -1,5 +1,11 @@
 # @chamaeleon/uikit
 
+## 0.0.2
+
+### Patch Changes
+
+- Add README.md & update package.json fields
+
 ## 0.0.1
 
 ### Patch Changes

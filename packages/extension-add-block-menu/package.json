@@ -1,11 +1,18 @@
 {
   "name": "@chamaeleon/extension-add-block-menu",
+  "description": "Chamaeleon extension for adding blocks",
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Chamaeleon react editor",
+  "keywords": [
+    "chameleon",
+    "chamaeleon",
+    "page builder",
+    "editor",
+    "add blocks"
+  ],
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -41,5 +48,10 @@
     "@types/react-dom": "18.2.7",
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lFandoriNl/chamaeleon",
+    "directory": "packages/extension-add-block-menu"
   }
 }

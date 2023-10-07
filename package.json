@@ -1,9 +1,5 @@
 {
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lFandoriNl/chamaeleon"
-  },
   "workspaces": [
     "packages/*"
   ],
@@ -38,5 +34,9 @@
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lFandoriNl/chamaeleon"
   }
 }

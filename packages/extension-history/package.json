@@ -1,11 +1,19 @@
 {
   "name": "@chamaeleon/extension-history",
+  "description": "Chamaeleon extension history for undo redo commands",
   "private": false,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Chamaeleon extension history for undo redo commands",
+  "keywords": [
+    "chameleon",
+    "chamaeleon",
+    "page builder",
+    "editor",
+    "history",
+    "undo redo"
+  ],
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -33,5 +41,10 @@
   },
   "devDependencies": {
     "tsup": "^7.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lFandoriNl/chamaeleon",
+    "directory": "packages/extension-history"
   }
 }

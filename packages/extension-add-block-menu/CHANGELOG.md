@@ -1,5 +1,15 @@
 # @chamaeleon/extension-add-block-menu
 
+## 0.0.5
+
+### Patch Changes
+
+- Add README.md & update package.json fields
+- Updated dependencies
+  - @chamaeleon/hooks@0.0.2
+  - @chamaeleon/uikit@0.0.2
+  - @chamaeleon/core@0.2.1
+
 ## 0.0.4
 
 ### Patch Changes

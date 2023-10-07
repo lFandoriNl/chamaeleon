@@ -1,11 +1,18 @@
 {
   "name": "@chamaeleon/hooks",
+  "description": "Chameleon hooks",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Chameleon hooks",
+  "keywords": [
+    "chameleon",
+    "chamaeleon",
+    "page builder",
+    "editor",
+    "react hooks"
+  ],
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -35,5 +42,10 @@
   "devDependencies": {
     "@types/react": "^18.2.15",
     "tsup": "^7.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lFandoriNl/chamaeleon",
+    "directory": "packages/hooks"
   }
 }

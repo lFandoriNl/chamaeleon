@@ -1,5 +1,13 @@
 # @chamaeleon/core
 
+## 0.2.1
+
+### Patch Changes
+
+- Add README.md & update package.json fields
+- Updated dependencies
+  - @chamaeleon/uikit@0.0.2
+
 ## 0.2.0
 
 ### Minor Changes

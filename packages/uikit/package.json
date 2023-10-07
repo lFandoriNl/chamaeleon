@@ -1,11 +1,19 @@
 {
   "name": "@chamaeleon/uikit",
+  "description": "Chamaeleon uikit",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Chamaeleon uikit",
+  "keywords": [
+    "chameleon",
+    "chamaeleon",
+    "page builder",
+    "editor",
+    "uikit",
+    "react uikit"
+  ],
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -33,5 +41,10 @@
   "devDependencies": {
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lFandoriNl/chamaeleon",
+    "directory": "packages/uikit"
   }
 }
