@@ -32,8 +32,7 @@ Chamaeleon provides the ability to override the editor UI components, allowing u
 
 [Live demo](https://lfandorinl.github.io/chamaeleon/)
 
-<video controls>
-  <source src="./docs/demo.mov" type="video/mov">
+<video src="https://github.com/lFandoriNl/chamaeleon/assets/23149596/f701f2fb-27ac-433b-b3dd-90ee757f107d" controls="controls" style="max-width: 500px;">
 </video>
 
 ## Example
