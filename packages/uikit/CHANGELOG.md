@@ -1,5 +1,11 @@
 # @chamaeleon/uikit
 
+## 0.0.3
+
+### Patch Changes
+
+- The order of css classes has been changed
+
 ## 0.0.2
 
 ### Patch Changes

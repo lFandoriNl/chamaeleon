@@ -79,7 +79,7 @@ export class EditorView {
     }[PluginType]
   > = new Map();
 
-  private rawUI = {
+  rawUI = {
     ActionPopover,
     PanelButton,
     DragButton,

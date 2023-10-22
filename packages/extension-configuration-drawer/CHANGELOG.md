@@ -1,5 +1,15 @@
 # @chamaeleon/extension-configuration-drawer
 
+## 0.1.3
+
+### Patch Changes
+
+- The order of css classes has been changed
+
+- Updated dependencies
+  - @chamaeleon/core@0.3.0
+  - @chamaeleon/uikit@0.0.3
+
 ## 0.1.2
 
 ### Patch Changes

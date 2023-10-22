@@ -1,5 +1,15 @@
 # @chamaeleon/react-editor
 
+## 0.0.6
+
+### Patch Changes
+
+- The order of css classes has been changed
+
+- Updated dependencies
+  - @chamaeleon/core@0.3.0
+  - @chamaeleon/uikit@0.0.3
+
 ## 0.0.5
 
 ### Patch Changes
