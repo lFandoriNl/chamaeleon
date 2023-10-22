@@ -13,7 +13,7 @@ export function ActionAddBlockButton({
   ...props
 }: ActionAddBlockButtonProps) {
   return (
-    <view.ui.ActionButton {...props}>
+    <view.ui.ActionButton {...props} className="!rounded-full text-blue-500">
       <AiOutlinePlus size={20} />
     </view.ui.ActionButton>
   );

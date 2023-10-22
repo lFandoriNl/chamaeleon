@@ -17,6 +17,12 @@ export type AnyConfig = ExtensionConfig | BlockExtensionConfig;
 export type AnyExtension = Extension | BlockExtension;
 export type Extensions = AnyExtension[];
 
+export type Provider = React.FunctionComponent<{
+  Renderer: React.FunctionComponent<{ block: Block }>;
+  editor: Editor;
+  children: React.ReactNode;
+}>;
+
 export type EditorEvents = {
   ready: { editor: Editor };
   update: { editor: Editor; transaction: Transaction };

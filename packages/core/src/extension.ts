@@ -3,7 +3,7 @@ import { Plugin, Transaction } from './state';
 
 import { mergeDeep } from './utilities/merge-deep';
 
-import { RawCommands } from './types';
+import { Provider, RawCommands } from './types';
 
 declare module '.' {
   interface ExtensionConfig<Options = any> {
@@ -19,6 +19,8 @@ declare module '.' {
     }) => Partial<RawCommands>;
 
     addPlugins?: (context: { editor: Editor; options: Options }) => Plugin[];
+
+    addProvider?: () => Provider;
 
     init?: (context: {
       editor: Editor;

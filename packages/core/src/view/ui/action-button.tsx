@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import clsx from 'clsx';
 
 import { IconButton, IconButtonProps } from '@chamaeleon/uikit';
@@ -8,8 +9,16 @@ export type ActionButtonProps = IconButtonProps & {
   view: EditorView;
 };
 
-export function ActionButton({ view: _, ...props }: ActionButtonProps) {
-  return (
-    <IconButton {...props} className={clsx(props.className, 'rounded-lg')} />
-  );
-}
+export const ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
+  ({ view: _, ...props }, ref) => {
+    return (
+      <IconButton
+        {...props}
+        ref={ref}
+        className={clsx(props.className, 'rounded-lg')}
+      />
+    );
+  },
+);
+
+ActionButton.displayName = 'ActionButton';

@@ -9,7 +9,7 @@ export const EditorProvider = editorContext.Provider;
 export function useEditor() {
   const value = useContext(editorContext);
 
-  if (!value) throw new Error(`Value not passed to "EditorProvider".`);
+  if (!value) throw new Error('Value not passed to "EditorProvider".');
 
   return value;
 }

@@ -1,6 +1,7 @@
 import { Block } from '../model';
 import { Blocks } from '../state/editor-state';
 import { InsertStep } from './insert-step';
+import { MoveStep } from './move-step';
 import { PropertyStep } from './property-step';
 import { RemoveStep } from './remove-step';
 import { Step } from './step';
@@ -43,6 +44,14 @@ export class Transform {
     value: any,
   ) {
     this.step(new PropertyStep(target, property, value));
+
+    this.lastModifiedBlock = target;
+
+    return this;
+  }
+
+  move(source: Block['id'], target: Block['id'], from: number, to: number) {
+    this.step(new MoveStep(source, target, from, to));
 
     this.lastModifiedBlock = target;
 

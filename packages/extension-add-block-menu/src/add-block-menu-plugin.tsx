@@ -44,10 +44,8 @@ class AddBlockMenuView implements PluginView {
 
     if (!target) throw new RangeError(`There is no target id.`);
 
-    const allowContent = state.getBlock(target).type.spec.allowContent || {};
-
     const allowedBlocksItems = state.schema
-      .getAllowContent(allowContent)
+      .getAllowContent(state.getBlock(target))
       .map((blockType) => {
         const Component = view.getBlockViews(blockType.name)['palette'];
 

@@ -26,7 +26,7 @@ export class PropertyStep extends Step {
         },
         block.style,
         block.children,
-        draft[this.target].id,
+        block.id,
       );
 
       this.meta.changed = this.target;

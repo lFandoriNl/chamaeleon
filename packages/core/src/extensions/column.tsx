@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import clsx from 'clsx';
 
 import { BlockExtension } from '../block-extension';
@@ -64,26 +65,51 @@ export const Column = BlockExtension.create({
       editor: ({ block, children, editor }) => {
         const { ui } = editor.view;
 
+        const { isOver, isAvailableDrop } =
+          editor.view.dragAndDrop.useBlockState(block);
+
+        const referenceRef = useRef<HTMLElement>(null);
+
         return (
-          <ui.ActionsTooltip
-            components={[
-              {
-                placement: 'top-end',
-                component: (
-                  <ui.ActionSettingsButton
-                    onClick={(event) => {
-                      editor.commands.intention(
-                        block.id,
-                        'change-properties',
-                        event.nativeEvent,
-                      );
-                    }}
-                  />
-                ),
-              },
-              {
-                placement: 'left',
-                component: (
+          <editor.view.Block id={block.id} ref={referenceRef}>
+            {block.children.isEmpty ? (
+              <div>
+                <editor.view.Dropzone>
+                  <div
+                    className={clsx(
+                      'hover:block-highlight flex w-full justify-center border-2 border-dashed border-gray-500 bg-white p-5',
+                      {
+                        'available-drop': isAvailableDrop,
+                        'dropzone-over': isOver,
+                      },
+                    )}
+                    style={block.style.root}
+                  >
+                    <ui.ActionAddBlockButton
+                      onClick={(event) => {
+                        editor.commands.intention(
+                          block.id,
+                          'add-block',
+                          event.nativeEvent,
+                        );
+                      }}
+                    />
+                  </div>
+                </editor.view.Dropzone>
+              </div>
+            ) : (
+              <div
+                className={clsx('e-column hover:block-highlight p-5', {
+                  'available-drop': isAvailableDrop,
+                  'dropzone-over': isOver,
+                })}
+                style={block.style.root}
+              >
+                <editor.view.Dropzone strategy="vertical">
+                  {children}
+                </editor.view.Dropzone>
+
+                <div className="flex justify-center p-4">
                   <ui.ActionAddBlockButton
                     onClick={(event) => {
                       editor.commands.intention(
@@ -93,20 +119,26 @@ export const Column = BlockExtension.create({
                       );
                     }}
                   />
-                ),
-              },
-            ]}
-          >
-            {block.children.isEmpty ? (
-              <ui.PanelButton style={block.style.root}>
-                Empty column
-              </ui.PanelButton>
-            ) : (
-              <div className={clsx('e-column')} style={block.style.root}>
-                {children}
+                </div>
               </div>
             )}
-          </ui.ActionsTooltip>
+
+            <ui.ActionPopover referenceRef={referenceRef} placement="top-start">
+              <ui.DragButton />
+            </ui.ActionPopover>
+
+            <ui.ActionPopover referenceRef={referenceRef} placement="top-end">
+              <ui.ActionSettingsButton
+                onClick={(event) => {
+                  editor.commands.intention(
+                    block.id,
+                    'change-properties',
+                    event.nativeEvent,
+                  );
+                }}
+              />
+            </ui.ActionPopover>
+          </editor.view.Block>
         );
       },
       palette: () => {

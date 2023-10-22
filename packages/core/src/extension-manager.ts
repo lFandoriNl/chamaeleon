@@ -4,7 +4,7 @@ import { getSchemaByResolvedExtensions } from './helpers/get-schema-by-resolved-
 import { splitExtensions } from './helpers/split-extensions';
 import { Schema } from './model/schema';
 import { Plugin } from './state/plugin';
-import { Extensions, RawCommands } from './types';
+import { Extensions, Provider, RawCommands } from './types';
 
 export class ExtensionManager {
   editor: Editor;
@@ -90,6 +90,20 @@ export class ExtensionManager {
 
         if (addPlugins) {
           return addPlugins(context);
+        }
+
+        return [];
+      })
+      .flat();
+  }
+
+  get providers(): Provider[] {
+    return this.extensions
+      .map((extension) => {
+        const { addProvider } = extension.config;
+
+        if (addProvider) {
+          return [addProvider()];
         }
 
         return [];

@@ -62,7 +62,7 @@ export const Menu = ({
       ref={dropdownRef}
       className={clsx(
         show ? 'block' : 'hidden',
-        'min-w-[12rem] mt-2 py-2 z-50 float-left rounded shadow-md',
+        'z-50 float-left mt-2 min-w-[12rem] rounded py-2 shadow-md',
         'bg-gray-50',
       )}
     >
@@ -70,7 +70,7 @@ export const Menu = ({
         <button
           key={item.id}
           className={clsx(
-            'p-2 w-full text-left hover:bg-gray-200 active:bg-gray-300',
+            'w-full p-2 text-left hover:bg-gray-200 active:bg-gray-300',
             'focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600',
           )}
           onClick={() => {

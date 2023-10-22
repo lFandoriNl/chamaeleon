@@ -57,6 +57,12 @@ importers:
       postcss:
         specifier: ^8.4.29
         version: 8.4.29
+      postcss-import:
+        specifier: ^15.1.0
+        version: 15.1.0(postcss@8.4.29)
+      prettier-plugin-tailwindcss:
+        specifier: ^0.5.5
+        version: 0.5.6(prettier@3.0.2)
       tailwindcss:
         specifier: ^3.3.3
         version: 3.3.3
@@ -115,9 +121,21 @@ importers:
 
   packages/core:
     dependencies:
+      '@chamaeleon/hooks':
+        specifier: workspace:*
+        version: link:../hooks
       '@chamaeleon/uikit':
         specifier: workspace:*
         version: link:../uikit
+      '@dnd-kit/core':
+        specifier: 6.0.8
+        version: 6.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@dnd-kit/sortable':
+        specifier: 7.0.2
+        version: 7.0.2(@dnd-kit/core@6.0.8)(react@18.2.0)
+      '@dnd-kit/utilities':
+        specifier: 3.2.1
+        version: 3.2.1(react@18.2.0)
       immer:
         specifier: ^10.0.2
         version: 10.0.2
@@ -695,6 +713,49 @@ packages:
       human-id: 1.0.2
       prettier: 2.8.8
     dev: true
+
+  /@dnd-kit/accessibility@3.0.1(react@18.2.0):
+    resolution: {integrity: sha512-HXRrwS9YUYQO9lFRc/49uO/VICbM+O+ZRpFDe9Pd1rwVv2PCNkRiTZRdxrDgng/UkvdC3Re9r2vwPpXXrWeFzg==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      tslib: 2.6.2
+    dev: false
+
+  /@dnd-kit/core@6.0.8(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-lYaoP8yHTQSLlZe6Rr9qogouGUz9oRUj4AHhDQGQzq/hqaJRpFo65X+JKsdHf8oUFBzx5A+SJPUvxAwTF2OabA==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@dnd-kit/accessibility': 3.0.1(react@18.2.0)
+      '@dnd-kit/utilities': 3.2.1(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      tslib: 2.6.2
+    dev: false
+
+  /@dnd-kit/sortable@7.0.2(@dnd-kit/core@6.0.8)(react@18.2.0):
+    resolution: {integrity: sha512-wDkBHHf9iCi1veM834Gbk1429bd4lHX4RpAwT0y2cHLf246GAvU2sVw/oxWNpPKQNQRQaeGXhAVgrOl1IT+iyA==}
+    peerDependencies:
+      '@dnd-kit/core': ^6.0.7
+      react: '>=16.8.0'
+    dependencies:
+      '@dnd-kit/core': 6.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@dnd-kit/utilities': 3.2.1(react@18.2.0)
+      react: 18.2.0
+      tslib: 2.6.2
+    dev: false
+
+  /@dnd-kit/utilities@3.2.1(react@18.2.0):
+    resolution: {integrity: sha512-OOXqISfvBw/1REtkSK2N3Fi2EQiLMlWUlqnOK/UpOISqBZPWpE6TqL+jcPtMOkE8TqYGiURvRdPSI9hltNUjEA==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      tslib: 2.6.2
+    dev: false
 
   /@esbuild/android-arm64@0.18.20:
     resolution: {integrity: sha512-Nz4rJcchGDtENV0eMKUNa6L12zz2zBDXuhj/Vjh18zGqB44Bi7MBMSXjgunJgjRhCmKOjnPuZp4Mb6OKqtMHLQ==}
@@ -3594,6 +3655,61 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
+  /prettier-plugin-tailwindcss@0.5.6(prettier@3.0.2):
+    resolution: {integrity: sha512-2Xgb+GQlkPAUCFi3sV+NOYcSI5XgduvDBL2Zt/hwJudeKXkyvRS65c38SB0yb9UB40+1rL83I6m0RtlOQ8eHdg==}
+    engines: {node: '>=14.21.3'}
+    peerDependencies:
+      '@ianvs/prettier-plugin-sort-imports': '*'
+      '@prettier/plugin-pug': '*'
+      '@shopify/prettier-plugin-liquid': '*'
+      '@shufo/prettier-plugin-blade': '*'
+      '@trivago/prettier-plugin-sort-imports': '*'
+      prettier: ^3.0
+      prettier-plugin-astro: '*'
+      prettier-plugin-css-order: '*'
+      prettier-plugin-import-sort: '*'
+      prettier-plugin-jsdoc: '*'
+      prettier-plugin-marko: '*'
+      prettier-plugin-organize-attributes: '*'
+      prettier-plugin-organize-imports: '*'
+      prettier-plugin-style-order: '*'
+      prettier-plugin-svelte: '*'
+      prettier-plugin-twig-melody: '*'
+    peerDependenciesMeta:
+      '@ianvs/prettier-plugin-sort-imports':
+        optional: true
+      '@prettier/plugin-pug':
+        optional: true
+      '@shopify/prettier-plugin-liquid':
+        optional: true
+      '@shufo/prettier-plugin-blade':
+        optional: true
+      '@trivago/prettier-plugin-sort-imports':
+        optional: true
+      prettier-plugin-astro:
+        optional: true
+      prettier-plugin-css-order:
+        optional: true
+      prettier-plugin-import-sort:
+        optional: true
+      prettier-plugin-jsdoc:
+        optional: true
+      prettier-plugin-marko:
+        optional: true
+      prettier-plugin-organize-attributes:
+        optional: true
+      prettier-plugin-organize-imports:
+        optional: true
+      prettier-plugin-style-order:
+        optional: true
+      prettier-plugin-svelte:
+        optional: true
+      prettier-plugin-twig-melody:
+        optional: true
+    dependencies:
+      prettier: 3.0.2
+    dev: true
+
   /prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
@@ -4245,7 +4361,6 @@ packages:
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-    dev: true
 
   /tsup@7.2.0(postcss@8.4.29)(typescript@5.2.2):
     resolution: {integrity: sha512-vDHlczXbgUvY3rWvqFEbSqmC1L7woozbzngMqTtL2PGBODTtWlRwGDDawhvWzr5c1QjKe4OAKqJGfE1xeXUvtQ==}

@@ -4,7 +4,12 @@ import { BlockSpec } from './model';
 
 import { mergeDeep } from './utilities/merge-deep';
 
-import { BlockViewRendererPack, Properties, RawCommands } from './types';
+import {
+  BlockViewRendererPack,
+  Properties,
+  Provider,
+  RawCommands,
+} from './types';
 
 declare module '.' {
   interface BlockExtensionConfig<Options = any> {
@@ -20,6 +25,8 @@ declare module '.' {
     }) => Partial<RawCommands>;
 
     addPlugins?: (context: { editor: Editor; options: Options }) => Plugin[];
+
+    addProvider?: () => Provider;
 
     init?: (context: {
       editor: Editor;

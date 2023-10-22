@@ -57,34 +57,14 @@ export const Page = BlockExtension.create({
       editor: ({ block, children, editor }) => {
         const { ui } = editor.view;
 
-        if (block.children.isEmpty) {
-          return (
-            <ui.ActionsTooltip
-              placement="left"
-              component={
-                <ui.ActionAddBlockButton
-                  onClick={(event) => {
-                    editor.commands.intention(
-                      block.id,
-                      'add-block',
-                      event.nativeEvent,
-                    );
-                  }}
-                />
-              }
-            >
-              <ui.PanelButton>Add root block for page</ui.PanelButton>
-            </ui.ActionsTooltip>
-          );
-        }
-
         return (
           <>
-            {children}
+            {block.children.isEmpty ? (
+              <div className="flex flex-col items-center justify-center p-5">
+                <p className="pb-4 text-xl">
+                  {"It's empty here yet, add your first block"}
+                </p>
 
-            <ui.ActionsTooltip
-              placement="left"
-              component={
                 <ui.ActionAddBlockButton
                   onClick={(event) => {
                     editor.commands.intention(
@@ -94,10 +74,26 @@ export const Page = BlockExtension.create({
                     );
                   }}
                 />
-              }
-            >
-              <ui.AddExtraBlock className="mt-4" />
-            </ui.ActionsTooltip>
+              </div>
+            ) : (
+              <>
+                <editor.view.Dropzone block={block} strategy="vertical">
+                  {children}
+                </editor.view.Dropzone>
+
+                <div className="flex items-center justify-center p-8">
+                  <ui.ActionAddBlockButton
+                    onClick={(event) => {
+                      editor.commands.intention(
+                        block.id,
+                        'add-block',
+                        event.nativeEvent,
+                      );
+                    }}
+                  />
+                </div>
+              </>
+            )}
           </>
         );
       },

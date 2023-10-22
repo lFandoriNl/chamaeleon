@@ -20,6 +20,7 @@ module.exports = {
   ignorePatterns: ['**/dist/*'],
   rules: {
     'no-unused-vars': 'off',
+    'react/prop-types': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {

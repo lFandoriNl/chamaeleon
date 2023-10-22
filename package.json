@@ -32,6 +32,8 @@
     "kill-port": "2.0.1",
     "postcss": "^8.4.29",
     "tailwindcss": "^3.3.3",
+    "postcss-import": "^15.1.0",
+    "prettier-plugin-tailwindcss": "^0.5.5",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6"
   },

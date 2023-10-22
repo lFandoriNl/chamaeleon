@@ -35,7 +35,7 @@ const BlockConfiguration = ({ view, extra }: BlockConfigurationProps) => {
 
   return (
     <div>
-      <div className="p-4 flex items-center justify-between text-xl border-b border-gray-300">
+      <div className="flex items-center justify-between border-b border-gray-300 p-4 text-xl">
         <div>{capitalize(view.state.activeBlock.type.name)} properties</div>
 
         {extra}
@@ -72,7 +72,7 @@ const ConfigurationDrawer = ({ open, editor }: ConfigurationDrawerProps) => {
         extra={
           <div>
             <IconButton
-              className={clsx('!p-1 !shadow-none rounded-none border', {
+              className={clsx('rounded-none border !p-1 !shadow-none', {
                 '!bg-slate-200': direction === 'left',
               })}
               onClick={() => setDirection('left')}
@@ -81,7 +81,7 @@ const ConfigurationDrawer = ({ open, editor }: ConfigurationDrawerProps) => {
             </IconButton>
 
             <IconButton
-              className={clsx('!p-1 !shadow-none rounded-none border', {
+              className={clsx('rounded-none border !p-1 !shadow-none', {
                 '!bg-slate-200': direction === 'right',
               })}
               onClick={() => setDirection('right')}

@@ -11,14 +11,24 @@ import {
   PluginView,
   Transaction,
 } from '../state';
-import { AnyExtension, BlockViewRendererPack } from '../types';
+import { AnyExtension, BlockViewRendererPack, Provider } from '../types';
 
-import { ActionsTooltip } from './ui/actions-tooltip';
+import { ActionPopover } from './ui/action-popover';
 import { PanelButton } from './ui/panel-button';
+import { DragButton } from './ui/drag-button';
 import { AddExtraBlock } from './ui/add-extra-block';
 import { ActionButton } from './ui/action-button';
 import { ActionAddBlockButton } from './ui/action-add-block-button';
 import { ActionSettingsButton } from './ui/action-settings-button';
+import {
+  DragAndDropState,
+  useDragAndDropState,
+  useDragAndDropBlockState,
+  useDndConnector,
+  BlockRoot,
+  Dropzone,
+} from './drag-and-drop';
+import { EditorInstanceContext } from './use-editor-instance';
 
 type Props<T extends keyof EditorView['rawUI']> = Omit<
   Parameters<EditorView['rawUI'][T]>[0],
@@ -32,6 +42,7 @@ export type EditorViewOptions = {
   propertyConfigurationRender?: React.FunctionComponent<{ view: EditorView }>;
   styleConfigurationRender?: React.FunctionComponent<{ view: EditorView }>;
   ui?: Partial<EditorView['rawUI']>;
+  extensionProviders?: Provider[];
 };
 
 export class EditorView {
@@ -69,8 +80,9 @@ export class EditorView {
   > = new Map();
 
   private rawUI = {
-    ActionsTooltip,
+    ActionPopover,
     PanelButton,
+    DragButton,
     AddExtraBlock,
     ActionButton,
     ActionAddBlockButton,
@@ -80,6 +92,22 @@ export class EditorView {
   ui!: {
     [name in keyof EditorView['rawUI']]: React.FunctionComponent<Props<name>>;
   };
+
+  ExtensionProviders: Provider = ({ editor, children }) => (
+    <EditorInstanceContext.Provider value={editor}>
+      {children}
+    </EditorInstanceContext.Provider>
+  );
+
+  dragAndDrop = {
+    state: new DragAndDropState(),
+    useState: useDragAndDropState,
+    useBlockState: useDragAndDropBlockState,
+    useDndConnector,
+  };
+
+  Block = BlockRoot;
+  Dropzone = Dropzone;
 
   constructor(options: EditorViewOptions) {
     this._options = options;
@@ -100,6 +128,27 @@ export class EditorView {
     this.dispatch = this.dispatch.bind(this);
 
     // this.updatePluginViews();
+
+    if (
+      this.options.extensionProviders &&
+      this.options.extensionProviders.length
+    ) {
+      this.ExtensionProviders = this.options.extensionProviders.reduce(
+        (Prev, Current) => {
+          // eslint-disable-next-line react/display-name
+          return ({ Renderer, editor, children }) => (
+            <Prev Renderer={Renderer} editor={editor}>
+              <Current Renderer={Renderer} editor={editor}>
+                {children}
+              </Current>
+            </Prev>
+          );
+        },
+        this.ExtensionProviders,
+      );
+
+      this.ExtensionProviders.displayName = 'ExtensionProviders';
+    }
   }
 
   get options() {
@@ -167,11 +216,7 @@ export class EditorView {
       (ui, [name, Component]) => {
         const ComponentWithViewInjected = React.forwardRef<HTMLElement>(
           (props, ref) => {
-            return React.createElement(Component, {
-              ...props,
-              view: this,
-              ref,
-            });
+            return <Component {...props} view={this} ref={ref} />;
           },
         );
 

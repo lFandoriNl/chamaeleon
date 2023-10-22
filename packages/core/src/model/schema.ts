@@ -214,7 +214,7 @@ export class BlockType {
   create(
     props: Props | null = null,
     style: Style | null = null,
-    content?: Fragment | Block | readonly Block[] | null,
+    content?: Fragment | Block | Block[] | null,
     id?: Block['id'],
   ) {
     return new Block(
@@ -224,6 +224,14 @@ export class BlockType {
       Fragment.from(content),
       id,
     );
+  }
+
+  isAllowedContent(block: Block) {
+    if (!block.type.spec.allowContent) return true;
+
+    return this.schema
+      .getAllowContent(this.spec.allowContent)
+      .some((blockType) => blockType.name === block.type.name);
   }
 
   validContent(_content: Fragment) {
@@ -285,7 +293,7 @@ export class Schema<Blocks extends string = any> {
     type: BlockType | string,
     props: Props | null = null,
     style: Style | null = null,
-    content?: Fragment | Block | readonly Block[],
+    content?: Fragment | Block | Block[],
     id?: Block['id'],
   ) {
     if (typeof type == 'string') {
@@ -309,7 +317,18 @@ export class Schema<Blocks extends string = any> {
     return found;
   }
 
-  getAllowContent(allowContent: NonNullable<BlockSpec['allowContent']>) {
+  getAllowContentAsChildren(block: Block) {
+    return Object.values(this.blocks).filter((blockType) => {
+      const allowContent = this.getAllowContent(blockType.spec.allowContent);
+
+      return allowContent.some((b) => b.name === block.type.name);
+    });
+  }
+
+  getAllowContent(value: Block | BlockSpec['allowContent']) {
+    const allowContent =
+      (value instanceof Block ? value.type.spec.allowContent : value) || {};
+
     return Object.values(this.blocks).filter((blockType) => {
       if (allowContent.name && allowContent.name.includes(blockType.name)) {
         return true;

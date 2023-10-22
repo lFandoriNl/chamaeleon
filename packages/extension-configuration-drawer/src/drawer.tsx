@@ -24,10 +24,10 @@ export const Drawer = ({
       {enableOverlay && (
         <div
           className={clsx(
-            'fixed inset-0 opacity-0 bg-[#00000080] transition-all ease-in-out duration-300',
+            'fixed inset-0 bg-[#00000080] opacity-0 transition-all duration-300 ease-in-out',
             {
-              'opacity-30 z-0': open,
-              'opacity-0 -z-10 invisible': !open,
+              'z-0 opacity-30': open,
+              'invisible -z-10 opacity-0': !open,
             },
           )}
           aria-hidden="true"
@@ -37,8 +37,8 @@ export const Drawer = ({
       <div
         tabIndex={-1}
         className={clsx(
-          `fixed top-0 flex flex-col flex-shrink-0 h-full outline-0 z-[1200] overflow-y-auto bg-white`,
-          'transition-all ease-in-out duration-300',
+          `fixed top-0 z-[1200] flex h-full flex-shrink-0 flex-col overflow-y-auto bg-white outline-0`,
+          'transition-all duration-300 ease-in-out',
           {
             'invisible flex-shrink-0': !open,
             'translate-x-full': !open && direction === 'right',

@@ -1,7 +1,21 @@
 import { nanoid } from 'nanoid';
 
+import { Blocks } from '../state';
 import { Fragment } from './fragment';
 import { Props, Style, BlockType, Schema } from './schema';
+
+// FYI: incremental variant for creating id for lightweight debugging
+
+// const ids: Record<string, number> = {};
+
+// function getId(name: string) {
+//   if (ids[name] === undefined) {
+//     ids[name] = 0;
+//     return String(name + '-' + ids[name]++);
+//   } else {
+//     return String(name + '-' + ids[name]++);
+//   }
+// }
 
 export class Block {
   private _style: Style;
@@ -11,6 +25,7 @@ export class Block {
     readonly props: Props,
     style: Style,
     readonly children: Fragment,
+    // readonly id: string = getId(type.name),
     readonly id: string = nanoid(10),
   ) {
     this._style = style;
@@ -35,6 +50,29 @@ export class Block {
         ];
       }),
     );
+  }
+
+  hasNestedBlock(blockId: Block['id'], blocks: Blocks): boolean {
+    const block = blocks[blockId];
+
+    if (!block) return false;
+
+    return block.children.children.some((childId) =>
+      this.hasNestedBlock(childId, blocks),
+    );
+  }
+
+  getNestedBlocks(blocks: Blocks): Block[] {
+    const getBlocks = (blockId: Block['id'], blocks: Blocks): Block[] => {
+      const block = blocks[blockId];
+
+      return block.children.children
+        .map((childId) => getBlocks(childId, blocks))
+        .flat()
+        .concat(block);
+    };
+
+    return getBlocks(this.id, blocks);
   }
 
   static fromJSON(schema: Schema, json: any): Block {

@@ -12,7 +12,11 @@ export {
 } from './state';
 export { Block } from './model';
 export * as commands from './commands';
+
+export * from './tailwind-plugin';
+
 export type {
+  Provider,
   EditorEvents,
   BlockViewRenderer,
   BlockViewRendererPack,

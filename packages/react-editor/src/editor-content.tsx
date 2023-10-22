@@ -1,5 +1,5 @@
-import { Editor } from '@chamaeleon/core';
-import { PanelButton } from '@chamaeleon/uikit';
+import { Editor, Block } from '@chamaeleon/core';
+import { Button } from '@chamaeleon/uikit';
 
 import { Renderer } from './renderer';
 import { useEditorSelector } from './use-editor-selector';
@@ -34,29 +34,35 @@ type EditorContentProps = {
 export const EditorContent = ({ editor }: EditorContentProps) => {
   const [rootPage] = useEditorSelector(({ editor }) => editor.state.rootPage);
 
-  if (!rootPage) {
-    return (
+  return (
+    <editor.view.ExtensionProviders
+      Renderer={(props: { block: Block }) => (
+        <Renderer block={props.block} editor={editor} componentType="editor" />
+      )}
+      editor={editor}
+    >
       <div className="editor-root">
-        <div className="flex justify-center">
-          <PanelButton
-            onClick={() => {
-              editor.chain.addPage(null).select().run();
-            }}
-          >
-            Add first page
-          </PanelButton>
-        </div>
+        {rootPage ? (
+          <Renderer block={rootPage} editor={editor} componentType="editor" />
+        ) : (
+          <div className="editor-root">
+            <div className="flex justify-center">
+              <Button
+                color="secondary"
+                onClick={() => {
+                  editor.chain.addPage(null).select().run();
+                }}
+              >
+                Add first page
+              </Button>
+            </div>
+
+            <EditorContentPortals />
+          </div>
+        )}
 
         <EditorContentPortals />
       </div>
-    );
-  }
-
-  return (
-    <div className="editor-root px-5">
-      <Renderer block={rootPage} editor={editor} componentType="editor" />
-
-      <EditorContentPortals />
-    </div>
+    </editor.view.ExtensionProviders>
   );
 };

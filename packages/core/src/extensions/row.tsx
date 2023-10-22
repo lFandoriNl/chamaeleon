@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import clsx from 'clsx';
 
@@ -96,62 +97,81 @@ export const Row = BlockExtension.create({
       editor: ({ block, children, editor }) => {
         const { ui } = editor.view;
 
+        const { isOver, isAvailableDrop } =
+          editor.view.dragAndDrop.useBlockState(block);
+
+        const referenceRef = useRef<HTMLElement>(null);
+
         return (
-          <ui.ActionsTooltip
-            components={[
-              {
-                placement: 'top-end',
-                component: (
-                  <ui.ActionSettingsButton
-                    onClick={(event) => {
-                      editor.commands.intention(
-                        block.id,
-                        'change-properties',
-                        event.nativeEvent,
-                      );
-                    }}
-                  />
-                ),
-              },
-              {
-                show: block.children.isEmpty,
-                placement: 'left',
-                component: (
-                  <ui.ActionAddBlockButton
-                    onClick={(event) => {
-                      editor.commands.intention(
-                        block.id,
-                        'add-block',
-                        event.nativeEvent,
-                      );
-                    }}
-                  />
-                ),
-              },
-            ]}
-          >
+          <editor.view.Block id={block.id} ref={referenceRef}>
             {block.children.isEmpty ? (
-              <ui.PanelButton className="w-full" style={block.style.root}>
-                Empty row
-              </ui.PanelButton>
+              <div>
+                <editor.view.Dropzone>
+                  <div
+                    className={clsx(
+                      'hover:block-highlight flex w-full justify-center bg-white p-5',
+                      'border-2 border-dashed border-gray-500',
+                      {
+                        'available-drop': isAvailableDrop,
+                        'dropzone-over': isOver,
+                      },
+                    )}
+                    style={block.style.root}
+                  >
+                    <ui.ActionAddBlockButton
+                      onClick={(event) => {
+                        editor.commands.intention(
+                          block.id,
+                          'add-block',
+                          event.nativeEvent,
+                        );
+                      }}
+                    />
+                  </div>
+                </editor.view.Dropzone>
+              </div>
             ) : (
               <div
                 className={clsx(
-                  'e-row w-full grid gap-4 hover:bg-slate-100',
+                  'e-row hover:block-highlight grid w-full gap-4 p-5',
                   columnMap[block.props.columns],
+                  {
+                    'available-drop': isAvailableDrop,
+                    'dropzone-over': isOver,
+                  },
                 )}
                 style={block.style.root}
               >
-                {children}
-
-                <ui.AddExtraBlock
-                  onClick={() => editor.commands.addColumn(block.id)}
+                <editor.view.Dropzone
+                  strategy={block.props.columns === 1 ? 'vertical' : 'rect'}
                 >
-                  Add column
-                </ui.AddExtraBlock>
+                  {children}
+                </editor.view.Dropzone>
+
+                <div className="flex items-center justify-center py-2">
+                  <ui.ActionAddBlockButton
+                    onClick={() => editor.commands.addColumn(block.id)}
+                  />
+                </div>
               </div>
             )}
-          </ui.ActionsTooltip>
+
+            <ui.ActionPopover referenceRef={referenceRef} placement="top-start">
+              <ui.DragButton />
+            </ui.ActionPopover>
+
+            <ui.ActionPopover referenceRef={referenceRef} placement="top-end">
+              <ui.ActionSettingsButton
+                onClick={(event) => {
+                  editor.commands.intention(
+                    block.id,
+                    'change-properties',
+                    event.nativeEvent,
+                  );
+                }}
+              />
+            </ui.ActionPopover>
+          </editor.view.Block>
         );
       },
       palette: () => {
@@ -188,7 +208,7 @@ export const Row = BlockExtension.create({
               <div>
                 <p className="text-lg">Select the number of columns</p>
 
-                <div className="flex space-x-4 mb-5">
+                <div className="mb-5 flex space-x-4">
                   <ButtonGroup color="secondary" size="medium">
                     {Array(12)
                       .fill(0)

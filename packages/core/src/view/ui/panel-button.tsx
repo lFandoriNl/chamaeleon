@@ -15,16 +15,16 @@ export const PanelButton = forwardRef<HTMLButtonElement, PanelButtonProps>(
   ({ className, onClick, view: _, ...props }, ref) => {
     return (
       <button
-        ref={ref}
         className={clsx(
           'ui-panel-button',
-          'h-16 py-4 px-6 rounded-xl text-base',
-          'bg-opacity-50 bg-slate-300 hover:bg-slate-300 active:bg-slate-400',
-          'focus:outline-none focus:relative focus:ring focus:ring-blue-600',
+          'h-16 rounded-xl px-6 py-4 text-base',
+          'bg-slate-200',
+          'focus:relative focus:outline-none focus:ring focus:ring-blue-600',
           className,
         )}
         onClick={onClick}
         {...props}
+        ref={ref}
       >
         {props.children}
       </button>

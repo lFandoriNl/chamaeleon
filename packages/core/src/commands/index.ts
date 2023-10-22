@@ -6,3 +6,4 @@ export * from './remove-content';
 export * from './change-property';
 export * from './change-title';
 export * from './change-value';
+export * from './move';

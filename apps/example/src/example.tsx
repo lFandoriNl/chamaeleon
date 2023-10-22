@@ -1,8 +1,8 @@
 import { Editor } from '@chamaeleon/core';
+import { Persist } from '@chamaeleon/extension-persist';
 import { History, HistoryKey } from '@chamaeleon/extension-history';
 import { AddBlockMenu } from '@chamaeleon/extension-add-block-menu';
 import { ConfigurationDrawer } from '@chamaeleon/extension-configuration-drawer';
-import { Persist } from '@chamaeleon/extension-persist';
 import {
   EditorContent,
   EditorProvider,
@@ -10,67 +10,149 @@ import {
 } from '@chamaeleon/react-editor';
 
 import { Button } from '@chamaeleon/uikit';
+import { useEffect } from 'react';
 
 const Content = () => {
   const [state, editor] = useEditorSelector(({ editor }) => editor.state);
 
   const historyState = HistoryKey.getState(state);
 
+  const isStateEmpty = Object.keys(state.blocks).length === 0;
+
   return (
     <div>
-      <div className="flex flex-row p-2 border-b space-x-2">
-        <div className="space-x-2">
-          <Button color="secondary" onClick={() => editor.commands.undo()}>
-            Undo
-          </Button>
+      <div className="border-b">
+        <div className="flex flex-row space-x-2 p-2">
+          <div className="space-x-2">
+            <Button color="secondary" onClick={() => editor.commands.undo()}>
+              Undo
+            </Button>
 
-          <Button color="secondary" onClick={() => editor.commands.redo()}>
-            Redo
-          </Button>
+            <Button color="secondary" onClick={() => editor.commands.redo()}>
+              Redo
+            </Button>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <p className="inline text-base">
+              Current version: {historyState.currentVersion + 1}
+              {' / '}
+              {historyState.supportedVersions}
+            </p>
+
+            <span>|</span>
+
+            <p className="inline text-base">
+              History stack: {historyState.historyTransactions.length}
+            </p>
+          </div>
+
+          <div className="space-x-2">
+            <Button color="secondary" onClick={() => editor.commands.persist()}>
+              Persist
+            </Button>
+
+            <Button
+              color="secondary"
+              onClick={() => editor.commands.clearPersisted()}
+            >
+              Clear
+            </Button>
+
+            <Button
+              color="secondary"
+              onClick={() => {
+                editor.commands.clearPersisted();
+                window.location.reload();
+              }}
+            >
+              Reload
+            </Button>
+          </div>
         </div>
 
-        <div className="flex items-center space-x-2">
-          <p className="inline text-base">
-            Current version: {historyState.currentVersion + 1}
-            {' / '}
-            {historyState.supportedVersions}
-          </p>
-
-          <span>|</span>
-
-          <p className="inline text-base">
-            History stack: {historyState.historyTransactions.length}
-          </p>
-        </div>
-
-        <div className="space-x-2">
-          <Button color="secondary" onClick={() => editor.commands.persist()}>
-            Persist
+        <div className="space-x-2 p-2">
+          <Button
+            color="secondary"
+            disabled={!isStateEmpty}
+            onClick={() => {
+              editor.chain.addPage(null).select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addColumn(editor.state.activeId!).select().run();
+              editor.chain.addRow('root').select().run();
+            }}
+          >
+            Preset default
           </Button>
 
           <Button
             color="secondary"
-            onClick={() => editor.commands.clearPersisted()}
+            disabled={!isStateEmpty}
+            onClick={() => {
+              editor.chain.addPage(null).select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+            }}
           >
-            Clear
+            Preset only rows
+          </Button>
+
+          <Button
+            color="secondary"
+            disabled={!isStateEmpty}
+            onClick={() => {
+              editor.chain.addPage(null).select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addColumn(editor.state.activeId!).run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+            }}
+          >
+            Preset rows with nested columns
+          </Button>
+
+          <Button
+            color="secondary"
+            disabled={!isStateEmpty}
+            onClick={() => {
+              editor.chain.addPage(null).select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain
+                .addColumn(editor.state.activeId!)
+                .addColumn(editor.state.activeId!)
+                .addColumn(editor.state.activeId!)
+                .run();
+            }}
+          >
+            Preset row with columns
           </Button>
         </div>
       </div>
 
-      <EditorContent editor={editor} />
+      <div className="px-5">
+        <EditorContent editor={editor} />
+      </div>
     </div>
   );
 };
 
 const editor = new Editor({
   extensions: [
+    Persist.configure({
+      // expireIn: 1 * 60 * 1000,
+    }),
     History.configure({ limit: 10 }),
     AddBlockMenu,
     ConfigurationDrawer,
-    Persist.configure({
-      expireIn: 1 * 60 * 1000,
-    }),
   ],
+  logger: {
+    enabled: true,
+  },
 });
 
 // @ts-expect-error
@@ -110,17 +192,21 @@ editor.on('update', ({ transaction }) => {
   });
 });
 
-// editor.chain.addPage(null).select().run();
-
-// editor.chain.addRow(editor.state.activeId!).select().run();
-
 export const Example = () => {
+  useEffect(() => {
+    editor.logger.init({
+      element: '.log',
+    });
+  }, []);
+
   return (
     <EditorProvider value={editor}>
-      <div className="flex">
+      <div className="flex flex-col">
         <div className="w-full">
           <Content />
         </div>
+
+        <div className="log h-[1000px] overflow-scroll p-5"></div>
       </div>
     </EditorProvider>
   );

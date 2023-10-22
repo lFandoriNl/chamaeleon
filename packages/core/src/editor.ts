@@ -5,11 +5,21 @@ import { ExtensionManager } from './extension-manager';
 import { CommandManager } from './command-manager';
 import { EventEmitter } from './event-emitter';
 
-import { Commands, BaseStyle, Page, Row, Column, Text } from './extensions';
+import {
+  Commands,
+  DragAndDrop,
+  BaseStyle,
+  Page,
+  Row,
+  Column,
+  Text,
+} from './extensions';
 
 import { Schema } from './model/schema';
 
 import { EditorEvents, Extensions, SingleCommands } from './types';
+import { Logger, createLogger } from './logger';
+import { noop } from './utilities/noop';
 
 export type EditorOptions = Pick<
   EditorViewOptions,
@@ -17,6 +27,9 @@ export type EditorOptions = Pick<
 > & {
   blocks: RawBlocks;
   extensions: Extensions;
+  logger?: {
+    enabled?: boolean;
+  };
 };
 
 export class Editor extends EventEmitter<EditorEvents> {
@@ -31,6 +44,16 @@ export class Editor extends EventEmitter<EditorEvents> {
   options: EditorOptions = {
     blocks: {},
     extensions: [],
+  };
+
+  logger: Logger = {
+    init: noop,
+    log: noop,
+    info: noop,
+    warn: noop,
+    error: noop,
+    action: noop,
+    system: noop,
   };
 
   constructor(options: Partial<EditorOptions> = {}) {
@@ -48,6 +71,10 @@ export class Editor extends EventEmitter<EditorEvents> {
 
     this.createView();
 
+    if (options.logger?.enabled) {
+      this.logger = createLogger();
+    }
+
     this.initExtensions();
   }
 
@@ -55,6 +82,8 @@ export class Editor extends EventEmitter<EditorEvents> {
     await this.extensionManager.init();
 
     this.emit('ready', { editor: this });
+
+    this.logger.system('Editor initialized.');
   }
 
   get state() {
@@ -84,7 +113,15 @@ export class Editor extends EventEmitter<EditorEvents> {
   }
 
   private createExtensionManager() {
-    const coreExtensions = [Commands, BaseStyle, Page, Row, Column, Text];
+    const coreExtensions = [
+      Commands,
+      DragAndDrop,
+      BaseStyle,
+      Page,
+      Row,
+      Column,
+      Text,
+    ];
 
     const allExtensions = [...coreExtensions, ...this.options.extensions];
 
@@ -101,6 +138,7 @@ export class Editor extends EventEmitter<EditorEvents> {
       dispatchTransaction: this.dispatchTransaction.bind(this),
       propertyConfigurationRender: this.options.propertyConfigurationRender,
       ui: this.options.ui,
+      extensionProviders: this.extensionManager.providers,
     });
 
     this.createBlockViews();
@@ -113,10 +151,6 @@ export class Editor extends EventEmitter<EditorEvents> {
   }
 
   private dispatchTransaction(transaction: Transaction) {
-    // if (this.view.isDestroyed) {
-    //   return;
-    // }
-
     const state = this.state.apply(transaction);
 
     this.view.updateState(state);
