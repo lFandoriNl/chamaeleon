@@ -24,7 +24,7 @@ const Content = () => {
   return (
     <div>
       <div className="border-b">
-        <div className="flex flex-row space-x-2 p-2">
+        <div className="flex flex-col space-x-2 p-2 sm:flex-row">
           <div className="space-x-2">
             <Button color="secondary" onClick={() => editor.commands.undo()}>
               Undo
@@ -35,7 +35,7 @@ const Content = () => {
             </Button>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 py-4 sm:py-0">
             <p className="inline text-base">
               Current version: {historyState.currentVersion + 1}
               {' / '}
@@ -73,7 +73,7 @@ const Content = () => {
           </div>
         </div>
 
-        <div className="space-x-2 p-2">
+        <div className="flex flex-col space-y-2 p-2 sm:flex-row sm:space-x-2 sm:space-y-0">
           <Button
             color="secondary"
             disabled={!isStateEmpty}
