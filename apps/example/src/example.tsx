@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { Editor } from '@chamaeleon/core';
 import { Persist } from '@chamaeleon/extension-persist';
 import { History, HistoryKey } from '@chamaeleon/extension-history';
@@ -10,7 +12,7 @@ import {
 } from '@chamaeleon/react-editor';
 
 import { Button } from '@chamaeleon/uikit';
-import { useEffect } from 'react';
+import { Button as ButtonExtension } from './button';
 
 const Content = () => {
   const [state, editor] = useEditorSelector(({ editor }) => editor.state);
@@ -146,9 +148,10 @@ const editor = new Editor({
     Persist.configure({
       // expireIn: 1 * 60 * 1000,
     }),
-    History.configure({ limit: 10 }),
+    History.configure({ limit: 100 }),
     AddBlockMenu,
     ConfigurationDrawer,
+    ButtonExtension,
   ],
   logger: {
     enabled: true,

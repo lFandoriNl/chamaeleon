@@ -82,6 +82,15 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
     }),
   );
 
+  const move = (
+    fromContainerId: Block['id'],
+    toContainerId: Block['id'],
+    from: number,
+    to: number,
+  ) => {
+    editor.commands.move(fromContainerId, toContainerId, from, to);
+  };
+
   return (
     <DndContext
       sensors={sensors}
@@ -196,7 +205,7 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
               )}`,
             ]);
 
-            editor.commands.move(activeBlock.id, overBlock.id, from, to);
+            move(activeBlock.id, overBlock.id, from, to);
           }
 
           return;
@@ -230,7 +239,7 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
             )}`,
           ]);
 
-          editor.commands.move(activeContainer.id, overBlock.id, from, to);
+          move(activeContainer.id, overBlock.id, from, to);
         } else if (isAllowedOverContainer) {
           logger.action([
             'move to target ' + blockToLog(overContainer),
@@ -243,7 +252,7 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
             )}`,
           ]);
 
-          editor.commands.move(activeContainer.id, overContainer.id, from, to);
+          move(activeContainer.id, overContainer.id, from, to);
         }
       }}
       onDragEnd={({ active, over }) => {
@@ -293,7 +302,7 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
             )}`,
           ]);
 
-          editor.commands.move(activeContainer.id, overContainer.id, from, to);
+          move(activeContainer.id, overContainer.id, from, to);
           return;
         }
       }}

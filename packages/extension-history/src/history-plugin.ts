@@ -42,7 +42,7 @@ export function history(options: HistoryOptions) {
         };
       },
       apply(tr, value) {
-        if (tr.steps.length == 0) {
+        if (tr.steps.length == 0 || tr.getMeta('preventHistory')) {
           return value;
         }
 
