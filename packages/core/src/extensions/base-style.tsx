@@ -20,7 +20,7 @@ export const BaseStyle = Extension.create({
         },
 
         view: (view) => ({
-          update() {
+          render() {
             const { state } = view;
             const { activeBlock } = state;
 

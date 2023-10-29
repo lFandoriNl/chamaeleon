@@ -6,6 +6,21 @@ import { Block } from '../model';
 
 import { JSONContent } from '../types';
 
+const columnsMap = {
+  1: 'col-span-1',
+  2: 'col-span-2',
+  3: 'col-span-3',
+  4: 'col-span-4',
+  5: 'col-span-5',
+  6: 'col-span-6',
+  7: 'col-[span_7_/_span_7]',
+  8: 'col-[span_8_/_span_8]',
+  9: 'col-[span_9_/_span_9]',
+  10: 'col-[span_10_/_span_10]',
+  11: 'col-[span_11_/_span_11]',
+  12: 'col-[span_12_/_span_12]',
+} as Record<number, string>;
+
 declare module '..' {
   interface Commands<ReturnType> {
     column: {
@@ -27,16 +42,21 @@ export const Column = BlockExtension.create({
     withValue: true,
   },
 
+  addProperties() {
+    return {
+      colSpan: {
+        default: 6,
+        isRequired: true,
+      },
+    };
+  },
+
   addStyle() {
     return {
       root: {
         marginLeft: {},
       },
     };
-  },
-
-  addProperties() {
-    return {};
   },
 
   addCommands() {
@@ -57,7 +77,10 @@ export const Column = BlockExtension.create({
     return {
       natural: ({ block, children }) => {
         return (
-          <div className={clsx('e-column')} style={block.style.root}>
+          <div
+            className={clsx('e-column', columnsMap[block.props.colSpan])}
+            style={block.style.root}
+          >
             {children}
           </div>
         );
@@ -73,18 +96,19 @@ export const Column = BlockExtension.create({
         return (
           <editor.view.Block id={block.id} ref={referenceRef}>
             {block.children.isEmpty ? (
-              <div>
+              <div
+                className={clsx(
+                  'e-column hover:block-highlight flex w-full items-center justify-center border-2 border-dashed border-gray-500 bg-white p-5',
+                  columnsMap[block.props.colSpan],
+                  {
+                    'available-drop': isAvailableDrop,
+                    'dropzone-over': isOver,
+                  },
+                )}
+                style={block.style.root}
+              >
                 <editor.view.Dropzone>
-                  <div
-                    className={clsx(
-                      'hover:block-highlight flex w-full justify-center border-2 border-dashed border-gray-500 bg-white p-5',
-                      {
-                        'available-drop': isAvailableDrop,
-                        'dropzone-over': isOver,
-                      },
-                    )}
-                    style={block.style.root}
-                  >
+                  <div>
                     <ui.ActionAddBlockButton
                       onClick={(event) => {
                         editor.commands.intention(
@@ -99,10 +123,14 @@ export const Column = BlockExtension.create({
               </div>
             ) : (
               <div
-                className={clsx('e-column hover:block-highlight p-5', {
-                  'available-drop': isAvailableDrop,
-                  'dropzone-over': isOver,
-                })}
+                className={clsx(
+                  'e-column hover:block-highlight p-5',
+                  columnsMap[block.props.colSpan],
+                  {
+                    'available-drop': isAvailableDrop,
+                    'dropzone-over': isOver,
+                  },
+                )}
                 style={block.style.root}
               >
                 <editor.view.Dropzone strategy="vertical">

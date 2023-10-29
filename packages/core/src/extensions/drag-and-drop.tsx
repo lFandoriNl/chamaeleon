@@ -126,11 +126,9 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
         const activeId = active.id as Block['id'];
         const overId = over.id as Block['id'];
 
-        const { containerId: activeContainerId, index: fromIndex } =
-          active.data.current.sortable;
+        const { containerId: activeContainerId } = active.data.current.sortable;
 
-        const { containerId: overContainerId, index: toIndex } =
-          over.data.current.sortable;
+        const { containerId: overContainerId } = over.data.current.sortable;
 
         if (activeId === overId) return;
 
@@ -142,8 +140,6 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
 
         const from = activeContainer.children.indexOf(activeBlock);
         const to = overContainer.children.indexOf(overBlock);
-
-        console.log({ fromIndex, toIndex });
 
         const { logger } = editor;
 
@@ -157,8 +153,6 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
         });
 
         const isAllowedOverBlock = overBlock.type.isAllowedContent(activeBlock);
-
-        console.log({ isAllowedOverBlock });
 
         if (isAllowedOverBlock) {
           logger.action('changeOverContainerId to ' + blockToLog(overBlock));

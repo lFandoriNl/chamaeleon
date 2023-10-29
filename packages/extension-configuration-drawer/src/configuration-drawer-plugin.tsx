@@ -121,7 +121,7 @@ class ConfigurationDrawerView implements PluginView {
     this.element = options.element;
   }
 
-  update(view: EditorView) {
+  render(view: EditorView) {
     const { open } = this.pluginKey.getState(view.state);
 
     if (!view.state.activeBlock) return null;

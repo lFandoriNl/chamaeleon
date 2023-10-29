@@ -23,6 +23,14 @@ export class Fragment {
     );
   }
 
+  at(index: number): Block['id'] | undefined {
+    return this.children[index];
+  }
+
+  slice(start?: number, end?: number) {
+    return this.children.slice(start, end);
+  }
+
   remove(ids: Array<Block['id'] | number>) {
     return new Fragment(
       this.children.filter((id, index) => {
@@ -65,7 +73,11 @@ export class Fragment {
     ]);
   }
 
-  append(block: Block) {
+  append(block: Block | Block[]) {
+    if (Array.isArray(block)) {
+      return new Fragment([...this.children, ...block.map((b) => b.id)]);
+    }
+
     return new Fragment([...this.children, block.id]);
   }
 

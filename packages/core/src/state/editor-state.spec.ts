@@ -39,7 +39,7 @@ describe('EditorState', () => {
 
     const block = state.schema.block('page');
 
-    const { activeId } = tr.insertContent(block.id, block).select();
+    const { activeId } = tr.insertContent(block.id, [block]).select();
 
     const newState = state.apply(tr);
 
@@ -58,7 +58,7 @@ describe('EditorState', () => {
 
       if (oldState.blocks[block.id]?.id === block.id) return null;
 
-      return tr.insertContent(block.id, block);
+      return tr.insertContent(block.id, [block]);
     });
 
     const appendedTransactionSecond = vi.fn<

@@ -1,5 +1,18 @@
 # @chamaeleon/core
 
+## 0.4.0
+
+### Minor Changes
+
+- Added support for configuration templates for `Row`
+- Added `property.propertyMatch` for `Plugin['property-configuration']`
+- Renamed `plugin.view.update` to `plugin.view.render`
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/uikit@0.1.0
+
 ## 0.3.0
 
 ### Minor Changes

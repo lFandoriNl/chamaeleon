@@ -6,29 +6,35 @@ import { Block } from '../model';
 export class InsertStep extends Step {
   constructor(
     private target: Block['id'],
-    private block: Block,
+    private blocks: Array<Block | Block['id']>,
   ) {
     super();
   }
 
   apply(blocks: Blocks) {
     const newBlocks = this.produceWithPatches(blocks, (draft) => {
+      const paramBlocks = this.blocks.map((block) =>
+        typeof block === 'string' ? draft[block] : block,
+      );
+
       if (draft[this.target]) {
-        draft[this.block.id] = this.block;
+        paramBlocks.forEach((block) => {
+          draft[block.id] = block;
+        });
 
         draft[this.target] = draft[this.target].type.create(
           draft[this.target].props,
           draft[this.target].style,
-          draft[this.target].children.append(this.block),
+          draft[this.target].children.append(paramBlocks),
           draft[this.target].id,
         );
-
-        this.meta.changedParent = this.target;
       } else {
-        draft[this.target] = this.block;
+        draft[this.target] = paramBlocks[0];
       }
 
-      this.meta.changed = this.block.id;
+      this.meta.changedParent = this.target;
+
+      this.meta.changed = paramBlocks[paramBlocks.length - 1].id;
     });
 
     return StepResult.ok(newBlocks);

@@ -67,6 +67,10 @@ export type PluginSpec<PluginState, T extends PluginType = PluginType> = {
     type: 'property-configuration';
     property: {
       name: string;
+      /**
+       * @default true
+       */
+      propertyMatch?: boolean;
       applicable: BlockSpec['allowContent'];
     };
     state?: StateField<PluginState>;
@@ -97,15 +101,12 @@ export type PluginSpec<PluginState, T extends PluginType = PluginType> = {
 }[T];
 
 export interface PluginView {
-  update?: (
-    view: EditorView,
-    prevState: EditorState,
-  ) => React.ReactPortal | null;
+  render?: (view: EditorView, prevState: EditorState) => React.ReactNode;
   destroy?: () => void;
 }
 
 export interface StylePluginView {
-  update?: (
+  render?: (
     element: keyof Style,
     view: EditorView,
     prevState: EditorState,

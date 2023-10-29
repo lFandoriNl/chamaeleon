@@ -51,10 +51,8 @@ export class EditorView {
   private _options: EditorViewOptions;
 
   propertyConfiguration: {
-    element: HTMLElement | null;
     Render: React.FunctionComponent<{ view: EditorView }>;
   } = {
-    element: null,
     Render: PropertyConfigurationRender,
   };
 
@@ -73,7 +71,7 @@ export class EditorView {
         renderRules: {
           conditionals: Array<() => boolean>;
         };
-        updateParams: () => Parameters<NonNullable<PluginView['update']>>;
+        updateParams: () => Parameters<NonNullable<PluginView['render']>>;
         view: ReturnType<NonNullable<Plugin<any, type>['spec']['view']>>;
       };
     }[PluginType]
@@ -126,8 +124,6 @@ export class EditorView {
     this.state = options.state;
 
     this.dispatch = this.dispatch.bind(this);
-
-    // this.updatePluginViews();
 
     if (
       this.options.extensionProviders &&
@@ -207,10 +203,6 @@ export class EditorView {
     return this.options.blockViews[name];
   }
 
-  setPropertyConfigurationElement(element: HTMLElement) {
-    this.propertyConfiguration.element = element;
-  }
-
   private injectViewToUI() {
     this.ui = (Object.entries(this.rawUI) as any[]).reduce(
       (ui, [name, Component]) => {
@@ -266,15 +258,20 @@ export class EditorView {
 
                 if (!activeBlock) return false;
 
-                if (activeBlock.type.props[property.name]) {
-                  const allowBlocks = state.schema
-                    .getAllowContent(property.applicable || {})
-                    .map((blockType) => blockType.name);
+                const propertyMatch = property.propertyMatch ?? true;
 
-                  return allowBlocks.includes(activeBlock.type.name);
+                if (
+                  propertyMatch &&
+                  activeBlock.type.props[property.name] === undefined
+                ) {
+                  return false;
                 }
 
-                return false;
+                const allowBlocks = state.schema
+                  .getAllowContent(property.applicable || {})
+                  .map((blockType) => blockType.name);
+
+                return allowBlocks.includes(activeBlock.type.name);
               },
             ],
           },

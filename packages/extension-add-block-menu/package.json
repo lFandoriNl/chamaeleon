@@ -2,7 +2,7 @@
   "name": "@chamaeleon/extension-add-block-menu",
   "description": "Chamaeleon extension for adding blocks",
   "private": false,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publishConfig": {
     "access": "public"
   },

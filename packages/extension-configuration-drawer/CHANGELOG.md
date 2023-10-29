@@ -1,5 +1,14 @@
 # @chamaeleon/extension-configuration-drawer
 
+## 0.1.4
+
+### Patch Changes
+
+- Renamed `plugin.view.update` to `plugin.view.render`
+- Updated dependencies
+  - @chamaeleon/uikit@0.1.0
+  - @chamaeleon/core@0.4.0
+
 ## 0.1.3
 
 ### Patch Changes

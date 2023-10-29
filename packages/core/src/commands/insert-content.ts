@@ -16,6 +16,6 @@ export const insertContent: RawCommands['insertContent'] =
     const blocks = createBlocksFromContent(content, editor.schema);
 
     if (blocks instanceof Block) {
-      tr.insertContent(target, blocks);
+      tr.insertContent(target, [blocks]);
     }
   };

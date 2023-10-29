@@ -19,7 +19,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           className,
           'ui-button',
           color,
-          'rounded-xl',
+          'rounded-lg border',
           'focus:relative focus:outline-none focus:ring focus:ring-blue-600',
           {
             large: 'px-4 py-2 text-lg',

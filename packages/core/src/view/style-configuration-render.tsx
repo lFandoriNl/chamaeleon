@@ -41,7 +41,7 @@ export const StyleConfigurationRender = ({
             ) {
               return (
                 <Fragment key={element + pluginKey}>
-                  {view.update?.(element, ...updateParams())}
+                  {view.render?.(element, ...updateParams())}
                 </Fragment>
               );
             }

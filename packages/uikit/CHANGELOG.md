@@ -1,5 +1,11 @@
 # @chamaeleon/uikit
 
+## 0.1.0
+
+### Minor Changes
+
+- Added `Input`
+
 ## 0.0.3
 
 ### Patch Changes

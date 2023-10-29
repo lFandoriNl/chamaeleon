@@ -166,12 +166,13 @@ if (reduxDevToolsExtension) {
 
   editor.on('transaction', ({ editor, transaction }) => {
     if (transaction.getMeta(HistoryKey)) {
-      return devTools.send(`${transaction.getMeta(HistoryKey)}-transaction`, {
-        ...editor.state,
-      });
+      return devTools.send(
+        `${transaction.getMeta(HistoryKey)}-transaction`,
+        editor.state,
+      );
     }
 
-    devTools.send('transaction', { ...editor.state });
+    devTools.send('transaction', editor.state);
   });
 }
 

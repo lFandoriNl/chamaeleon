@@ -21,7 +21,7 @@ const EditorContentPortals = () => {
 
         if (!canRender) return null;
 
-        return view.update?.(...updateParams());
+        return view.render?.(...updateParams());
       })}
     </div>
   );

@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { EditorView } from '.';
 
 type PropertyConfigurationRender = {
@@ -8,12 +9,7 @@ export const PropertyConfigurationRender = ({
   view,
 }: PropertyConfigurationRender) => {
   return (
-    <div
-      className="property-configuration-place"
-      ref={(ref) => {
-        ref && view.setPropertyConfigurationElement(ref);
-      }}
-    >
+    <div className="property-configuration-place">
       {Array.from(view.pluginViews).map(([_, pluginView]) => {
         if (pluginView.type !== 'property-configuration') return null;
 
@@ -25,7 +21,11 @@ export const PropertyConfigurationRender = ({
 
         if (!canRender) return null;
 
-        return view.update?.(...updateParams());
+        return (
+          <Fragment key={pluginView.plugin.key}>
+            {view.render?.(...updateParams())}
+          </Fragment>
+        );
       })}
     </div>
   );

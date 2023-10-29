@@ -35,7 +35,7 @@ class AddBlockMenuView implements PluginView {
     this.element = options.element;
   }
 
-  update(view: EditorView) {
+  render(view: EditorView) {
     const { state } = view;
 
     const { open, target, event } = this.pluginKey.getState(state);

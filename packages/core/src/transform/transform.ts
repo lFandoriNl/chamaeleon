@@ -22,10 +22,17 @@ export class Transform {
     public lastModifiedBlock: Block['id'] | null,
   ) {}
 
-  insertContent(target: Block['id'], block: Block): this {
-    this.step(new InsertStep(target, block));
+  insertContent(target: Block['id'], blocks: Array<Block | Block['id']>): this {
+    if (blocks.length === 0) {
+      throw new TypeError('The array of blocks to insert must not be empty.');
+    }
 
-    this.lastModifiedBlock = block.id;
+    this.step(new InsertStep(target, blocks));
+
+    const lastBlock = blocks[blocks.length - 1];
+
+    this.lastModifiedBlock =
+      typeof lastBlock === 'string' ? lastBlock : lastBlock.id;
 
     return this;
   }
