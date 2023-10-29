@@ -2,7 +2,7 @@
   "name": "@chamaeleon/extension-configuration-drawer",
   "description": "Chameleon extension for editing block parameters",
   "private": false,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "publishConfig": {
     "access": "public"
   },
@@ -38,8 +38,8 @@
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@chamaeleon/core": "workspace:*",
-    "@chamaeleon/uikit": "workspace:*"
+    "@chamaeleon/core": "workspace:~",
+    "@chamaeleon/uikit": "workspace:~"
   },
   "devDependencies": {
     "@types/react": "18.2.15",

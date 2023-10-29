@@ -1,5 +1,12 @@
 # @chamaeleon/extension-persist
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/core@0.4.1
+
 ## 0.1.4
 
 ### Patch Changes

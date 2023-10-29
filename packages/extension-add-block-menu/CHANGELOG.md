@@ -1,5 +1,12 @@
 # @chamaeleon/extension-add-block-menu
 
+## 0.0.8
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/core@0.4.1
+
 ## 0.0.7
 
 ### Patch Changes

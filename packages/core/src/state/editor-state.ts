@@ -239,21 +239,20 @@ export class EditorState {
     // if (!tr.before.eq(this.blocks))
     //   throw new RangeError('Applying a mismatched transaction');
 
-    const newInstance = new EditorState(this.config);
     const { fields } = this.config;
 
     for (let i = 0; i < fields.length; i++) {
       const field = fields[i];
 
-      (newInstance as any)[field.name] = field.apply(
+      (this as any)[field.name] = field.apply(
         tr,
         (this as any)[field.name],
         this,
-        newInstance,
+        this,
       );
     }
 
-    return newInstance;
+    return this;
   }
 
   static create(config: EditorStateConfig) {

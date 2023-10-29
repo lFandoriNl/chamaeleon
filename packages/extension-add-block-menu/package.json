@@ -2,7 +2,7 @@
   "name": "@chamaeleon/extension-add-block-menu",
   "description": "Chamaeleon extension for adding blocks",
   "private": false,
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publishConfig": {
     "access": "public"
   },
@@ -39,9 +39,9 @@
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@chamaeleon/core": "workspace:*",
-    "@chamaeleon/uikit": "workspace:*",
-    "@chamaeleon/hooks": "workspace:*"
+    "@chamaeleon/core": "workspace:~",
+    "@chamaeleon/uikit": "workspace:~",
+    "@chamaeleon/hooks": "workspace:~"
   },
   "devDependencies": {
     "@types/react": "18.2.15",
