@@ -27,7 +27,7 @@ export const StyleConfigurationRender = ({
       {Object.entries(activeBlock.type.style)
         .map(([layer, cssProperties]) => {
           return (
-            <>
+            <Fragment key={layer}>
               <p className="border-b pb-2 text-lg text-gray-500">{layer}</p>
 
               {pluginViews.map(([pluginKey, pluginView]) => {
@@ -52,7 +52,7 @@ export const StyleConfigurationRender = ({
 
                 return null;
               })}
-            </>
+            </Fragment>
           );
         })
         .flat()}

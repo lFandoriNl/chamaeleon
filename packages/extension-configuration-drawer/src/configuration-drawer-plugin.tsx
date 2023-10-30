@@ -1,8 +1,5 @@
-import { useState } from 'react';
 import ReactDOM from 'react-dom';
-import clsx from 'clsx';
 
-import { AiOutlineBorderLeft, AiOutlineBorderRight } from 'react-icons/ai';
 import { IoMdClose } from 'react-icons/io';
 
 import { IconButton } from '@chamaeleon/uikit';
@@ -58,38 +55,16 @@ type ConfigurationDrawerProps = {
 };
 
 const ConfigurationDrawer = ({ open, editor }: ConfigurationDrawerProps) => {
-  const [direction, setDirection] = useState<'left' | 'right'>('right');
-
   return (
     <Drawer
       open={open}
       size="500px"
       onClose={editor.commands.closeConfiguration}
-      direction={direction}
-      enableOverlay={true}
     >
       <BlockConfiguration
         view={editor.view}
         extra={
           <div>
-            <IconButton
-              className={clsx('rounded-none border !p-1 !shadow-none', {
-                '!bg-slate-200': direction === 'left',
-              })}
-              onClick={() => setDirection('left')}
-            >
-              <AiOutlineBorderLeft size={24} />
-            </IconButton>
-
-            <IconButton
-              className={clsx('rounded-none border !p-1 !shadow-none', {
-                '!bg-slate-200': direction === 'right',
-              })}
-              onClick={() => setDirection('right')}
-            >
-              <AiOutlineBorderRight size={24} />
-            </IconButton>
-
             <IconButton
               className="ml-4 !shadow-none"
               onClick={editor.commands.closeConfiguration}
@@ -124,8 +99,6 @@ class ConfigurationDrawerView implements PluginView {
 
   render(view: EditorView) {
     const { open } = this.pluginKey.getState(view.state);
-
-    if (!view.state.activeBlock) return null;
 
     return ReactDOM.createPortal(
       <ConfigurationDrawer open={open} editor={this.editor} />,

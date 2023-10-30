@@ -93,16 +93,16 @@ export const Row = BlockExtension.create({
   addStyle() {
     return {
       root: {
+        rowGap: {},
+        columnGap: {},
         gap: {
           default: '16px',
         },
-        rowGap: {},
-        columnGap: {},
-        margin: {},
         marginTop: {},
         marginRight: {},
         marginBottom: {},
         marginLeft: {},
+        margin: {},
       },
     };
   },

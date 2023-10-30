@@ -230,7 +230,6 @@ export class EditorView {
   }
 
   private updatePluginViews(prevState: EditorState) {
-    // if (!prevState || prevState.plugins != this.state.plugins) {
     if (prevState.plugins != this.state.plugins) {
       this.destroyPluginViews();
     }

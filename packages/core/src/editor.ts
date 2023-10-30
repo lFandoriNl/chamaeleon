@@ -17,7 +17,12 @@ import {
 
 import { Schema } from './model/schema';
 
-import { EditorEvents, Extensions, SingleCommands } from './types';
+import {
+  AnyExtension,
+  EditorEvents,
+  Extensions,
+  SingleCommands,
+} from './types';
 import { Logger, createLogger } from './logger';
 import { noop } from './utilities/noop';
 
@@ -164,5 +169,12 @@ export class Editor extends EventEmitter<EditorEvents> {
       editor: this,
       transaction,
     });
+  }
+
+  configureExtension<T extends AnyExtension>(
+    extension: T,
+    configure: (extension: T) => T,
+  ) {
+    this.extensionManager.configureExtension(extension, configure);
   }
 }

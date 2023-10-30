@@ -46,7 +46,7 @@ export const EditorContent = ({ editor }: EditorContentProps) => {
           <Renderer block={rootPage} editor={editor} componentType="editor" />
         ) : (
           <div className="editor-root">
-            <div className="flex justify-center">
+            <div className="flex justify-center p-10">
               <Button
                 color="secondary"
                 onClick={() => {

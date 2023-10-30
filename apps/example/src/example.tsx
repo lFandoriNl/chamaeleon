@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Editor } from '@chamaeleon/core';
 import { Persist } from '@chamaeleon/extension-persist';
@@ -20,6 +20,18 @@ const Content = () => {
   const historyState = HistoryKey.getState(state);
 
   const isStateEmpty = Object.keys(state.blocks).length === 0;
+
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (drawerRef.current) {
+      editor.configureExtension(ConfigurationDrawer, (extension) =>
+        extension.configure({
+          element: drawerRef.current,
+        }),
+      );
+    }
+  }, []);
 
   return (
     <div>
@@ -136,8 +148,12 @@ const Content = () => {
         </div>
       </div>
 
-      <div className="px-5">
-        <EditorContent editor={editor} />
+      <div className="relative flex">
+        <div className="flex-1 px-5">
+          <EditorContent editor={editor} />
+        </div>
+
+        <div ref={drawerRef} className="sticky top-0 self-start" />
       </div>
     </div>
   );

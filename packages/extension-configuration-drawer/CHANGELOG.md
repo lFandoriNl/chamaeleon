@@ -1,5 +1,16 @@
 # @chamaeleon/extension-configuration-drawer
 
+## 0.3.0
+
+### Minor Changes
+
+- The drawer style has been changed, now it appears inside the content
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/core@0.6.0
+
 ## 0.2.0
 
 ### Minor Changes

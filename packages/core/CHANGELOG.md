@@ -1,5 +1,11 @@
 # @chamaeleon/core
 
+## 0.6.0
+
+### Minor Changes
+
+- Added `editor.configureExtension` to configure the extension after startup
+
 ## 0.5.0
 
 ### Minor Changes

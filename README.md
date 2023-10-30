@@ -5,9 +5,9 @@
   - [Extensible Architecture](#extensible-architecture)
   - [Overriding Built-in Components](#overriding-built-in-components)
 - [Demo](#demo)
-- [Example](#example)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Example](#example)
 - [Local setup](#local-setup)
 
 ## Overview
@@ -32,12 +32,8 @@ Chamaeleon provides the ability to override the editor UI components, allowing u
 
 [Live demo](https://lfandorinl.github.io/chamaeleon/)
 
-<video src="https://github.com/lFandoriNl/chamaeleon/assets/23149596/f701f2fb-27ac-433b-b3dd-90ee757f107d" controls="controls" style="max-width: 500px;">
+<video src="https://github.com/lFandoriNl/chamaeleon/assets/23149596/173e5059-a58d-4021-945e-b6442061fdad" controls="controls" style="max-width: 500px;">
 </video>
-
-## Example
-
-[View examples](./docs/example/example.md)
 
 ## Prerequisites
 
@@ -76,6 +72,10 @@ If you need support persisted state:
 ```
 npm i @chamaeleon/extension-persist
 ```
+
+## Example
+
+[View examples](./docs/example/example.md)
 
 ## Local setup
 

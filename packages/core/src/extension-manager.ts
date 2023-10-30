@@ -4,7 +4,7 @@ import { getSchemaByResolvedExtensions } from './helpers/get-schema-by-resolved-
 import { splitExtensions } from './helpers/split-extensions';
 import { Schema } from './model/schema';
 import { Plugin } from './state/plugin';
-import { Extensions, Provider, RawCommands } from './types';
+import { AnyExtension, Extensions, Provider, RawCommands } from './types';
 
 export class ExtensionManager {
   editor: Editor;
@@ -56,6 +56,37 @@ export class ExtensionManager {
         await promise();
       }
     }
+  }
+
+  configureExtension<T extends AnyExtension>(
+    extension: T,
+    configure: (extension: T) => T,
+  ) {
+    const extensionToChange = this.extensions.find(
+      (ext) => ext.name === extension.name,
+    ) as T | undefined;
+
+    if (!extensionToChange) {
+      throw new Error(
+        `Extension "${extension.name}" not found in editor.configureExtension.`,
+      );
+    }
+
+    const changedExtension = configure(extensionToChange);
+
+    this.extensions = this.extensions.map((extension) => {
+      if (extension.name === changedExtension.name) {
+        return changedExtension;
+      }
+
+      return extension;
+    });
+
+    this.editor.view.updateState(
+      this.editor.state.reconfigure({
+        plugins: this.plugins,
+      }),
+    );
   }
 
   get commands(): RawCommands {

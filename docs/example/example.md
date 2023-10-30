@@ -44,15 +44,55 @@ const editor = new Editor({
 });
 ```
 
-In this example, AddBlockMenu - expands the editor's capabilities to display and add blocks, as shown in the figure
+In this example, `AddBlockMenu` - expands the editor's capabilities to display and add blocks, as shown in the figure
 
 <img alt="AddBlockMenu" src="./add-block-menu-demo.png" height="200">
 
-And the ConfigurationDrawer provides a drawer where the settings for the active block are rendered
+And the `ConfigurationDrawer` provides a drawer where the settings for the active block are rendered
 
 <img alt="ConfigurationDrawer" src="./configuration-drawer-demo.png" height="400">
 
 Specifically, these extensions intercept a special transaction with a meta tag - intention, which means that the user calls a certain function, like [this](../../packages/extension-configuration-drawer/src/configuration-drawer.tsx#L56)
+
+`ConfigurationDrawer` requires additional settings; it needs to be passed a node where it will be rendered using ReactPortal
+
+Node can be passed when passing the extension to the editor
+
+```ts
+const editor = new Editor({
+  extensions: [
+    ConfigurationDrawer.configure({
+      element: document.body,
+    }),
+  ],
+});
+```
+
+Don't worry if you don't have a link to your node when creating the editor instance, you can configure the driver at any time while the application is running to change the rendering location
+
+```ts
+const Example = () => {
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (drawerRef.current) {
+      editor.configureExtension(ConfigurationDrawer, (extension) =>
+        extension.configure({
+          element: drawerRef.current,
+        }),
+      );
+    }
+  }, []);
+
+  return (
+    <div>
+      <EditorContent editor={editor} />
+
+      <div ref={drawerRef} />
+    </div>
+  )
+};
+```
 
 ## Undo redo commands
 
@@ -113,13 +153,13 @@ const editor = new Editor({
 });
 ```
 
-You can use the **persist** command to force a save:
+You can use the `persist` command to force a save:
 
 ```ts
 editor.commands.persist();
 ```
 
-And the **clearPersisted** command to clear the persisted state:
+And the `clearPersisted` command to clear the persisted state:
 
 ```ts
 editor.commands.clearPersisted();

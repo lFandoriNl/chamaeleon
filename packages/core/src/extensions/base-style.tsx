@@ -50,8 +50,6 @@ export const BaseStyle = Extension.create({
 
             const { gap, rowGap, columnGap } = style;
 
-            console.log(activeBlock, { gap, rowGap, columnGap });
-
             return (
               <div className="grid grid-cols-[auto_1fr] gap-4">
                 {gap !== undefined && (
