@@ -129,7 +129,7 @@ export class Editor extends EventEmitter<EditorEvents> {
   }
 
   private createView() {
-    this.view = new EditorView({
+    this.view = new EditorView(this, {
       state: EditorState.create({
         schema: this.schema,
         blocks: this.options.blocks,

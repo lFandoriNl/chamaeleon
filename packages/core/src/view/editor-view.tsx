@@ -3,6 +3,7 @@ import React from 'react';
 import { PropertyConfigurationRender } from './property-configuration-render';
 import { StyleConfigurationRender } from './style-configuration-render';
 
+import { Editor } from '../editor';
 import { Block } from '../model';
 import {
   EditorState,
@@ -46,6 +47,8 @@ export type EditorViewOptions = {
 };
 
 export class EditorView {
+  editor: Editor;
+
   state: EditorState;
 
   private _options: EditorViewOptions;
@@ -107,7 +110,9 @@ export class EditorView {
   Block = BlockRoot;
   Dropzone = Dropzone;
 
-  constructor(options: EditorViewOptions) {
+  constructor(editor: Editor, options: EditorViewOptions) {
+    this.editor = editor;
+
     this._options = options;
 
     if (options.propertyConfigurationRender) {
@@ -241,7 +246,10 @@ export class EditorView {
             conditionals: [],
           },
           updateParams: () => [this, prevState],
-          view: plugin.spec.view(this),
+          view: plugin.spec.view({
+            editor: this.editor,
+            view: this,
+          }),
         });
       }
 
@@ -276,7 +284,10 @@ export class EditorView {
             ],
           },
           updateParams: () => [this, prevState],
-          view: plugin.spec.view(this),
+          view: plugin.spec.view({
+            editor: this.editor,
+            view: this,
+          }),
         });
       }
 
@@ -288,7 +299,10 @@ export class EditorView {
             conditionals: [() => Boolean(this.state.activeBlock)],
           },
           updateParams: () => [this, prevState],
-          view: plugin.spec.view(this),
+          view: plugin.spec.view({
+            editor: this.editor,
+            view: this,
+          }),
         });
       }
     });

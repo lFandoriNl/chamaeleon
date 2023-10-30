@@ -96,6 +96,8 @@ export const Row = BlockExtension.create({
         gap: {
           default: '16px',
         },
+        rowGap: {},
+        columnGap: {},
         margin: {},
         marginTop: {},
         marginRight: {},
@@ -225,7 +227,7 @@ export const Row = BlockExtension.create({
             name: ['row'],
           },
         },
-        view: (view) => ({
+        view: ({ view }) => ({
           render() {
             const { state } = view;
 
@@ -314,7 +316,7 @@ export const Row = BlockExtension.create({
 
             return (
               <div>
-                <p className="text-lg">Template</p>
+                <p className="text-base">Template</p>
 
                 <div className="flex flex-wrap">
                   {templates.map((template) => (

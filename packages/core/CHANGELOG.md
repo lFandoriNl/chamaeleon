@@ -1,5 +1,13 @@
 # @chamaeleon/core
 
+## 0.5.0
+
+### Minor Changes
+
+- Added `commands.changeStyle`
+- Added style plugin for `gap`
+- Changed `plugin.view` function signature, from `(view: EditorView)` to `(context: { editor: Editor; view: EditorView })`
+
 ## 0.4.1
 
 ### Patch Changes

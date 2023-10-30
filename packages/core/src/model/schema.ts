@@ -88,7 +88,7 @@ function computeStyle(style: BlockType['style'], value: Style | null) {
       let given = value && value[element] && value[element][name];
 
       if (given === undefined) {
-        given = cssProperty.default;
+        given = cssProperty.default || '';
       }
 
       if (!built[element]) {

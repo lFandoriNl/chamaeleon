@@ -1,5 +1,7 @@
-import { BlockSpec, Style } from '../model';
+import { Editor } from '../editor';
 import { EditorView } from '../view';
+import { BlockSpec, Style } from '../model';
+
 import { EditorState, EditorStateConfig } from './editor-state';
 import { Transaction } from './transaction';
 
@@ -54,7 +56,7 @@ export type PluginSpec<PluginState, T extends PluginType = PluginType> = {
     key?: PluginKey;
     type: 'common';
     state?: StateField<PluginState>;
-    view?: (view: EditorView) => PluginView;
+    view?: (context: { editor: Editor; view: EditorView }) => PluginView;
     filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
     appendTransaction?: (
       transactions: readonly Transaction[],
@@ -74,7 +76,7 @@ export type PluginSpec<PluginState, T extends PluginType = PluginType> = {
       applicable: BlockSpec['allowContent'];
     };
     state?: StateField<PluginState>;
-    view: (view: EditorView) => PluginView;
+    view: (context: { editor: Editor; view: EditorView }) => PluginView;
     filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
     appendTransaction?: (
       transactions: readonly Transaction[],
@@ -90,7 +92,7 @@ export type PluginSpec<PluginState, T extends PluginType = PluginType> = {
       every?: Array<keyof NonNullable<BlockSpec['style']>['root']>;
     };
     state?: StateField<PluginState>;
-    view: (view: EditorView) => StylePluginView;
+    view: (context: { editor: Editor; view: EditorView }) => StylePluginView;
     filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
     appendTransaction?: (
       transactions: readonly Transaction[],

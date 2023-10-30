@@ -1,10 +1,12 @@
-import { Block } from '../model';
+import { Block, Style } from '../model';
 import { Blocks } from '../state/editor-state';
-import { InsertStep } from './insert-step';
-import { MoveStep } from './move-step';
-import { PropertyStep } from './property-step';
-import { RemoveStep } from './remove-step';
+
 import { Step } from './step';
+import { InsertStep } from './insert-step';
+import { RemoveStep } from './remove-step';
+import { PropertyStep } from './property-step';
+import { StyleStep } from './style-step';
+import { MoveStep } from './move-step';
 
 class TransformError extends Error {
   name = 'TransformError' as const;
@@ -51,6 +53,18 @@ export class Transform {
     value: any,
   ) {
     this.step(new PropertyStep(target, property, value));
+
+    this.lastModifiedBlock = target;
+
+    return this;
+  }
+
+  changeStyle(
+    target: Block['id'],
+    layer: keyof Style,
+    style: NonNullable<Style[string]>,
+  ) {
+    this.step(new StyleStep(target, layer, style));
 
     this.lastModifiedBlock = target;
 

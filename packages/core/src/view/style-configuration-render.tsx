@@ -23,31 +23,37 @@ export const StyleConfigurationRender = ({
   );
 
   return (
-    <div className="style-configuration-place">
+    <div className="style-configuration-place space-y-4">
       {Object.entries(activeBlock.type.style)
-        .map(([element, cssProperties]) => {
-          return pluginViews.map(([pluginKey, pluginView]) => {
-            if (pluginView.type !== 'style-configuration') return null;
+        .map(([layer, cssProperties]) => {
+          return (
+            <>
+              <p className="border-b pb-2 text-lg text-gray-500">{layer}</p>
 
-            const { plugin, updateParams, view } = pluginView;
+              {pluginViews.map(([pluginKey, pluginView]) => {
+                if (pluginView.type !== 'style-configuration') return null;
 
-            const { cssProperty } = plugin.spec;
+                const { plugin, updateParams, view } = pluginView;
 
-            if (
-              (cssProperty.some &&
-                cssProperty.some.some((name) => cssProperties[name])) ||
-              (cssProperty.every &&
-                cssProperty.every.every((name) => cssProperties[name]))
-            ) {
-              return (
-                <Fragment key={element + pluginKey}>
-                  {view.render?.(element, ...updateParams())}
-                </Fragment>
-              );
-            }
+                const { cssProperty } = plugin.spec;
 
-            return null;
-          });
+                if (
+                  (cssProperty.some &&
+                    cssProperty.some.some((name) => cssProperties[name])) ||
+                  (cssProperty.every &&
+                    cssProperty.every.every((name) => cssProperties[name]))
+                ) {
+                  return (
+                    <Fragment key={layer + pluginKey}>
+                      {view.render?.(layer, ...updateParams())}
+                    </Fragment>
+                  );
+                }
+
+                return null;
+              })}
+            </>
+          );
         })
         .flat()}
     </div>

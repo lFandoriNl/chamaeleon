@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import clsx from 'clsx';
 
 type DrawerProps = {
@@ -19,6 +20,10 @@ export const Drawer = ({
   onClose,
   children,
 }: DrawerProps) => {
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+  }, [open]);
+
   return (
     <>
       {enableOverlay && (
@@ -37,7 +42,7 @@ export const Drawer = ({
       <div
         tabIndex={-1}
         className={clsx(
-          `fixed top-0 z-[1200] flex h-full flex-shrink-0 flex-col overflow-y-auto bg-white outline-0`,
+          `fixed top-0 z-[1200] flex h-full flex-shrink-0 flex-col bg-white outline-0`,
           'transition-all duration-300 ease-in-out',
           {
             'invisible flex-shrink-0': !open,

@@ -1,5 +1,16 @@
 # @chamaeleon/extension-configuration-drawer
 
+## 0.2.0
+
+### Minor Changes
+
+- Drawer height changed to 100%
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/core@0.5.0
+
 ## 0.1.5
 
 ### Patch Changes

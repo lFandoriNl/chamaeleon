@@ -34,15 +34,17 @@ const BlockConfiguration = ({ view, extra }: BlockConfigurationProps) => {
   if (!view.state.activeBlock) return null;
 
   return (
-    <div>
+    <div className="h-full">
       <div className="flex items-center justify-between border-b border-gray-300 p-4 text-xl">
         <div>{capitalize(view.state.activeBlock.type.name)} properties</div>
 
         {extra}
       </div>
 
-      <div className="p-4">
+      <div className="h-full overflow-y-auto p-4">
         <view.propertyConfiguration.Render view={view} />
+
+        <p className="pb-2 pt-4 text-center text-lg">Style</p>
 
         <view.styleConfiguration.Render view={view} />
       </div>
@@ -60,7 +62,6 @@ const ConfigurationDrawer = ({ open, editor }: ConfigurationDrawerProps) => {
 
   return (
     <Drawer
-      className="top-[40%]"
       open={open}
       size="500px"
       onClose={editor.commands.closeConfiguration}
