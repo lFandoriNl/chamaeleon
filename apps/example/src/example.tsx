@@ -11,6 +11,8 @@ import {
   useEditorSelector,
 } from '@chamaeleon/react-editor';
 
+import { ChamaeleonDevtools } from '@chamaeleon/devtools';
+
 import { Button } from '@chamaeleon/uikit';
 import { Button as ButtonExtension } from './button';
 
@@ -169,9 +171,7 @@ const editor = new Editor({
     ConfigurationDrawer,
     ButtonExtension,
   ],
-  logger: {
-    enabled: true,
-  },
+  loggers: [ChamaeleonDevtools.logger],
 });
 
 // @ts-expect-error
@@ -213,21 +213,13 @@ editor.on('update', ({ transaction }) => {
 });
 
 export const Example = () => {
-  useEffect(() => {
-    editor.logger.init({
-      element: '.log',
-    });
-  }, []);
-
   return (
     <EditorProvider value={editor}>
       <div className="flex flex-col">
-        <div className="w-full">
-          <Content />
-        </div>
-
-        <div className="log h-[1000px] overflow-scroll p-5"></div>
+        <Content />
       </div>
+
+      <ChamaeleonDevtools.Render />
     </EditorProvider>
   );
 };

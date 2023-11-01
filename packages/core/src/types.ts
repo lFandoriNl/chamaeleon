@@ -29,6 +29,17 @@ export type EditorEvents = {
   transaction: { editor: Editor; transaction: Transaction };
 };
 
+type LogData = number | string | Record<string, any> | any[];
+
+export interface Logger {
+  log(data: LogData): void;
+  info(data: LogData): void;
+  warn(data: LogData): void;
+  error(data: LogData): void;
+  action(data: LogData): void;
+  system(data: LogData): void;
+}
+
 export type MaybeReturnType<T> = T extends (...args: any) => any
   ? ReturnType<T>
   : T;

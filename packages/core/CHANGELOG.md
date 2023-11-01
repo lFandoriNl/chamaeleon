@@ -1,5 +1,11 @@
 # @chamaeleon/core
 
+## 0.7.0
+
+### Minor Changes
+
+- Added support for custom loggers
+
 ## 0.6.0
 
 ### Minor Changes

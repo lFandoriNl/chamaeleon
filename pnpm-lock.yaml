@@ -78,6 +78,9 @@ importers:
       '@chamaeleon/core':
         specifier: workspace:^
         version: link:../../packages/core
+      '@chamaeleon/devtools':
+        specifier: workspace:^
+        version: link:../../packages/devtools
       '@chamaeleon/extension-add-block-menu':
         specifier: workspace:^
         version: link:../../packages/extension-add-block-menu
@@ -158,6 +161,31 @@ importers:
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
+
+  packages/devtools:
+    dependencies:
+      '@nanostores/react':
+        specifier: ^0.7.1
+        version: 0.7.1(nanostores@0.9.4)(react@18.2.0)
+      nanostores:
+        specifier: ^0.9.4
+        version: 0.9.4
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.2.0
+        version: 18.2.21
+      '@types/react-dom':
+        specifier: ^18.2.0
+        version: 18.2.7
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
@@ -1068,6 +1096,17 @@ packages:
       globby: 11.1.0
       read-yaml-file: 1.1.0
     dev: true
+
+  /@nanostores/react@0.7.1(nanostores@0.9.4)(react@18.2.0):
+    resolution: {integrity: sha512-EXQg9N4MdI4eJQz/AZLIx3hxQ6BuBmV4Q55bCd5YCSgEOAW7tGTsIZxpRXxvxLXzflNvHTBvfrDNY38TlSVBkQ==}
+    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      nanostores: ^0.9.0
+      react: '>=18.0.0'
+    dependencies:
+      nanostores: 0.9.4
+      react: 18.2.0
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -3261,6 +3300,11 @@ packages:
     resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
     engines: {node: ^14 || ^16 || >=18}
     hasBin: true
+    dev: false
+
+  /nanostores@0.9.4:
+    resolution: {integrity: sha512-BVFzKt6K5P8tYQLL7MItqcev7jpspA5pIjv+Ck3k6wBnUlwCJcpkGTIinj4APvx8SvdP9fXDGoMRCTY6DO/9QA==}
+    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     dev: false
 
   /natural-compare@1.4.0:

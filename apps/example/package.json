@@ -12,13 +12,14 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@chamaeleon/uikit": "workspace:^",
-    "@chamaeleon/react-editor": "workspace:^",
     "@chamaeleon/core": "workspace:^",
+    "@chamaeleon/react-editor": "workspace:^",
+    "@chamaeleon/uikit": "workspace:^",
     "@chamaeleon/extension-history": "workspace:^",
     "@chamaeleon/extension-persist": "workspace:^",
     "@chamaeleon/extension-add-block-menu": "workspace:^",
     "@chamaeleon/extension-configuration-drawer": "workspace:^",
+    "@chamaeleon/devtools": "workspace:^",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

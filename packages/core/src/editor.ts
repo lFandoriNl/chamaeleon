@@ -18,13 +18,12 @@ import {
 import { Schema } from './model/schema';
 
 import {
+  Logger,
   AnyExtension,
   EditorEvents,
   Extensions,
   SingleCommands,
 } from './types';
-import { Logger, createLogger } from './logger';
-import { noop } from './utilities/noop';
 
 export type EditorOptions = Pick<
   EditorViewOptions,
@@ -32,9 +31,7 @@ export type EditorOptions = Pick<
 > & {
   blocks: RawBlocks;
   extensions: Extensions;
-  logger?: {
-    enabled?: boolean;
-  };
+  loggers?: Logger[];
 };
 
 export class Editor extends EventEmitter<EditorEvents> {
@@ -52,14 +49,15 @@ export class Editor extends EventEmitter<EditorEvents> {
   };
 
   logger: Logger = {
-    init: noop,
-    log: noop,
-    info: noop,
-    warn: noop,
-    error: noop,
-    action: noop,
-    system: noop,
+    log: (data) => this.loggers.forEach((logger) => logger.log(data)),
+    info: (data) => this.loggers.forEach((logger) => logger.info(data)),
+    warn: (data) => this.loggers.forEach((logger) => logger.warn(data)),
+    error: (data) => this.loggers.forEach((logger) => logger.error(data)),
+    action: (data) => this.loggers.forEach((logger) => logger.action(data)),
+    system: (data) => this.loggers.forEach((logger) => logger.system(data)),
   };
+
+  private loggers: Logger[] = [];
 
   constructor(options: Partial<EditorOptions> = {}) {
     super();
@@ -76,9 +74,7 @@ export class Editor extends EventEmitter<EditorEvents> {
 
     this.createView();
 
-    if (options.logger?.enabled) {
-      this.logger = createLogger();
-    }
+    this.loggers = options.loggers || [];
 
     this.initExtensions();
   }

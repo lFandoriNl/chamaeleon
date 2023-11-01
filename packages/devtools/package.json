@@ -1,17 +1,16 @@
 {
-  "name": "@chamaeleon/react-editor",
-  "description": "Chamaeleon react editor",
+  "name": "@chamaeleon/devtools",
+  "description": "Floating devtools for Chamaeleon",
   "private": false,
-  "version": "0.0.11",
+  "version": "0.0.1",
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
     "chameleon",
     "chamaeleon",
-    "page builder",
-    "editor",
-    "react editor"
+    "log",
+    "logger"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -33,22 +32,24 @@
     "dev": "tsup --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "test": "vitest",
-    "clean": "rm -r dist && rm -r .turbo"
+    "test": "vitest"
   },
   "dependencies": {
-    "react": "18.2.0",
-    "@chamaeleon/core": "workspace:~",
-    "@chamaeleon/uikit": "workspace:~"
+    "nanostores": "^0.9.4",
+    "@nanostores/react": "^0.7.1"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "18.2.15",
-    "tailwind-config": "workspace:*",
-    "tsup": "^7.2.0"
+    "tsup": "^7.2.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/lFandoriNl/chamaeleon",
-    "directory": "packages/react-editor"
+    "directory": "packages/devtools"
   }
 }
