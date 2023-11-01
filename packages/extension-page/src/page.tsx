@@ -1,8 +1,6 @@
-import { BlockExtension } from '../block-extension';
-import { Block } from '../model';
-import { JSONContent } from '../types';
+import { BlockExtension, Block, JSONContent } from '@chamaeleon/core';
 
-declare module '..' {
+declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
     page: {
       addPage: (

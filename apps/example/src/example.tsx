@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
 
 import { Editor } from '@chamaeleon/core';
+import { Page } from '@chamaeleon/extension-page';
+import { Row, Column } from '@chamaeleon/extension-grid';
+import { Text } from '@chamaeleon/extension-typography';
 import { Persist } from '@chamaeleon/extension-persist';
 import { History, HistoryKey } from '@chamaeleon/extension-history';
 import { AddBlockMenu } from '@chamaeleon/extension-add-block-menu';
@@ -170,6 +173,10 @@ const editor = new Editor({
     AddBlockMenu,
     ConfigurationDrawer,
     ButtonExtension,
+    Page,
+    Row,
+    Column,
+    Text,
   ],
   loggers: [ChamaeleonDevtools.logger],
 });

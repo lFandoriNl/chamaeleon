@@ -5,15 +5,7 @@ import { ExtensionManager } from './extension-manager';
 import { CommandManager } from './command-manager';
 import { EventEmitter } from './event-emitter';
 
-import {
-  Commands,
-  DragAndDrop,
-  BaseStyle,
-  Page,
-  Row,
-  Column,
-  Text,
-} from './extensions';
+import { Commands, DragAndDrop, BaseStyle } from './extensions';
 
 import { Schema } from './model/schema';
 
@@ -114,15 +106,7 @@ export class Editor extends EventEmitter<EditorEvents> {
   }
 
   private createExtensionManager() {
-    const coreExtensions = [
-      Commands,
-      DragAndDrop,
-      BaseStyle,
-      Page,
-      Row,
-      Column,
-      Text,
-    ];
+    const coreExtensions = [Commands, DragAndDrop, BaseStyle];
 
     const allExtensions = [...coreExtensions, ...this.options.extensions];
 

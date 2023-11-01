@@ -1,14 +1,17 @@
 import { useRef, useState } from 'react';
 import clsx from 'clsx';
 
+import {
+  BlockExtension,
+  Block,
+  Plugin,
+  PluginKey,
+  JSONContent,
+} from '@chamaeleon/core';
+
 import { Button, Input } from '@chamaeleon/uikit';
 
-import { BlockExtension } from '../block-extension';
-import { Block } from '../model';
-import { Plugin, PluginKey } from '../state';
-import { JSONContent } from '../types';
-
-declare module '..' {
+declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
     row: {
       addRow: (

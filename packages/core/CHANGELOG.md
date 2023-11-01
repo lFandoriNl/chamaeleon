@@ -1,5 +1,11 @@
 # @chamaeleon/core
 
+## 0.8.0
+
+### Minor Changes
+
+- Page, Row, Column, Text have been moved from the core into a separate package.
+
 ## 0.7.2
 
 ### Patch Changes

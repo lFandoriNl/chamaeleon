@@ -33,7 +33,21 @@ const Example = () => {
 
 This is the most minimal set. By default, the chameleon has only basic capabilities. To expand their number you need to provide him with extensions.
 
+By default there are no blocks in chameleon, you can install basic extensions to get started.
+
 This happens by passing extensions to editor options.
+
+```ts
+import { Page } from '@chamaeleon/extension-page';
+import { Row, Column } from '@chamaeleon/extension-grid';
+import { Text } from '@chamaeleon/extension-typography';
+
+const editor = new Editor({
+  extensions: [Page, Row, Column, Text],
+});
+```
+
+Blocks alone will not be enough; you will also need pop-up menus for adding new blocks and configuration menus where you can change block parameters. You can also add them.
 
 ```ts
 import { AddBlockMenu } from '@chamaeleon/extension-add-block-menu';

@@ -1,4 +1,5 @@
 import { Input } from '@chamaeleon/uikit';
+
 import { Extension } from '../extension';
 import { Plugin, PluginKey } from '../state';
 

@@ -1,10 +1,7 @@
 import { useRef } from 'react';
 import clsx from 'clsx';
 
-import { BlockExtension } from '../block-extension';
-import { Block } from '../model';
-
-import { JSONContent } from '../types';
+import { BlockExtension, Block, JSONContent } from '@chamaeleon/core';
 
 const columnsMap = {
   1: 'col-span-1',
@@ -21,7 +18,7 @@ const columnsMap = {
   12: 'col-[span_12_/_span_12]',
 } as Record<number, string>;
 
-declare module '..' {
+declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
     column: {
       addColumn: (

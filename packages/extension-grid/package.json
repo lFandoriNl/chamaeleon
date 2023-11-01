@@ -1,8 +1,8 @@
 {
-  "name": "@chamaeleon/extension-configuration-drawer",
-  "description": "Chameleon extension for editing block parameters",
+  "name": "@chamaeleon/extension-grid",
+  "description": "Chamaeleon extension for grid components",
   "private": false,
-  "version": "0.3.4",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -11,7 +11,9 @@
     "chamaeleon",
     "page builder",
     "editor",
-    "change block properties"
+    "grid",
+    "row",
+    "column"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -33,7 +35,8 @@
     "dev": "tsup --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "test": "vitest"
+    "test": "vitest",
+    "clean": "rm -r dist && rm -r .turbo"
   },
   "peerDependencies": {
     "react": "^18.2.0",
@@ -54,6 +57,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/lFandoriNl/chamaeleon",
-    "directory": "packages/extension-configuration-drawer"
+    "directory": "packages/extension-grid"
   }
 }

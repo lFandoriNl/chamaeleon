@@ -13,13 +13,12 @@ export {
 export { Block } from './model';
 export * as commands from './commands';
 
-export * from './tailwind-plugin';
-
 export type {
   Provider,
   EditorEvents,
   BlockViewRenderer,
   BlockViewRendererPack,
+  JSONContent,
 } from './types';
 
 // eslint-disable-next-line

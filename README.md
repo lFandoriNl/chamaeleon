@@ -51,25 +51,31 @@ npm install -g pnpm
 
 For basic use you need to install the core and react-editor:
 
-```
+```shell
 npm i react react-dom @chamaeleon/core @chamaeleon/react-editor
+```
+
+If you want to install base blocks:
+
+```shell
+npm i @chamaeleon/extension-page @chamaeleon/extension-grid @chamaeleon/extension-typography
 ```
 
 If you want to connect built-in extensions for editing and adding blocks, then run:
 
-```
+```shell
 npm i @chamaeleon/extension-add-block-menu @chamaeleon/extension-configuration-drawer
 ```
 
 You may also want to install an extension for the undo redo commands:
 
-```
+```shell
 npm i @chamaeleon/extension-history
 ```
 
 If you need support persisted state:
 
-```
+```shell
 npm i @chamaeleon/extension-persist
 ```
 

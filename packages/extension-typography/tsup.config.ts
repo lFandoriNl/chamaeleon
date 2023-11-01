@@ -1,7 +1,7 @@
 import { defineConfig, Options } from 'tsup';
 
 export default defineConfig((options: Options) => ({
-  entry: ['src/index.ts', 'src/tailwind-plugin.ts'],
+  entry: ['src/index.ts'],
   banner: {
     js: `"use client";`,
   },

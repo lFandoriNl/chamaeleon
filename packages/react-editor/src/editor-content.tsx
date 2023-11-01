@@ -50,7 +50,13 @@ export const EditorContent = ({ editor }: EditorContentProps) => {
               <Button
                 color="secondary"
                 onClick={() => {
-                  editor.chain.addPage(null).select().run();
+                  editor.chain
+                    .insertContent(editor.schema.spec.rootBlockId, {
+                      id: editor.schema.spec.rootBlockId,
+                      type: 'page',
+                    })
+                    .select()
+                    .run();
                 }}
               >
                 Add first page
