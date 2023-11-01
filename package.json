@@ -9,7 +9,7 @@
     "test": "turbo test",
     "lint": "turbo lint",
     "check-types": "turbo check-types",
-    "clean": "turbo clean",
+    "clean": "turbo clean --concurrency 20",
     "format": "prettier --write ."
   },
   "dependencies": {

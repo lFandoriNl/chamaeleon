@@ -46,6 +46,11 @@
   "devDependencies": {
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@chamaeleon/core": "workspace:~",
+    "@chamaeleon/uikit": "workspace:~",
+    "@chamaeleon/hooks": "workspace:~",
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   },

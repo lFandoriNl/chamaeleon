@@ -39,6 +39,7 @@
     "@chamaeleon/core": "workspace:~"
   },
   "devDependencies": {
+    "@chamaeleon/core": "workspace:~",
     "tsup": "^7.2.0"
   },
   "repository": {

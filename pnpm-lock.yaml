@@ -145,12 +145,6 @@ importers:
       nanoid:
         specifier: 4.0.2
         version: 4.0.2
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
     devDependencies:
       '@types/react':
         specifier: ^18.2.21
@@ -158,6 +152,12 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.7
         version: 18.2.7
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config
@@ -176,12 +176,6 @@ importers:
       re-resizable:
         specifier: ^6.9.11
         version: 6.9.11(react-dom@18.2.0)(react@18.2.0)
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
     devDependencies:
       '@types/react':
         specifier: ^18.2.0
@@ -189,12 +183,18 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.0
         version: 18.2.7
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   packages/extension-add-block-menu:
-    dependencies:
+    devDependencies:
       '@chamaeleon/core':
         specifier: workspace:~
         version: link:../core
@@ -204,19 +204,18 @@ importers:
       '@chamaeleon/uikit':
         specifier: workspace:~
         version: link:../uikit
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-    devDependencies:
       '@types/react':
         specifier: 18.2.15
         version: 18.2.15
       '@types/react-dom':
         specifier: 18.2.7
         version: 18.2.7
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config
@@ -225,26 +224,25 @@ importers:
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   packages/extension-configuration-drawer:
-    dependencies:
+    devDependencies:
       '@chamaeleon/core':
         specifier: workspace:~
         version: link:../core
       '@chamaeleon/uikit':
         specifier: workspace:~
         version: link:../uikit
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-    devDependencies:
       '@types/react':
         specifier: 18.2.15
         version: 18.2.15
       '@types/react-dom':
         specifier: 18.2.7
         version: 18.2.7
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config
@@ -253,53 +251,49 @@ importers:
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   packages/extension-history:
-    dependencies:
+    devDependencies:
       '@chamaeleon/core':
         specifier: workspace:~
         version: link:../core
-    devDependencies:
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   packages/extension-persist:
-    dependencies:
+    devDependencies:
       '@chamaeleon/core':
         specifier: workspace:~
         version: link:../core
-    devDependencies:
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   packages/hooks:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
     devDependencies:
       '@types/react':
         specifier: ^18.2.15
         version: 18.2.21
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   packages/react-editor:
-    dependencies:
+    devDependencies:
       '@chamaeleon/core':
         specifier: workspace:~
         version: link:../core
       '@chamaeleon/uikit':
         specifier: workspace:~
         version: link:../uikit
-      react:
-        specifier: 18.2.0
-        version: 18.2.0
-    devDependencies:
       '@types/react':
         specifier: 18.2.15
         version: 18.2.15
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config
@@ -310,11 +304,10 @@ importers:
   packages/tailwind-config: {}
 
   packages/uikit:
-    dependencies:
+    devDependencies:
       react:
         specifier: ^18.2.0
         version: 18.2.0
-    devDependencies:
       tailwind-config:
         specifier: workspace:*
         version: link:../tailwind-config
@@ -3826,7 +3819,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
-    dev: false
 
   /react-icons@4.11.0(react@18.2.0):
     resolution: {integrity: sha512-V+4khzYcE5EBk/BvcuYRq6V/osf11ODUM2J8hg2FDSswRrGvqiYUYPRy4OdrWaQOBj4NcpJfmHZLNaD+VH0TyA==}
@@ -3854,7 +3846,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /read-cache@1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
@@ -4027,7 +4018,6 @@ packages:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
