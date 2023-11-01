@@ -71,7 +71,7 @@ export const Menu = ({
           key={item.id}
           className={clsx(
             'w-full p-2 text-left hover:bg-gray-200 active:bg-gray-300',
-            'focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600',
+            'focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600',
           )}
           onClick={() => {
             onClick({

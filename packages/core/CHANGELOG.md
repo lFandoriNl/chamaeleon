@@ -1,5 +1,12 @@
 # @chamaeleon/core
 
+## 0.7.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/uikit@0.2.0
+
 ## 0.7.0
 
 ### Minor Changes

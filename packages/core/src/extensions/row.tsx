@@ -312,7 +312,7 @@ export const Row = BlockExtension.create({
               0,
             );
 
-            const customTemplateError = customTemplateColumns > 12;
+            const hasCustomTemplateError = customTemplateColumns > 12;
 
             return (
               <div>
@@ -336,11 +336,9 @@ export const Row = BlockExtension.create({
                   <div>
                     <div>
                       <Input
+                        className="mb-2"
                         placeholder="Template: 4+4+4"
-                        className={clsx(
-                          'mb-2',
-                          customTemplateError && 'border-red-500',
-                        )}
+                        error={hasCustomTemplateError}
                         value={value}
                         onChange={(event) =>
                           setValue(event.currentTarget.value)
@@ -358,7 +356,7 @@ export const Row = BlockExtension.create({
                       </Button>
                     </div>
 
-                    {customTemplateError ? (
+                    {hasCustomTemplateError ? (
                       <div className="text-sm text-red-500">
                         The amount should not exceed 12, now{' '}
                         {customTemplateColumns}
@@ -372,7 +370,7 @@ export const Row = BlockExtension.create({
                     )}
                   </div>
 
-                  {!customTemplateError && (
+                  {!hasCustomTemplateError && (
                     <TemplateButton
                       className="p-0"
                       template={value}

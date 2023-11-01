@@ -31,7 +31,7 @@ export const DevtoolsApp = () => {
     <div className="chamaeleon-logger fixed bottom-0 left-0 right-0">
       {!isOpen && (
         <button
-          className="fixed bottom-3 left-3 rounded-lg p-1 outline-blue-800 active:outline active:outline-2"
+          className="fixed bottom-3 left-3 z-[1000] rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800"
           onClick={() => setIsOpen(true)}
         >
           <ChamaeleonIcon />
@@ -50,7 +50,7 @@ export const DevtoolsApp = () => {
 
             <div>
               <button
-                className="rounded-lg bg-gray-100 px-4 py-2 outline-blue-800 hover:bg-gray-200 focus:outline focus:outline-2"
+                className="rounded-lg bg-gray-100 px-4 py-2 outline-blue-800 hover:bg-gray-200 focus-visible:outline focus-visible:outline-2"
                 onClick={() => setIsOpen(false)}
               >
                 Close

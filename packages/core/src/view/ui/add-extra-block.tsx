@@ -20,7 +20,7 @@ export const AddExtraBlock = React.forwardRef<
       ref={ref}
       className={clsx(
         'min-h-[64px] rounded-xl border p-4',
-        'bg-white hover:bg-slate-100 focus:relative focus:outline-none focus:ring focus:ring-blue-600 active:bg-slate-200',
+        'bg-white hover:bg-slate-100 focus-visible:relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 active:bg-slate-200',
         className,
       )}
       onClick={onClick}

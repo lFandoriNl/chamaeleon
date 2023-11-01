@@ -2,7 +2,7 @@
   "name": "@chamaeleon/extension-persist",
   "description": "Chamaeleon extension to persist editor state",
   "private": false,
-  "version": "0.1.8",
+  "version": "0.1.9",
   "publishConfig": {
     "access": "public"
   },

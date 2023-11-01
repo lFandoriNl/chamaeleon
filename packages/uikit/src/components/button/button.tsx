@@ -4,14 +4,17 @@ import clsx from 'clsx';
 export type ButtonProps = HTMLAttributes<HTMLButtonElement> & {
   className?: string;
   color?: 'primary' | 'secondary';
-  size?: 'small' | 'medium' | 'large';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   disabled?: boolean;
   children?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, color, size, disabled, children, onClick, ...props }, ref) => {
+  (
+    { className, color, size = 'md', disabled, children, onClick, ...props },
+    ref,
+  ) => {
     return (
       <button
         ref={ref}
@@ -19,16 +22,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           className,
           'ui-button',
           color,
-          'rounded-lg border',
-          'focus:relative focus:outline-none focus:ring focus:ring-blue-600',
+          'relative rounded-lg',
+          'focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600',
           {
-            large: 'px-4 py-2 text-lg',
-            medium: 'px-3 py-1.5 text-base',
-            small: 'px-2 py-1 text-sm',
-          }[size || 'medium'],
+            xs: 'h-6 px-2 text-xs',
+            sm: 'h-8 px-3 text-sm',
+            md: 'h-10 px-4 text-base',
+            lg: 'h-12 px-4 text-lg',
+          }[size],
           {
             primary:
-              'bg-green-500 text-green-50 hover:bg-green-600 active:bg-green-700',
+              'bg-emerald-500 text-green-50 hover:bg-emerald-600 active:bg-emerald-700',
             secondary:
               'bg-blue-500 text-blue-50 hover:bg-blue-600 active:bg-blue-700',
           }[color || 'primary'],

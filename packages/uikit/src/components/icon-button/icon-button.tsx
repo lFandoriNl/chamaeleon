@@ -14,9 +14,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         ref={ref}
         className={clsx(
           'ui-icon-button',
-          'rounded-full p-1.5 shadow-xl',
+          'relative rounded-full p-1.5 shadow-xl',
           'border bg-white hover:bg-slate-100 active:bg-slate-200',
-          'focus:relative focus:outline-none focus:ring focus:ring-blue-600',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600',
           '[&>svg]:pointer-events-none',
           className,
         )}

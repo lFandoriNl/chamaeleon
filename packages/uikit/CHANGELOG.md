@@ -1,5 +1,11 @@
 # @chamaeleon/uikit
 
+## 0.2.0
+
+### Minor Changes
+
+- Changed size prop for Input and Button
+
 ## 0.1.0
 
 ### Minor Changes

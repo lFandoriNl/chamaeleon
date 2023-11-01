@@ -1,5 +1,11 @@
 # @chamaeleon/extension-history
 
+## 0.1.9
+
+### Patch Changes
+
+- @chamaeleon/core@0.7.1
+
 ## 0.1.8
 
 ### Patch Changes

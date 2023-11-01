@@ -15,7 +15,6 @@ import {
 import { AnyExtension, BlockViewRendererPack, Provider } from '../types';
 
 import { ActionPopover } from './ui/action-popover';
-import { PanelButton } from './ui/panel-button';
 import { DragButton } from './ui/drag-button';
 import { AddExtraBlock } from './ui/add-extra-block';
 import { ActionButton } from './ui/action-button';
@@ -82,7 +81,6 @@ export class EditorView {
 
   rawUI = {
     ActionPopover,
-    PanelButton,
     DragButton,
     AddExtraBlock,
     ActionButton,

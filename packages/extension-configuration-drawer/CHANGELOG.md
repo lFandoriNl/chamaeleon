@@ -1,5 +1,13 @@
 # @chamaeleon/extension-configuration-drawer
 
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/uikit@0.2.0
+  - @chamaeleon/core@0.7.1
+
 ## 0.3.1
 
 ### Patch Changes
