@@ -1,5 +1,11 @@
 # @chamaeleon/hooks
 
+## 0.0.4
+
+### Patch Changes
+
+- Moved react to peerDependencies
+
 ## 0.0.3
 
 ### Patch Changes

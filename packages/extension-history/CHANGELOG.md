@@ -1,5 +1,13 @@
 # @chamaeleon/extension-history
 
+## 0.1.10
+
+### Patch Changes
+
+- Moved react to peerDependencies
+- Updated dependencies
+  - @chamaeleon/core@0.7.2
+
 ## 0.1.9
 
 ### Patch Changes

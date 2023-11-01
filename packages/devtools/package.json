@@ -2,7 +2,7 @@
   "name": "@chamaeleon/devtools",
   "description": "Floating devtools for Chamaeleon",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publishConfig": {
     "access": "public"
   },
@@ -36,7 +36,8 @@
   },
   "dependencies": {
     "nanostores": "^0.9.4",
-    "@nanostores/react": "^0.7.1"
+    "@nanostores/react": "^0.7.1",
+    "re-resizable": "^6.9.11"
   },
   "peerDependencies": {
     "react": "^18.2.0",

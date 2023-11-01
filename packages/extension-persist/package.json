@@ -2,7 +2,7 @@
   "name": "@chamaeleon/extension-persist",
   "description": "Chamaeleon extension to persist editor state",
   "private": false,
-  "version": "0.1.9",
+  "version": "0.1.10",
   "publishConfig": {
     "access": "public"
   },
@@ -35,7 +35,7 @@
     "check-types": "tsc --noEmit",
     "test": "vitest"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@chamaeleon/core": "workspace:~"
   },
   "devDependencies": {

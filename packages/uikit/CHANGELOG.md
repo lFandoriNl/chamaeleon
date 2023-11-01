@@ -1,5 +1,11 @@
 # @chamaeleon/uikit
 
+## 0.2.1
+
+### Patch Changes
+
+- Moved react to peerDependencies
+
 ## 0.2.0
 
 ### Minor Changes

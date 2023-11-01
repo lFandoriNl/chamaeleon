@@ -52,7 +52,7 @@ npm install -g pnpm
 For basic use you need to install the core and react-editor:
 
 ```
-npm i @chamaeleon/core @chamaeleon/react-editor
+npm i react react-dom @chamaeleon/core @chamaeleon/react-editor
 ```
 
 If you want to connect built-in extensions for editing and adding blocks, then run:

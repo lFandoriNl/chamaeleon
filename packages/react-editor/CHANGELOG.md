@@ -1,5 +1,14 @@
 # @chamaeleon/react-editor
 
+## 0.0.13
+
+### Patch Changes
+
+- Moved react to peerDependencies
+- Updated dependencies
+  - @chamaeleon/uikit@0.2.1
+  - @chamaeleon/core@0.7.2
+
 ## 0.0.12
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @chamaeleon/extension-add-block-menu
 
+## 0.0.13
+
+### Patch Changes
+
+- Moved react to peerDependencies
+- Updated dependencies
+  - @chamaeleon/hooks@0.0.4
+  - @chamaeleon/uikit@0.2.1
+  - @chamaeleon/core@0.7.2
+
 ## 0.0.12
 
 ### Patch Changes

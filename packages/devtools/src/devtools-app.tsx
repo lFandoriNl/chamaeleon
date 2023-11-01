@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import clsx from 'clsx';
+import { Resizable } from 're-resizable';
 
 import { useStore } from '@nanostores/react';
 
@@ -22,10 +24,15 @@ const levelColors: Record<Level, string> = {
 export const DevtoolsApp = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const [isResize, setIsResize] = useState(false);
+  const [height, setHeight] = useState(() => {
+    const persistedHeight = localStorage.getItem('devtools-height');
+    return persistedHeight ? parseInt(persistedHeight) : 300;
+  });
+
   const logs = useStore($logs);
 
-  const { outerRef, innerRef, canScrollDown, scrollToDown } =
-    useScrollContainer([logs]);
+  const { outerRef, innerRef } = useScrollContainer([logs]);
 
   return (
     <div className="chamaeleon-logger fixed bottom-0 left-0 right-0">
@@ -39,14 +46,31 @@ export const DevtoolsApp = () => {
       )}
 
       {isOpen && (
-        <div
-          className="flex h-full flex-col border-t bg-white"
-          style={{ height: 300 }}
+        <Resizable
+          className="flex h-full flex-col bg-white"
+          handleClasses={{
+            top: clsx(
+              "before:content[''] before:absolute before:mt-1 before:h-[1px] before:w-full before:bg-slate-200",
+              'before:hover:h-[3px] before:hover:bg-blue-500',
+              isResize && 'before:h-[3px] before:bg-blue-500',
+            ),
+          }}
+          enable={{ top: true }}
+          size={{ width: '100%', height }}
+          onResizeStart={() => {
+            setIsResize(true);
+          }}
+          onResizeStop={(event, direction, ref, d) => {
+            const newHeight = height + d.height;
+
+            setHeight(newHeight);
+            setIsResize(false);
+
+            localStorage.setItem('devtools-height', String(newHeight));
+          }}
         >
           <div className="flex justify-between border-b bg-white p-2">
-            <div>
-              {canScrollDown && <button onClick={scrollToDown}>Scroll</button>}
-            </div>
+            <div></div>
 
             <div>
               <button
@@ -76,7 +100,7 @@ export const DevtoolsApp = () => {
               })}
             </div>
           </div>
-        </div>
+        </Resizable>
       )}
     </div>
   );

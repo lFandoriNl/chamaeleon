@@ -2,7 +2,7 @@
   "name": "@chamaeleon/uikit",
   "description": "Chamaeleon uikit",
   "private": false,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publishConfig": {
     "access": "public"
   },
@@ -37,7 +37,9 @@
     "test": "vitest",
     "clean": "rm -r dist && rm -r .turbo"
   },
-  "dependencies": {},
+  "peerDependencies": {
+    "react": "^18.2.0"
+  },
   "devDependencies": {
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"

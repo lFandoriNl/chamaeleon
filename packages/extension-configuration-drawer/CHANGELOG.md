@@ -1,5 +1,14 @@
 # @chamaeleon/extension-configuration-drawer
 
+## 0.3.3
+
+### Patch Changes
+
+- Moved react to peerDependencies
+- Updated dependencies
+  - @chamaeleon/uikit@0.2.1
+  - @chamaeleon/core@0.7.2
+
 ## 0.3.2
 
 ### Patch Changes
