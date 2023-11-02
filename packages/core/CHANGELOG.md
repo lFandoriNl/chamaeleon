@@ -1,5 +1,11 @@
 # @chamaeleon/core
 
+## 0.8.1
+
+### Patch Changes
+
+- Fixed crash when dragging a block
+
 ## 0.8.0
 
 ### Minor Changes

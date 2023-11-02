@@ -1,5 +1,12 @@
 # @chamaeleon/react-editor
 
+## 0.0.15
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/core@0.8.1
+
 ## 0.0.14
 
 ### Patch Changes

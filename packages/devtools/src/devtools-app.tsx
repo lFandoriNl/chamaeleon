@@ -22,7 +22,10 @@ const levelColors: Record<Level, string> = {
 };
 
 export const DevtoolsApp = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(() => {
+    const persistedIsOpen = localStorage.getItem('devtools-is-open');
+    return persistedIsOpen ? JSON.parse(persistedIsOpen) : false;
+  });
 
   const [isResize, setIsResize] = useState(false);
   const [height, setHeight] = useState(() => {
@@ -34,12 +37,22 @@ export const DevtoolsApp = () => {
 
   const { outerRef, innerRef } = useScrollContainer([logs]);
 
+  const openDevtools = () => {
+    setIsOpen(true);
+    localStorage.setItem('devtools-is-open', 'true');
+  };
+
+  const closeDevtools = () => {
+    setIsOpen(false);
+    localStorage.setItem('devtools-is-open', 'false');
+  };
+
   return (
-    <div className="chamaeleon-logger fixed bottom-0 left-0 right-0">
+    <div className="chamaeleon-logger fixed bottom-0 left-0 right-0 z-[1000]">
       {!isOpen && (
         <button
-          className="fixed bottom-3 left-3 z-[1000] rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800"
-          onClick={() => setIsOpen(true)}
+          className="fixed bottom-3 left-3 rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800"
+          onClick={openDevtools}
         >
           <ChamaeleonIcon />
         </button>
@@ -75,7 +88,7 @@ export const DevtoolsApp = () => {
             <div>
               <button
                 className="rounded-lg bg-gray-100 px-4 py-2 outline-blue-800 hover:bg-gray-200 focus-visible:outline focus-visible:outline-2"
-                onClick={() => setIsOpen(false)}
+                onClick={closeDevtools}
               >
                 Close
               </button>

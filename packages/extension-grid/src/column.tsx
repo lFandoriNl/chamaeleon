@@ -119,33 +119,33 @@ export const Column = BlockExtension.create({
                 </editor.view.Dropzone>
               </div>
             ) : (
-              <div
-                className={clsx(
-                  'e-column hover:block-highlight p-5',
-                  columnsMap[block.props.colSpan],
-                  {
-                    'available-drop': isAvailableDrop,
-                    'dropzone-over': isOver,
-                  },
-                )}
-                style={block.style.root}
-              >
-                <editor.view.Dropzone strategy="vertical">
+              <editor.view.Dropzone>
+                <div
+                  className={clsx(
+                    'e-column hover:block-highlight p-5',
+                    columnsMap[block.props.colSpan],
+                    {
+                      'available-drop': isAvailableDrop,
+                      'dropzone-over': isOver,
+                    },
+                  )}
+                  style={block.style.root}
+                >
                   {children}
-                </editor.view.Dropzone>
 
-                <div className="flex justify-center p-4">
-                  <ui.ActionAddBlockButton
-                    onClick={(event) => {
-                      editor.commands.intention(
-                        block.id,
-                        'add-block',
-                        event.nativeEvent,
-                      );
-                    }}
-                  />
+                  <div className="flex justify-center p-4">
+                    <ui.ActionAddBlockButton
+                      onClick={(event) => {
+                        editor.commands.intention(
+                          block.id,
+                          'add-block',
+                          event.nativeEvent,
+                        );
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
+              </editor.view.Dropzone>
             )}
 
             <ui.ActionPopover referenceRef={referenceRef} placement="top-start">

@@ -2,7 +2,7 @@
   "name": "@chamaeleon/extension-grid",
   "description": "Chamaeleon extension for grid components",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publishConfig": {
     "access": "public"
   },

@@ -1,5 +1,11 @@
 # @chamaeleon/devtools
 
+## 0.0.3
+
+### Patch Changes
+
+- Added persist of open state and reduced size of log text
+
 ## 0.0.2
 
 ### Patch Changes

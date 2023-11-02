@@ -75,8 +75,8 @@ export const Page = BlockExtension.create({
               </div>
             ) : (
               <>
-                <editor.view.Dropzone block={block} strategy="vertical">
-                  {children}
+                <editor.view.Dropzone block={block}>
+                  <div className="e-page">{children}</div>
                 </editor.view.Dropzone>
 
                 <div className="flex items-center justify-center p-8">

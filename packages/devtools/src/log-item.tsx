@@ -25,9 +25,9 @@ export const LogItem = ({ className, level, time, data }: LogItemProps) => {
       } flex border-b border-black
   last:border-b-0`}
     >
-      <pre className="pr-4">{level.padEnd(6, ' ')}</pre>
-      <pre className="pr-4">{formatTime(time)}</pre>
-      <pre className="text-sm">{data}</pre>
+      <pre className="pr-4 text-sm">{level.padEnd(6, ' ')}</pre>
+      <pre className="pr-4 text-sm">{formatTime(time)}</pre>
+      <pre className="text-xs">{data}</pre>
     </div>
   );
 };

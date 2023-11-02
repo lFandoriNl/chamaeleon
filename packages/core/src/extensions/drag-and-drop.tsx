@@ -121,14 +121,14 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
         if (!active.data.current) return;
         if (!over?.data.current) return;
 
-        editor.logger.log(over);
-
         const activeId = active.id as Block['id'];
         const overId = over.id as Block['id'];
 
         const { containerId: activeContainerId } = active.data.current.sortable;
 
         const { containerId: overContainerId } = over.data.current.sortable;
+
+        editor.view.dragAndDrop.state.changeOverContainerId(overContainerId);
 
         if (activeId === overId) return;
 
@@ -182,26 +182,20 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
             activeContainer.id,
           );
 
-          logger.info([
+          if (activeBlock.id === overBlock.id) return;
+
+          logger.action([
             'move to same container ' + blockToLog(activeContainer),
             `from: ${from}, to: ${to}`,
+            `active: ${blockToLog(activeBlock)}, over: ${blockToLog(
+              overBlock,
+            )}`,
+            `source: ${blockToLog(activeContainer)}, target: ${blockToLog(
+              overContainer,
+            )}`,
           ]);
 
-          if (activeBlock.type.name !== overBlock.type.name) {
-            logger.action([
-              'move to over in same container' + blockToLog(overBlock),
-              `from: ${from}, to: ${to}`,
-              `active: ${blockToLog(activeBlock)}, over: ${blockToLog(
-                overBlock,
-              )}`,
-              `source: ${blockToLog(activeContainer)}, target: ${blockToLog(
-                overContainer,
-              )}`,
-            ]);
-
-            move(activeBlock.id, overBlock.id, from, to);
-          }
-
+          move(activeContainer.id, overContainer.id, from, to);
           return;
         }
 
@@ -249,10 +243,8 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
           move(activeContainer.id, overContainer.id, from, to);
         }
       }}
-      onDragEnd={({ active, over }) => {
-        const { logger } = editor;
-
-        logger.info(
+      onDragEnd={({ over }) => {
+        editor.logger.info(
           'end drag, over block - ' +
             (over
               ? blockToLog(editor.state.getBlock(over.id as Block['id']))
@@ -260,45 +252,6 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
         );
 
         editor.view.dragAndDrop.state.resetActiveBlock();
-
-        if (!active?.data?.current) return;
-        if (!over?.data?.current) return;
-
-        const activeId = active.id as Block['id'];
-        const overId = over.id as Block['id'];
-
-        const { containerId: activeContainerId } = active.data.current.sortable;
-
-        const { containerId: overContainerId } = over.data.current.sortable;
-
-        const activeBlock = editor.state.getBlock(activeId);
-        const overBlock = editor.state.getBlock(overId);
-
-        const activeContainer = editor.state.getBlock(activeContainerId);
-        const overContainer = editor.state.getBlock(overContainerId);
-
-        const from = activeContainer.children.indexOf(activeBlock);
-        const to = overContainer.children.indexOf(overBlock);
-
-        if (from === -1 || to === -1) return;
-
-        if (activeContainer.id === overContainer.id) {
-          if (activeBlock.id === overBlock.id) return;
-
-          logger.action([
-            'move to same container ' + blockToLog(activeContainer),
-            `from: ${from}, to: ${to}`,
-            `active: ${blockToLog(activeBlock)}, over: ${blockToLog(
-              overBlock,
-            )}`,
-            `source: ${blockToLog(activeContainer)}, target: ${blockToLog(
-              overContainer,
-            )}`,
-          ]);
-
-          move(activeContainer.id, overContainer.id, from, to);
-          return;
-        }
       }}
     >
       {children}

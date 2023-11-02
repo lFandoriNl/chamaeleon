@@ -1,5 +1,12 @@
 # @chamaeleon/extension-configuration-drawer
 
+## 0.3.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/core@0.8.1
+
 ## 0.3.4
 
 ### Patch Changes

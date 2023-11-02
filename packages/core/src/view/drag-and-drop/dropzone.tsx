@@ -1,50 +1,42 @@
-import { useContext } from 'react';
+import React, { forwardRef, useContext } from 'react';
 
-import {
-  SortableContext,
-  rectSortingStrategy,
-  rectSwappingStrategy,
-  verticalListSortingStrategy,
-  horizontalListSortingStrategy,
-} from '@dnd-kit/sortable';
+import { SortableContext } from '@dnd-kit/sortable';
+
+import { useCombinedRefs } from '@chamaeleon/hooks';
 
 import { DndConnectorContext } from './block-root';
 import { Block } from '../../model';
 
-const strategies = {
-  rect: rectSortingStrategy,
-  rectSwapping: rectSwappingStrategy,
-  vertical: verticalListSortingStrategy,
-  horizontal: horizontalListSortingStrategy,
-};
-
 type DropzoneProps = {
   block?: Block;
-  strategy?: keyof typeof strategies;
-  children: React.ReactNode;
+  children: React.ReactElement;
 };
 
-export function Dropzone({
-  block,
-  strategy = 'rect',
-  children,
-}: DropzoneProps) {
-  const context = useContext(DndConnectorContext);
+export const Dropzone = forwardRef<HTMLElement, DropzoneProps>(
+  ({ block, children }, ref) => {
+    const context = useContext(DndConnectorContext);
 
-  const blockValue = block || context?.block;
+    const blockValue = block || context?.block;
 
-  if (!blockValue)
-    throw new Error(
-      'Dropzone must be used as a child block in BlockRoot or must pass Block',
+    if (!blockValue)
+      throw new Error(
+        'Dropzone must be used as a child block in BlockRoot or must pass Block',
+      );
+
+    return (
+      <SortableContext
+        id={blockValue.id}
+        items={blockValue.children.children}
+        strategy={() => null}
+      >
+        {React.cloneElement(children, {
+          ...children.props,
+          // @ts-expect-error
+          ref: useCombinedRefs(ref, children.ref),
+        })}
+      </SortableContext>
     );
+  },
+);
 
-  return (
-    <SortableContext
-      id={blockValue.id}
-      items={blockValue.children.children}
-      strategy={strategies[strategy]}
-    >
-      {children}
-    </SortableContext>
-  );
-}
+Dropzone.displayName = 'Dropzone';

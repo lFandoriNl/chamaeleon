@@ -170,28 +170,26 @@ export const Row = BlockExtension.create({
                 </editor.view.Dropzone>
               </div>
             ) : (
-              <div
-                className={clsx(
-                  'e-row hover:block-highlight grid w-full grid-cols-12 p-5',
-                  {
-                    'available-drop': isAvailableDrop,
-                    'dropzone-over': isOver,
-                  },
-                )}
-                style={block.style.root}
-              >
-                <editor.view.Dropzone
-                  strategy={block.props.columns === 1 ? 'vertical' : 'rect'}
+              <editor.view.Dropzone>
+                <div
+                  className={clsx(
+                    'e-row hover:block-highlight grid w-full grid-cols-12 p-5',
+                    {
+                      'available-drop': isAvailableDrop,
+                      'dropzone-over': isOver,
+                    },
+                  )}
+                  style={block.style.root}
                 >
                   {children}
-                </editor.view.Dropzone>
 
-                <div className="flex items-center justify-center py-2">
-                  <ui.ActionAddBlockButton
-                    onClick={() => editor.commands.addColumn(block.id)}
-                  />
+                  <div className="flex items-center justify-center py-2">
+                    <ui.ActionAddBlockButton
+                      onClick={() => editor.commands.addColumn(block.id)}
+                    />
+                  </div>
                 </div>
-              </div>
+              </editor.view.Dropzone>
             )}
 
             <ui.ActionPopover referenceRef={referenceRef} placement="top-start">

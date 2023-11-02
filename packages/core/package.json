@@ -2,7 +2,7 @@
   "name": "@chamaeleon/core",
   "description": "Core Chamaeleon page builder platform",
   "private": false,
-  "version": "0.8.0",
+  "version": "0.8.1",
   "publishConfig": {
     "access": "public"
   },
