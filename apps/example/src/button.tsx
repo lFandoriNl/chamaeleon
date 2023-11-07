@@ -1,4 +1,5 @@
 import { BlockExtension } from '@chamaeleon/core';
+import { Button as UIButton } from '@chamaeleon/uikit';
 import { useRef } from 'react';
 
 export const Button = BlockExtension.create({
@@ -10,7 +11,7 @@ export const Button = BlockExtension.create({
 
   addProperties() {
     return {
-      value: {
+      content: {
         default: 'Button',
       },
     };
@@ -30,12 +31,7 @@ export const Button = BlockExtension.create({
     return {
       natural: ({ block }) => {
         return (
-          <button
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-            style={block.style.root}
-          >
-            {block.props.value}
-          </button>
+          <UIButton style={block.style.root}>{block.props.value}</UIButton>
         );
       },
       editor: ({ block, editor }) => {
@@ -45,25 +41,30 @@ export const Button = BlockExtension.create({
 
         return (
           <>
-            <button
-              ref={referenceRef}
-              className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-              style={block.style.root}
-            >
-              {block.props.value}
-            </button>
+            <editor.view.Block id={block.id} ref={referenceRef}>
+              <UIButton style={block.style.root}>
+                {block.props.content}
+              </UIButton>
 
-            <ui.ActionPopover referenceRef={referenceRef} placement="top-end">
-              <ui.ActionSettingsButton
-                onClick={(event) => {
-                  editor.commands.intention(
-                    block.id,
-                    'change-properties',
-                    event.nativeEvent,
-                  );
-                }}
-              />
-            </ui.ActionPopover>
+              <ui.ActionPopover
+                referenceRef={referenceRef}
+                placement="top-start"
+              >
+                <ui.DragButton />
+              </ui.ActionPopover>
+
+              <ui.ActionPopover referenceRef={referenceRef} placement="top-end">
+                <ui.ActionSettingsButton
+                  onClick={(event) => {
+                    editor.commands.intention(
+                      block.id,
+                      'change-properties',
+                      event.nativeEvent,
+                    );
+                  }}
+                />
+              </ui.ActionPopover>
+            </editor.view.Block>
           </>
         );
       },

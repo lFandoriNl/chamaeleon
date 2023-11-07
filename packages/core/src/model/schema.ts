@@ -152,7 +152,7 @@ type Elements = {
 
 export interface BlockSpec {
   allowContent?: {
-    name?: Block['type']['name'][];
+    name?: Array<'*' | Block['type']['name'] | `!${Block['type']['name']}`>;
     withValue?: boolean;
     withChildren?: boolean;
     rootable?: boolean;
@@ -329,9 +329,24 @@ export class Schema<Blocks extends string = any> {
     const allowContent =
       (value instanceof Block ? value.type.spec.allowContent : value) || {};
 
+    const nameAllowed = allowContent.name
+      ? allowContent.name.filter((b) => !b.startsWith('!'))
+      : [];
+
+    const nameNotAllowed = allowContent.name
+      ? allowContent.name
+          .filter((b) => b.startsWith('!'))
+          .map((b) => b.slice(1))
+      : [];
+
     return Object.values(this.blocks).filter((blockType) => {
-      if (allowContent.name && allowContent.name.includes(blockType.name)) {
-        return true;
+      if (
+        allowContent.name &&
+        nameNotAllowed.includes(blockType.name) === false
+      ) {
+        if (nameAllowed.includes('*') || nameAllowed.includes(blockType.name)) {
+          return true;
+        }
       }
 
       if (

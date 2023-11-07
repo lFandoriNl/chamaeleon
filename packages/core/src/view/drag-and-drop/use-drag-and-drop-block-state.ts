@@ -6,10 +6,6 @@ import { useDragAndDropState } from './use-drag-and-drop-state';
 export function useDragAndDropBlockState(block: Block) {
   const { view } = useEditorInstance();
 
-  const [isActive] = useDragAndDropState(
-    (state) => state.activeBlock?.id === block.id,
-  );
-
   const [isOver] = useDragAndDropState(
     (state) => state.isOverContainerId === block.id,
   );
@@ -31,7 +27,6 @@ export function useDragAndDropBlockState(block: Block) {
   });
 
   return {
-    isActive,
     isOver,
     isDragging,
     isAvailableDrop,

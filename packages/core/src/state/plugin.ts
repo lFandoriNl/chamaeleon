@@ -73,7 +73,7 @@ export type PluginSpec<PluginState, T extends PluginType = PluginType> = {
        * @default true
        */
       propertyMatch?: boolean;
-      applicable: BlockSpec['allowContent'];
+      applicable?: BlockSpec['allowContent'];
     };
     state?: StateField<PluginState>;
     view: (context: { editor: Editor; view: EditorView }) => PluginView;

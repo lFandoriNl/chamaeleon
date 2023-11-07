@@ -1,5 +1,13 @@
 # @chamaeleon/extension-grid
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/uikit@0.3.0
+  - @chamaeleon/core@0.9.0
+
 ## 0.1.1
 
 ### Patch Changes

@@ -1,10 +1,32 @@
-import { BlockExtensionConfig, Editor } from '.';
+import { BlockExtensionConfig } from '.';
+import { Editor } from './editor';
 import { BlockExtension } from './block-extension';
 import { getSchemaByResolvedExtensions } from './helpers/get-schema-by-resolved-extensions';
 import { splitExtensions } from './helpers/split-extensions';
 import { Schema } from './model/schema';
 import { Plugin } from './state/plugin';
 import { AnyExtension, Extensions, Provider, RawCommands } from './types';
+
+function throwIfHasDuplicateExtensions(extensions: Extensions) {
+  const countExtensionsByName: Partial<Record<AnyExtension['name'], number>> =
+    {};
+
+  extensions.forEach((extension) => {
+    const extensionCount = countExtensionsByName[extension.name];
+
+    if (extensionCount) {
+      countExtensionsByName[extension.name] = extensionCount + 1;
+    } else {
+      countExtensionsByName[extension.name] = 1;
+    }
+  });
+
+  Object.entries(countExtensionsByName).forEach(([name, count]) => {
+    if (count && count > 1) {
+      throw new Error(`Extension "${name}" already exists.`);
+    }
+  });
+}
 
 export class ExtensionManager {
   editor: Editor;
@@ -14,6 +36,8 @@ export class ExtensionManager {
   extensions: Extensions;
 
   constructor(extensions: Extensions, editor: Editor) {
+    throwIfHasDuplicateExtensions(extensions);
+
     this.editor = editor;
 
     this.extensions = extensions;

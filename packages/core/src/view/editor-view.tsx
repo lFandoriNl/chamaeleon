@@ -263,20 +263,26 @@ export class EditorView {
 
                 if (!activeBlock) return false;
 
+                const isMissingProperty =
+                  activeBlock.type.props[property.name] === undefined;
+
                 const propertyMatch = property.propertyMatch ?? true;
 
-                if (
-                  propertyMatch &&
-                  activeBlock.type.props[property.name] === undefined
-                ) {
-                  return false;
+                if (property.applicable) {
+                  if (propertyMatch && isMissingProperty) {
+                    return false;
+                  }
+
+                  const allowBlocks = state.schema
+                    .getAllowContent(property.applicable || {})
+                    .map((blockType) => blockType.name);
+
+                  return allowBlocks.includes(activeBlock.type.name);
+                } else {
+                  if (!propertyMatch) return false;
+
+                  return !isMissingProperty;
                 }
-
-                const allowBlocks = state.schema
-                  .getAllowContent(property.applicable || {})
-                  .map((blockType) => blockType.name);
-
-                return allowBlocks.includes(activeBlock.type.name);
               },
             ],
           },

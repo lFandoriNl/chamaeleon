@@ -2,7 +2,7 @@
   "name": "@chamaeleon/extension-page",
   "description": "Chamaeleon extension for page component",
   "private": false,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publishConfig": {
     "access": "public"
   },

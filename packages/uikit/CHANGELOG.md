@@ -1,5 +1,11 @@
 # @chamaeleon/uikit
 
+## 0.3.0
+
+### Minor Changes
+
+- Added `FormControl` component
+
 ## 0.2.1
 
 ### Patch Changes

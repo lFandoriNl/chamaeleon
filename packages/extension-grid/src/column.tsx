@@ -34,9 +34,7 @@ export const Column = BlockExtension.create({
   name: 'column',
 
   allowContent: {
-    structural: true,
-    withChildren: true,
-    withValue: true,
+    name: ['*', '!page', '!column'],
   },
 
   addProperties() {

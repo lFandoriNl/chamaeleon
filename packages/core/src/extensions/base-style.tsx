@@ -4,7 +4,7 @@ import { Extension } from '../extension';
 import { Plugin, PluginKey } from '../state';
 
 export const BaseStyle = Extension.create({
-  name: 'row',
+  name: 'base-style',
 
   addPlugins() {
     return [

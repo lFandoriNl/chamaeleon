@@ -120,6 +120,7 @@ export function ActionPopover(props: ActionPopoverProps) {
     <div
       ref={popperRef}
       className={clsx(
+        'z-50',
         isOpen ? 'visible' : 'invisible',
         isDragging && 'invisible',
         className,

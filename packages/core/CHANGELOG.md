@@ -1,5 +1,17 @@
 # @chamaeleon/core
 
+## 0.9.0
+
+### Minor Changes
+
+- Added configuration plugin for content prop
+- `allowContent["name"]` expanded support for new ways to filter blocks `"*"`, `"!blockName"`, `"blockName"`
+
+### Patch Changes
+
+- Updated dependencies
+  - @chamaeleon/uikit@0.3.0
+
 ## 0.8.1
 
 ### Patch Changes
