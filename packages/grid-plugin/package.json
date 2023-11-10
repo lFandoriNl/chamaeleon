@@ -1,8 +1,8 @@
 {
-  "name": "@chamaeleon/extension-page",
-  "description": "Chamaeleon extension for page component",
+  "name": "@chamaeleon/grid-plugin",
+  "description": "Chamaeleon plugin for grid components",
   "private": false,
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -11,7 +11,9 @@
     "chamaeleon",
     "page builder",
     "editor",
-    "page"
+    "grid",
+    "row",
+    "column"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -37,22 +39,24 @@
     "clean": "rm -r dist && rm -r .turbo"
   },
   "peerDependencies": {
+    "@chamaeleon/core": "workspace:~",
+    "@chamaeleon/uikit": "workspace:~",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@chamaeleon/core": "workspace:~"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@chamaeleon/core": "workspace:~",
+    "@chamaeleon/uikit": "workspace:~",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@chamaeleon/core": "workspace:~",
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/lFandoriNl/chamaeleon",
-    "directory": "packages/extension-page"
+    "directory": "packages/grid-plugin"
   }
 }

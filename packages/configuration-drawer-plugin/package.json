@@ -1,8 +1,8 @@
 {
-  "name": "@chamaeleon/extension-persist",
-  "description": "Chamaeleon extension to persist editor state",
+  "name": "@chamaeleon/configuration-drawer-plugin",
+  "description": "Chameleon plugin for editing block parameters",
   "private": false,
-  "version": "0.1.13",
+  "version": "0.4.0",
   "publishConfig": {
     "access": "public"
   },
@@ -11,7 +11,7 @@
     "chamaeleon",
     "page builder",
     "editor",
-    "persist"
+    "change block properties"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -33,19 +33,27 @@
     "dev": "tsup --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "echo 'No test specified'"
   },
   "peerDependencies": {
-    "@chamaeleon/core": "workspace:~"
+    "@chamaeleon/core": "workspace:~",
+    "@chamaeleon/uikit": "workspace:~",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@chamaeleon/core": "workspace:~",
+    "@chamaeleon/uikit": "workspace:~",
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/lFandoriNl/chamaeleon",
-    "directory": "packages/extension-persist"
+    "directory": "packages/configuration-drawer-plugin"
   }
 }

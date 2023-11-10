@@ -2,7 +2,7 @@
   "name": "@chamaeleon/react-editor",
   "description": "Chamaeleon react editor",
   "private": false,
-  "version": "0.0.16",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -37,15 +37,15 @@
     "clean": "rm -r dist && rm -r .turbo"
   },
   "peerDependencies": {
-    "react": "18.2.0",
-    "@chamaeleon/core": "workspace:~",
-    "@chamaeleon/uikit": "workspace:~"
-  },
-  "devDependencies": {
-    "@types/react": "18.2.15",
-    "react": "18.2.0",
     "@chamaeleon/core": "workspace:~",
     "@chamaeleon/uikit": "workspace:~",
+    "react": "18.2.0"
+  },
+  "devDependencies": {
+    "@chamaeleon/core": "workspace:~",
+    "@chamaeleon/uikit": "workspace:~",
+    "@types/react": "18.2.15",
+    "react": "18.2.0",
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   },

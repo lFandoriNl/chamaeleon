@@ -1,8 +1,8 @@
 {
-  "name": "@chamaeleon/extension-add-block-menu",
-  "description": "Chamaeleon extension for adding blocks",
+  "name": "@chamaeleon/history-plugin",
+  "description": "Chamaeleon plugin history for undo redo commands",
   "private": false,
-  "version": "0.0.16",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -11,7 +11,8 @@
     "chamaeleon",
     "page builder",
     "editor",
-    "add blocks"
+    "history",
+    "undo redo"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -33,28 +34,19 @@
     "dev": "tsup --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "test": "echo 'No test specified'",
-    "clean": "rm -r dist && rm -r .turbo"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@chamaeleon/core": "workspace:~",
-    "@chamaeleon/hooks": "workspace:~"
+    "@chamaeleon/core": "workspace:~"
   },
   "devDependencies": {
-    "@types/react": "18.2.15",
-    "@types/react-dom": "18.2.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "@chamaeleon/core": "workspace:~",
-    "@chamaeleon/hooks": "workspace:~",
-    "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/lFandoriNl/chamaeleon",
-    "directory": "packages/extension-add-block-menu"
+    "directory": "packages/history-plugin"
   }
 }

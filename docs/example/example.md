@@ -38,8 +38,8 @@ By default there are no blocks in chameleon, you can install basic plugins to ge
 This happens by passing plugins to editor options.
 
 ```ts
-import { Page } from '@chamaeleon/extension-page';
-import { Row, Column } from '@chamaeleon/extension-grid';
+import { Page } from '@chamaeleon/page-plugin';
+import { Row, Column } from '@chamaeleon/grid-plugin';
 
 const editor = new Editor({
   plugins: [Page(), Row(), Column()],
@@ -49,8 +49,8 @@ const editor = new Editor({
 Blocks alone will not be enough; you will also need pop-up menus for adding new blocks and configuration menus where you can change block parameters. You can also add them.
 
 ```ts
-import { AddBlockMenu } from '@chamaeleon/extension-add-block-menu';
-import { ConfigurationDrawer } from '@chamaeleon/extension-configuration-drawer';
+import { AddBlockMenu } from '@chamaeleon/add-block-menu-plugin';
+import { ConfigurationDrawer } from '@chamaeleon/configuration-drawer-plugin';
 
 const editor = new Editor({
   plugins: [AddBlockMenu(), ConfigurationDrawer()],
@@ -65,7 +65,7 @@ And the `ConfigurationDrawer` provides a drawer where the settings for the activ
 
 <img alt="ConfigurationDrawer" src="./configuration-drawer-demo.png" height="400">
 
-Specifically, these plugins intercept a special transaction with a meta tag - intention, which means that the user calls a certain function, like [this](../../packages/extension-configuration-drawer/src/configuration-drawer.tsx#L56)
+Specifically, these plugins intercept a special transaction with a meta tag - intention, which means that the user calls a certain function, like [this](../../packages/configuration-drawer-plugin/src/configuration-drawer.tsx#L56)
 
 `ConfigurationDrawer` requires additional settings; it needs to be passed a node where it will be rendered using ReactPortal
 
@@ -74,7 +74,7 @@ Node can be passed when passing the plugin to the editor
 ```ts
 const editor = new Editor({
   plugins: [
-    ConfigurationDrawer.configure({
+    ConfigurationDrawer({
       element: document.body,
     }),
   ],
@@ -89,11 +89,10 @@ const Example = () => {
 
   useEffect(() => {
     if (drawerRef.current) {
-      editor.configureExtension(ConfigurationDrawer, (extension) =>
-        extension.configure({
-          element: drawerRef.current,
-        }),
-      );
+      editor.setPluginState(ConfigurationDrawer(), (prev) => ({
+        ...prev,
+        element: drawerRef.current!,
+      }));
     }
   }, []);
 
@@ -110,7 +109,7 @@ const Example = () => {
 ## Undo redo commands
 
 ```ts
-import { History } from '@chamaeleon/extension-history';
+import { History } from '@chamaeleon/history-plugin';
 
 const editor = new Editor({
   plugins: [History()],
@@ -120,7 +119,7 @@ const editor = new Editor({
 By default, the history limit is 1000 commands, you can configure the plugin to increase or decrease this limit
 
 ```ts
-import { History } from '@chamaeleon/extension-history';
+import { History } from '@chamaeleon/history-plugin';
 
 const editor = new Editor({
   plugins: [History({ limit: 100 })],
@@ -145,7 +144,7 @@ const Example = () => {
 ## Persist state
 
 ```ts
-import { Persist } from '@chamaeleon/extension-persist';
+import { Persist } from '@chamaeleon/persist-plugin';
 
 const editor = new Editor({
   plugins: [Persist()],
@@ -186,81 +185,76 @@ Therefore, you will have to create your own plugins to add support for your bloc
 
 This is what a basic example of a button block might look like:
 
-```ts
-import { BlockExtension } from '@chamaeleon/core';
+```tsx
+import { Plugin } from '@chamaeleon/core';
 
-export const Button = BlockExtension.create({
-  name: 'button',
-
-  allowContent: {},
-
-  withValue: true,
-
-  addProperties() {
-    return {
-      value: {
-        default: 'Button',
-      },
-    };
-  },
-
-  addStyle() {
-    return {
-      root: {
-        margin: {
-          default: 0,
+export function Button(): Plugin {
+  return {
+    name: 'button',
+    apply(editor, { addBlock }) {
+      addBlock({
+        name: 'button',
+        props: {
+          content: {
+            default: 'Button',
+          },
         },
-      },
-    };
-  },
-
-  addBlockViews() {
-    return {
-      view: ({ block }) => {
-        return (
-          <button
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-            style={block.style.root}
-          >
-            {block.props.value}
-          </button>
-        );
-      },
-      editor: ({ block }) => {
-        return (
-          <button
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-            style={block.style.root}
-          >
-            {block.props.value}
-          </button>
-        );
-      },
-      palette: () => {
-        return <div>Button</div>;
-      },
-    };
-  },
-});
+        style: {
+          root: {
+            margin: 0,
+          },
+        },
+        components: {
+          view: ({ block }) => {
+            return (
+              <button
+                className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                style={block.style.root}
+              >
+                {block.props.value}
+              </button>
+            );
+          },
+          editor: ({ block }) => {
+            return (
+              <button
+                className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                style={block.style.root}
+              >
+                {block.props.value}
+              </button>
+            );
+          },
+          palette: () => {
+            return <div>Button</div>;
+          },
+        },
+      });
+    },
+  };
+}
 ```
 
-The object that we pass to the BlockExtension.create factory is the specification of our block, in more detail:
+We create a function that returns the plugin type, more details about each property:
 
-- `name` - the type of our block, note this name must be unique for all plugins that are loaded into the editor
-- `allowContent` - an [object](https://github.com/lFandoriNl/chamaeleon/blob/master/packages/core/src/model/schema.ts#L154) that describes which blocks can be nested in this block
-- `addProperties` - this method describes the parameters of our block; they can be changed in the property editor
-- `addStyle` - this method, by analogy with parameters, describes the styles of the component, styles can be divided into layers, but the main root layer must always be defined if the block has custom styles
-- `addBlockViews` - this method returns three components
-  - `view` component for display by the editor in `view mode`
-  - `editor` component for display by the editor in `edit mode`
-  - `palette` for rendering a component selection from a `palette`
+- `name` - the name of our plugin, please note that this name must be unique for all plugins that are loaded into the editor
+- `apply` - called immediately before using the plugin
+  - the function takes two arguments, the first is the instance of the editor itself, and the second is a set of methods with which you can expand the editor with your own blocks/components to change props or styles etc.
+  - to add a new block we use the `addBlock` function, where we pass the following parameters
+    - `name` - the name of our block, must be unique
+    - `props` - this object describes the parameters of our block; they can be changed in the property editor
+    - `style` - this object, by analogy with parameters, describes the styles of the component, styles can be divided into layers, but the main `root` layer must always be defined
+    - `components` - set of different block display options
+      - `view` component for display by the editor in `view mode`
+      - `editor` component for display by the editor in `edit mode`
+      - `palette` for rendering a component selection from a `palette`
 
 Now the view and editor components are similar to each other, this is because in edit mode we do not change our button in any way.
 
 For example, if we wanted a popover to be displayed when we hover a button to open the properties editing panel, we could already make the following changes:
 
 ```ts
-editor: ({ block, editor }) => {
+editor: ({ block }) => {
   const { ui } = editor.view;
 
   const referenceRef = useRef<HTMLButtonElement>(null);

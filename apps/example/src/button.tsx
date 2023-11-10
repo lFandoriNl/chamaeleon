@@ -9,8 +9,6 @@ export function Button(): Plugin {
     apply(editor, { addBlock }) {
       addBlock({
         name: 'button',
-        allowContent: {},
-        withValue: true,
         props: {
           content: {
             default: 'Button',
@@ -18,12 +16,7 @@ export function Button(): Plugin {
         },
         style: {
           root: {
-            margin: 10,
-            // margin: '5px 10px 15px 20px',
-            // marginTop: 0,
-            // marginRight: undefined,
-            // marginBottom: undefined,
-            // marginLeft: undefined,
+            margin: 0,
           },
         },
         components: {

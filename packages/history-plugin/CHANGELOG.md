@@ -1,4 +1,15 @@
-# @chamaeleon/extension-persist
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [0.2.0](https://github.com/lFandoriNl/chamaeleon/compare/@chamaeleon/history-plugin@0.1.12...@chamaeleon/history-plugin@0.2.0) (2023-11-10)
+
+### Features
+
+- rewrite to new plugin api
+
+## Below is the old style changelog
 
 ## 0.1.13
 
@@ -89,15 +100,16 @@
 
 ### Patch Changes
 
-- Fix commands types
+- Updated dependencies
+  - @chamaeleon/core@0.2.0
 
 ## 0.1.0
 
 ### Minor Changes
 
-- Create extension-persist package
+- Create history-plugin package
 
 ### Patch Changes
 
 - Updated dependencies
-  - @chamaeleon/core@0.2.0
+  - @chamaeleon/core@0.1.0

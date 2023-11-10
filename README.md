@@ -58,25 +58,25 @@ npm i react react-dom @chamaeleon/core @chamaeleon/react-editor
 If you want to install base blocks:
 
 ```shell
-npm i @chamaeleon/extension-page @chamaeleon/extension-grid @chamaeleon/extension-typography
+npm i @chamaeleon/page-plugin @chamaeleon/grid-plugin @chamaeleon/typography-plugin
 ```
 
-If you want to connect built-in extensions for editing and adding blocks, then run:
+If you want to connect built-in plugins for editing and adding blocks, then run:
 
 ```shell
-npm i @chamaeleon/extension-add-block-menu @chamaeleon/extension-configuration-drawer
+npm i @chamaeleon/add-block-menu-plugin @chamaeleon/configuration-drawer-plugin
 ```
 
-You may also want to install an extension for the undo redo commands:
+You may also want to install an plugin for the undo redo commands:
 
 ```shell
-npm i @chamaeleon/extension-history
+npm i @chamaeleon/history-plugin
 ```
 
 If you need support persisted state:
 
 ```shell
-npm i @chamaeleon/extension-persist
+npm i @chamaeleon/persist-plugin
 ```
 
 ## Example

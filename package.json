@@ -11,7 +11,8 @@
     "check-types": "turbo check-types",
     "clean": "turbo clean --concurrency 20",
     "format": "prettier --write .",
-    "release": "turbo run build lint test && changeset publish"
+    "version": "npx lerna version --no-private --no-git-tag-version --conventional-commits",
+    "prepublish": "turbo run build lint test"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",

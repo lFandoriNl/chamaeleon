@@ -1,8 +1,8 @@
 {
-  "name": "@chamaeleon/extension-history",
-  "description": "Chamaeleon extension history for undo redo commands",
+  "name": "@chamaeleon/persist-plugin",
+  "description": "Chamaeleon plugin to persist editor state",
   "private": false,
-  "version": "0.1.13",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -11,8 +11,7 @@
     "chamaeleon",
     "page builder",
     "editor",
-    "history",
-    "undo redo"
+    "persist"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -47,6 +46,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/lFandoriNl/chamaeleon",
-    "directory": "packages/extension-history"
+    "directory": "packages/persist-plugin"
   }
 }

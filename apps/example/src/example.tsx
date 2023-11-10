@@ -1,17 +1,13 @@
 import { useEffect, useRef } from 'react';
 
 import { Editor } from '@chamaeleon/core';
-import { Page } from '@chamaeleon/extension-page';
-import { GridPack } from '@chamaeleon/extension-grid';
-import { Text } from '@chamaeleon/extension-typography';
-import { Persist } from '@chamaeleon/extension-persist';
-import {
-  History,
-  historyName,
-  HistoryState,
-} from '@chamaeleon/extension-history';
-import { AddBlockMenu } from '@chamaeleon/extension-add-block-menu';
-import { ConfigurationDrawer } from '@chamaeleon/extension-configuration-drawer';
+import { Page } from '@chamaeleon/page-plugin';
+import { GridPack } from '@chamaeleon/grid-plugin';
+import { Text } from '@chamaeleon/typography-plugin';
+import { Persist } from '@chamaeleon/persist-plugin';
+import { History, historyName, HistoryState } from '@chamaeleon/history-plugin';
+import { AddBlockMenu } from '@chamaeleon/add-block-menu-plugin';
+import { ConfigurationDrawer } from '@chamaeleon/configuration-drawer-plugin';
 import {
   EditorContent,
   EditorProvider,

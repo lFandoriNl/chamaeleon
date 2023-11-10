@@ -78,36 +78,36 @@ importers:
 
   apps/example:
     dependencies:
+      '@chamaeleon/add-block-menu-plugin':
+        specifier: workspace:^
+        version: link:../../packages/add-block-menu-plugin
+      '@chamaeleon/configuration-drawer-plugin':
+        specifier: workspace:^
+        version: link:../../packages/configuration-drawer-plugin
       '@chamaeleon/core':
         specifier: workspace:^
         version: link:../../packages/core
       '@chamaeleon/devtools':
         specifier: workspace:^
         version: link:../../packages/devtools
-      '@chamaeleon/extension-add-block-menu':
+      '@chamaeleon/grid-plugin':
         specifier: workspace:^
-        version: link:../../packages/extension-add-block-menu
-      '@chamaeleon/extension-configuration-drawer':
+        version: link:../../packages/grid-plugin
+      '@chamaeleon/history-plugin':
         specifier: workspace:^
-        version: link:../../packages/extension-configuration-drawer
-      '@chamaeleon/extension-grid':
+        version: link:../../packages/history-plugin
+      '@chamaeleon/page-plugin':
         specifier: workspace:^
-        version: link:../../packages/extension-grid
-      '@chamaeleon/extension-history':
+        version: link:../../packages/page-plugin
+      '@chamaeleon/persist-plugin':
         specifier: workspace:^
-        version: link:../../packages/extension-history
-      '@chamaeleon/extension-page':
-        specifier: workspace:^
-        version: link:../../packages/extension-page
-      '@chamaeleon/extension-persist':
-        specifier: workspace:^
-        version: link:../../packages/extension-persist
-      '@chamaeleon/extension-typography':
-        specifier: workspace:^
-        version: link:../../packages/extension-typography
+        version: link:../../packages/persist-plugin
       '@chamaeleon/react-editor':
         specifier: workspace:^
         version: link:../../packages/react-editor
+      '@chamaeleon/typography-plugin':
+        specifier: workspace:^
+        version: link:../../packages/typography-plugin
       '@chamaeleon/uikit':
         specifier: workspace:^
         version: link:../../packages/uikit
@@ -133,6 +133,60 @@ importers:
       vite:
         specifier: 4.4.9
         version: 4.4.9(@types/node@20.5.6)
+
+  packages/add-block-menu-plugin:
+    devDependencies:
+      '@chamaeleon/core':
+        specifier: workspace:~
+        version: link:../core
+      '@chamaeleon/hooks':
+        specifier: workspace:~
+        version: link:../hooks
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+      '@types/react-dom':
+        specifier: 18.2.7
+        version: 18.2.7
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      tailwind-config:
+        specifier: workspace:*
+        version: link:../tailwind-config
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
+
+  packages/configuration-drawer-plugin:
+    devDependencies:
+      '@chamaeleon/core':
+        specifier: workspace:~
+        version: link:../core
+      '@chamaeleon/uikit':
+        specifier: workspace:~
+        version: link:../uikit
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+      '@types/react-dom':
+        specifier: 18.2.7
+        version: 18.2.7
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      tailwind-config:
+        specifier: workspace:*
+        version: link:../tailwind-config
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   packages/core:
     dependencies:
@@ -205,34 +259,7 @@ importers:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
-  packages/extension-add-block-menu:
-    devDependencies:
-      '@chamaeleon/core':
-        specifier: workspace:~
-        version: link:../core
-      '@chamaeleon/hooks':
-        specifier: workspace:~
-        version: link:../hooks
-      '@types/react':
-        specifier: 18.2.15
-        version: 18.2.15
-      '@types/react-dom':
-        specifier: 18.2.7
-        version: 18.2.7
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      tailwind-config:
-        specifier: workspace:*
-        version: link:../tailwind-config
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
-
-  packages/extension-configuration-drawer:
+  packages/grid-plugin:
     devDependencies:
       '@chamaeleon/core':
         specifier: workspace:~
@@ -259,95 +286,11 @@ importers:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
-  packages/extension-grid:
+  packages/history-plugin:
     devDependencies:
       '@chamaeleon/core':
         specifier: workspace:~
         version: link:../core
-      '@chamaeleon/uikit':
-        specifier: workspace:~
-        version: link:../uikit
-      '@types/react':
-        specifier: 18.2.15
-        version: 18.2.15
-      '@types/react-dom':
-        specifier: 18.2.7
-        version: 18.2.7
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      tailwind-config:
-        specifier: workspace:*
-        version: link:../tailwind-config
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
-
-  packages/extension-history:
-    devDependencies:
-      '@chamaeleon/core':
-        specifier: workspace:~
-        version: link:../core
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
-
-  packages/extension-page:
-    devDependencies:
-      '@chamaeleon/core':
-        specifier: workspace:~
-        version: link:../core
-      '@types/react':
-        specifier: 18.2.15
-        version: 18.2.15
-      '@types/react-dom':
-        specifier: 18.2.7
-        version: 18.2.7
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      tailwind-config:
-        specifier: workspace:*
-        version: link:../tailwind-config
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
-
-  packages/extension-persist:
-    devDependencies:
-      '@chamaeleon/core':
-        specifier: workspace:~
-        version: link:../core
-      tsup:
-        specifier: ^7.2.0
-        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
-
-  packages/extension-typography:
-    devDependencies:
-      '@chamaeleon/core':
-        specifier: workspace:~
-        version: link:../core
-      '@types/react':
-        specifier: 18.2.15
-        version: 18.2.15
-      '@types/react-dom':
-        specifier: 18.2.7
-        version: 18.2.7
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      tailwind-config:
-        specifier: workspace:*
-        version: link:../tailwind-config
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
@@ -360,6 +303,39 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.2.0
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
+
+  packages/page-plugin:
+    devDependencies:
+      '@chamaeleon/core':
+        specifier: workspace:~
+        version: link:../core
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+      '@types/react-dom':
+        specifier: 18.2.7
+        version: 18.2.7
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      tailwind-config:
+        specifier: workspace:*
+        version: link:../tailwind-config
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
+
+  packages/persist-plugin:
+    devDependencies:
+      '@chamaeleon/core':
+        specifier: workspace:~
+        version: link:../core
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
@@ -386,6 +362,30 @@ importers:
         version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   packages/tailwind-config: {}
+
+  packages/typography-plugin:
+    devDependencies:
+      '@chamaeleon/core':
+        specifier: workspace:~
+        version: link:../core
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+      '@types/react-dom':
+        specifier: 18.2.7
+        version: 18.2.7
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      tailwind-config:
+        specifier: workspace:*
+        version: link:../tailwind-config
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(postcss@8.4.31)(typescript@5.2.2)
 
   packages/uikit:
     devDependencies:
