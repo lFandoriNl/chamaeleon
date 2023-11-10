@@ -5,10 +5,11 @@ export {
   type RawBlocks,
 } from './editor-state';
 export {
-  Plugin,
-  PluginKey,
-  type PluginType,
-  type PluginSpec,
-  type PluginView,
+  type Plugin,
+  type PluginApplyMethods,
+  type PluginCommonComponent,
+  type PluginPropsComponent,
+  type PluginStyleComponent,
+  type InferPluginState,
 } from './plugin';
 export { Transaction } from './transaction';

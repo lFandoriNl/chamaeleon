@@ -1,35 +1,36 @@
 import { EditorView, EditorViewOptions } from './view';
-import { EditorState, RawBlocks, Transaction } from './state';
+import {
+  EditorState,
+  InferPluginState,
+  Plugin,
+  RawBlocks,
+  Transaction,
+} from './state';
+import { Schema } from './model';
 
-import { ExtensionManager } from './extension-manager';
+import { PluginManager } from './plugin-manager';
 import { CommandManager } from './command-manager';
 import { EventEmitter } from './event-emitter';
 
-import { Commands, DragAndDrop, BaseProps, BaseStyle } from './extensions';
+import { BasePropsPack, BaseStylePack } from './plugins-pack';
+import { Commands, DragAndDrop } from './plugins';
 
-import { Schema } from './model/schema';
-
-import {
-  Logger,
-  AnyExtension,
-  EditorEvents,
-  Extensions,
-  SingleCommands,
-} from './types';
+import { Logger, EditorEvents, SingleCommands } from './types';
+import { isFunction } from './utilities/is-function';
 
 export type EditorOptions = Pick<
   EditorViewOptions,
   'propertyConfigurationRender' | 'ui'
 > & {
   blocks: RawBlocks;
-  extensions: Extensions;
+  plugins: ReadonlyArray<Plugin | ReadonlyArray<Plugin>>;
   loggers?: Logger[];
 };
 
 export class Editor extends EventEmitter<EditorEvents> {
   private commandManager: CommandManager;
 
-  extensionManager!: ExtensionManager;
+  pluginManager!: PluginManager;
 
   schema: Schema;
 
@@ -37,7 +38,7 @@ export class Editor extends EventEmitter<EditorEvents> {
 
   options: EditorOptions = {
     blocks: {},
-    extensions: [],
+    plugins: [],
   };
 
   logger: Logger = {
@@ -56,23 +57,30 @@ export class Editor extends EventEmitter<EditorEvents> {
 
     this.setOptions(options);
 
-    this.createExtensionManager();
+    this.createPluginManager();
 
-    this.schema = this.extensionManager.schema;
+    this.schema = this.pluginManager.schema;
+
+    this.createView();
 
     this.commandManager = new CommandManager({
       editor: this,
     });
 
-    this.createView();
-
     this.loggers = options.loggers || [];
 
-    this.initExtensions();
+    this.initPlugins();
+
+    this.view.setPluginProviders(this.pluginManager.providers);
+    this.view.setPluginViews(
+      this.pluginManager.pluginViews.common,
+      this.pluginManager.pluginViews.props,
+      this.pluginManager.pluginViews.style,
+    );
   }
 
-  private async initExtensions() {
-    await this.extensionManager.init();
+  private async initPlugins() {
+    await this.pluginManager.init();
 
     this.emit('ready', { editor: this });
 
@@ -105,12 +113,17 @@ export class Editor extends EventEmitter<EditorEvents> {
     }
   }
 
-  private createExtensionManager() {
-    const coreExtensions = [Commands, DragAndDrop, BaseProps, BaseStyle];
+  private createPluginManager() {
+    const corePlugins = [
+      Commands(),
+      DragAndDrop(),
+      BasePropsPack,
+      BaseStylePack,
+    ];
 
-    const allExtensions = [...coreExtensions, ...this.options.extensions];
+    const allPlugins = [...corePlugins, ...this.options.plugins];
 
-    this.extensionManager = new ExtensionManager(allExtensions, this);
+    this.pluginManager = new PluginManager(allPlugins.flat(), this);
   }
 
   private createView() {
@@ -118,12 +131,11 @@ export class Editor extends EventEmitter<EditorEvents> {
       state: EditorState.create({
         schema: this.schema,
         blocks: this.options.blocks,
-        plugins: this.extensionManager.plugins,
+        plugins: this.pluginManager.plugins,
       }),
       dispatchTransaction: this.dispatchTransaction.bind(this),
       propertyConfigurationRender: this.options.propertyConfigurationRender,
       ui: this.options.ui,
-      extensionProviders: this.extensionManager.providers,
     });
 
     this.createBlockViews();
@@ -131,7 +143,7 @@ export class Editor extends EventEmitter<EditorEvents> {
 
   private createBlockViews() {
     this.view.setOptions({
-      blockViews: this.extensionManager.blockViews,
+      blockViews: this.pluginManager.blockViews,
     });
   }
 
@@ -151,10 +163,38 @@ export class Editor extends EventEmitter<EditorEvents> {
     });
   }
 
-  configureExtension<T extends AnyExtension>(
-    extension: T,
-    configure: (extension: T) => T,
-  ) {
-    this.extensionManager.configureExtension(extension, configure);
+  getPluginState<T>(plugin: Plugin['name']): T;
+  getPluginState<T extends Plugin>(plugin: T): InferPluginState<T>;
+  getPluginState<T>(plugin: Plugin | Plugin['name']): T {
+    return this.state.getPluginState(this.getPluginName(plugin));
+  }
+
+  setPluginState<S>(
+    plugin: Plugin['name'],
+    state: S | ((prevState: S) => S),
+  ): void;
+  setPluginState<T extends Plugin, S = InferPluginState<T>>(
+    plugin: T,
+    state: S | ((prevState: S) => S),
+  ): void;
+  setPluginState<S>(
+    plugin: Plugin | Plugin['name'],
+    state: S | ((prevState: S) => S),
+  ): void {
+    const name = this.getPluginName(plugin);
+
+    if (isFunction(state)) {
+      const newState = state(this.state.getPluginState(name));
+
+      this.state.setPluginState(name, newState);
+    } else {
+      this.state.setPluginState(name, state);
+    }
+
+    this.pluginManager.pluginStateChanged(name);
+  }
+
+  private getPluginName<T extends Plugin>(plugin: T | T['name']) {
+    return typeof plugin === 'string' ? plugin : plugin.name;
   }
 }

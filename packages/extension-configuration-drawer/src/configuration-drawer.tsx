@@ -1,5 +1,7 @@
-import { Block, Extension, PluginKey } from '@chamaeleon/core';
-import { ConfigurationDrawerPlugin } from './configuration-drawer-plugin';
+import ReactDOM from 'react-dom';
+
+import { Block, Plugin } from '@chamaeleon/core';
+import { ConfigurationDrawerView } from './configuration-drawer-view';
 
 declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
@@ -10,57 +12,77 @@ declare module '@chamaeleon/core' {
   }
 }
 
-export type ConfigurationDrawerOptions = {
-  element: HTMLElement | null;
+export type ConfigurationDrawerState = {
+  element: HTMLElement;
+  open: boolean;
 };
 
-const ConfigurationDrawerPluginKey = new PluginKey('ConfigurationDrawerPlugin');
+export type ConfigurationDrawerOptions = {
+  element?: HTMLElement;
+};
 
-export const ConfigurationDrawer = Extension.create<ConfigurationDrawerOptions>(
-  {
-    name: 'ConfigurationDrawer',
+export const configurationDrawerName = 'configuration-drawer';
 
-    addOptions() {
-      return {
-        element: null,
-      };
-    },
+export function ConfigurationDrawer(
+  options: ConfigurationDrawerOptions = {},
+): Plugin<ConfigurationDrawerState> {
+  return {
+    name: configurationDrawerName,
+    apply(editor, { addCommands, addView, getState }) {
+      editor.on('transaction', ({ transaction }) => {
+        const intention = transaction.getMeta('intention');
 
-    addCommands() {
-      return {
+        if (intention?.type === 'change-properties') {
+          Promise.resolve().then(() =>
+            editor.commands.openConfiguration(intention.target),
+          );
+        }
+      });
+
+      addCommands({
         openConfiguration: (target) => {
           return ({ tr }) => {
-            tr.select(target).setMeta(ConfigurationDrawerPluginKey, {
+            tr.select(target).setMeta(configurationDrawerName, {
               open: true,
             });
           };
         },
         closeConfiguration: () => {
           return ({ tr }) => {
-            tr.setMeta(ConfigurationDrawerPluginKey, { open: false });
+            tr.setMeta(configurationDrawerName, { open: false });
           };
         },
-      };
+      });
+
+      addView({
+        component: () => {
+          const { element, open } = getState();
+
+          return ReactDOM.createPortal(
+            <ConfigurationDrawerView open={open} editor={editor} />,
+            element,
+          );
+        },
+      });
     },
 
-    addPlugins({ editor, options }) {
-      return [
-        ConfigurationDrawerPlugin({
-          pluginKey: ConfigurationDrawerPluginKey,
-          editor,
+    state: {
+      init() {
+        return {
           element: options.element || document.body,
-        }),
-      ];
-    },
+          open: false,
+        };
+      },
+      apply(tr, value) {
+        if (!tr.getMeta(configurationDrawerName)) {
+          return value;
+        }
 
-    onTransaction({ editor }, { transaction }) {
-      const intention = transaction.getMeta('intention');
-
-      if (intention?.type === 'change-properties') {
-        Promise.resolve().then(() =>
-          editor.commands.openConfiguration(intention.target),
-        );
-      }
+        return {
+          element: value.element,
+          open: tr.getMeta(configurationDrawerName)?.open === true,
+        };
+      },
     },
-  },
-);
+  };
+}

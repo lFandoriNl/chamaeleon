@@ -67,7 +67,7 @@ const baseFields = [
 class Configuration {
   fields: FieldDesc<any>[];
   plugins: Plugin[] = [];
-  pluginsByKey: { [key: string]: Plugin } = {};
+  pluginsByName: { [key: string]: Plugin } = {};
 
   constructor(
     readonly schema: Schema,
@@ -77,17 +77,17 @@ class Configuration {
 
     if (plugins)
       plugins.forEach((plugin) => {
-        if (this.pluginsByKey[plugin.key])
+        if (this.pluginsByName[plugin.name])
           throw new RangeError(
-            `Adding different instances of a keyed plugin "${plugin.key}"`,
+            `Adding different instances of a keyed plugin "${plugin.name}"`,
           );
 
         this.plugins.push(plugin);
-        this.pluginsByKey[plugin.key] = plugin;
+        this.pluginsByName[plugin.name] = plugin;
 
-        if (plugin.spec.state)
+        if (plugin.state)
           this.fields.push(
-            new FieldDesc<any>(plugin.key, plugin.spec.state, plugin),
+            new FieldDesc<any>(plugin.name, plugin.state, plugin),
           );
       });
   }
@@ -133,6 +133,16 @@ export class EditorState {
     return this.blocks[this.schema.spec.rootBlockId];
   }
 
+  /// @internal
+  getPluginState<T>(name: Plugin['name']): T {
+    return (this as any)[name] as T;
+  }
+
+  /// @internal
+  setPluginState<T>(name: Plugin['name'], state: T) {
+    (this as any)[name] = state;
+  }
+
   getBlock(id: Block['id']) {
     if (!this.blocks[id])
       throw new RangeError(`Block with id: ${id} - does not exist.`);
@@ -151,8 +161,8 @@ export class EditorState {
         const plugin = this.config.plugins[i];
 
         if (
-          plugin.spec.filterTransaction &&
-          !plugin.spec.filterTransaction.call(plugin, tr, this)
+          plugin.filterTransaction &&
+          !plugin.filterTransaction.call(plugin, tr, this)
         ) {
           return false;
         }
@@ -185,13 +195,13 @@ export class EditorState {
       for (let i = 0; i < this.config.plugins.length; i++) {
         const plugin = this.config.plugins[i];
 
-        if (plugin.spec.appendTransaction) {
+        if (plugin.appendTransaction) {
           const n = seen ? seen[i].n : 0;
           const oldState = seen ? seen[i].state : this;
 
           const tr =
             n < trs.length &&
-            plugin.spec.appendTransaction.call(
+            plugin.appendTransaction.call(
               plugin,
               n ? trs.slice(n) : trs,
               oldState,

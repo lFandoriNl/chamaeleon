@@ -1,21 +1,10 @@
 import React from 'react';
 
-import {
-  BlockExtensionConfig,
-  Commands,
-  ExtensionConfig,
-} from '@chamaeleon/core';
+import { Commands } from '.';
 import { Editor } from './editor';
 import { EditorView } from './view';
 import { EditorState, Transaction } from './state';
 import { Block, BlockSpec } from './model';
-
-import { Extension } from './extension';
-import { BlockExtension } from './block-extension';
-
-export type AnyConfig = ExtensionConfig | BlockExtensionConfig;
-export type AnyExtension = Extension | BlockExtension;
-export type Extensions = AnyExtension[];
 
 export type Provider = React.FunctionComponent<{
   Renderer: React.FunctionComponent<{ block: Block }>;
@@ -69,14 +58,13 @@ export type Properties = {
   [key: string]: Property;
 };
 
-export type ExtensionProperty = {
-  type: Extension['name'];
+export type BlockProperty = {
   name: string;
   property: Required<Property>;
 };
 
-export type ExtensionStyle = {
-  type: Extension['name'];
+export type BlockStyle = {
+  type: Block['type']['name'];
   style: BlockSpec['style'];
 };
 
@@ -91,7 +79,7 @@ export type BlockViewRenderer = (
 ) => React.ReactNode;
 
 export type BlockViewRendererPack = {
-  natural: BlockViewRenderer;
+  view: BlockViewRenderer;
   editor: BlockViewRenderer;
   palette: () => React.ReactNode;
 };

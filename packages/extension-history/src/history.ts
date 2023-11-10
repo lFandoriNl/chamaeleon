@@ -1,5 +1,4 @@
-import { Extension } from '@chamaeleon/core';
-import { history, HistoryKey } from './history-plugin';
+import { Plugin, Transaction } from '@chamaeleon/core';
 
 declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
@@ -10,84 +9,173 @@ declare module '@chamaeleon/core' {
   }
 }
 
-export const History = Extension.create({
-  name: 'history',
+type HistoryOptions = {
+  limit?: number;
+};
 
-  addOptions() {
-    return {
-      limit: 100,
-    };
-  },
+export type HistoryState = {
+  historyTransactions: Transaction[];
+  supportedVersions: number;
+  currentVersion: number;
+  canUndo: boolean;
+  canRedo: boolean;
+};
 
-  addCommands() {
-    return {
-      undo: () => {
-        return ({ tr, state, view }) => {
-          tr.setMeta('preventDispatch', true);
+const getUndoRedoFlags = (
+  state: Pick<HistoryState, 'historyTransactions' | 'currentVersion'>,
+): Pick<HistoryState, 'canUndo' | 'canRedo'> => {
+  const { historyTransactions, currentVersion } = state;
 
-          const { historyTransactions, currentVersion, canUndo } =
-            HistoryKey.getState(state);
+  return {
+    canUndo: currentVersion !== -1,
+    canRedo: currentVersion !== historyTransactions.length - 1,
+  };
+};
 
-          if (!canUndo) return;
+export const historyName = 'history';
 
-          const trFromHistory = historyTransactions[currentVersion];
+export function History(options: HistoryOptions = {}): Plugin<HistoryState> {
+  return {
+    name: historyName,
+    apply(_, { addCommands, getState }) {
+      addCommands({
+        undo: () => {
+          return ({ tr, state, view }) => {
+            tr.setMeta('preventDispatch', true);
 
-          const invertedTr = trFromHistory.steps.reduceRight((tr, step) => {
-            const result = step.invert(tr.blocks);
+            const { historyTransactions, currentVersion, canUndo } = getState();
 
-            if (result.failed) {
+            if (!canUndo) return;
+
+            const trFromHistory = historyTransactions[currentVersion];
+
+            const invertedTr = trFromHistory.steps.reduceRight((tr, step) => {
+              const result = step.invert(tr.blocks);
+
+              if (result.failed) {
+                return tr;
+              }
+
+              tr.blocks = result.blocks!;
+              tr.lastModifiedBlock = tr.blocks[state.schema.spec.rootBlockId]
+                ? step.meta.changed
+                : null;
+              tr.activeId = null;
+
               return tr;
-            }
+            }, trFromHistory);
 
-            tr.blocks = result.blocks!;
-            tr.lastModifiedBlock = tr.blocks[state.schema.spec.rootBlockId]
-              ? step.meta.changed
-              : null;
-            tr.activeId = null;
+            view.dispatch(invertedTr.setMeta(historyName, 'inverted'));
+          };
+        },
+        redo: () => {
+          return ({ tr, view }) => {
+            tr.setMeta('preventDispatch', true);
 
-            return tr;
-          }, trFromHistory);
+            const { historyTransactions, currentVersion, canRedo } = getState();
 
-          view.dispatch(invertedTr.setMeta(HistoryKey, 'inverted'));
+            if (!canRedo) return;
+
+            const currentVersionShift = currentVersion + 1;
+
+            const trFromHistory =
+              historyTransactions[
+                currentVersionShift === -1 ? 0 : currentVersionShift
+              ];
+
+            const appliedTr = trFromHistory.steps.reduce((tr, step) => {
+              const result = step.apply(tr.blocks);
+
+              if (result.failed) {
+                return tr;
+              }
+
+              tr.blocks = result.blocks!;
+              tr.lastModifiedBlock = step.meta.changed;
+              tr.activeId = null;
+
+              return tr;
+            }, trFromHistory);
+
+            view.dispatch(appliedTr.setMeta(historyName, 'applied'));
+          };
+        },
+      });
+    },
+
+    state: {
+      init() {
+        return {
+          historyTransactions: [],
+          currentVersion: -1,
+          supportedVersions: options.limit || 1000,
+          canUndo: false,
+          canRedo: false,
         };
       },
-      redo: () => {
-        return ({ tr, state, view }) => {
-          tr.setMeta('preventDispatch', true);
+      apply(tr, value) {
+        if (tr.steps.length == 0 || tr.getMeta('preventHistory')) {
+          return value;
+        }
 
-          const { historyTransactions, currentVersion, canRedo } =
-            HistoryKey.getState(state);
+        if (tr.getMeta(historyName) === 'inverted') {
+          const newCurrentVersion = value.currentVersion - 1;
 
-          if (!canRedo) return;
+          return {
+            ...value,
+            currentVersion: newCurrentVersion,
+            ...getUndoRedoFlags({
+              historyTransactions: value.historyTransactions,
+              currentVersion: newCurrentVersion,
+            }),
+          };
+        }
 
-          const currentVersionShift = currentVersion + 1;
+        if (tr.getMeta(historyName) === 'applied') {
+          const newCurrentVersion = value.currentVersion + 1;
 
-          const trFromHistory =
-            historyTransactions[
-              currentVersionShift === -1 ? 0 : currentVersionShift
-            ];
+          return {
+            ...value,
+            currentVersion: newCurrentVersion,
+            ...getUndoRedoFlags({
+              historyTransactions: value.historyTransactions,
+              currentVersion: newCurrentVersion,
+            }),
+          };
+        }
 
-          const appliedTr = trFromHistory.steps.reduce((tr, step) => {
-            const result = step.apply(tr.blocks);
+        let newHistoryTransactions = [];
+        let newCurrentVersion = -1;
 
-            if (result.failed) {
-              return tr;
-            }
+        const hasUndoneTransaction =
+          value.historyTransactions.length - 1 !== value.currentVersion;
 
-            tr.blocks = result.blocks!;
-            tr.lastModifiedBlock = step.meta.changed;
-            tr.activeId = null;
+        if (hasUndoneTransaction) {
+          newHistoryTransactions = [
+            ...value.historyTransactions.slice(0, value.currentVersion + 1),
+            tr,
+          ];
+          newCurrentVersion = newHistoryTransactions.length - 1;
+        } else {
+          newHistoryTransactions = [...value.historyTransactions, tr];
 
-            return tr;
-          }, trFromHistory);
+          if (newHistoryTransactions.length > value.supportedVersions) {
+            newHistoryTransactions = newHistoryTransactions.slice(1);
+          }
 
-          view.dispatch(appliedTr.setMeta(HistoryKey, 'applied'));
+          newCurrentVersion = newHistoryTransactions.length - 1;
+        }
+
+        return {
+          historyTransactions: newHistoryTransactions,
+          currentVersion: newCurrentVersion,
+          supportedVersions: value.supportedVersions,
+          ...getUndoRedoFlags({
+            historyTransactions: newHistoryTransactions,
+            currentVersion: newCurrentVersion,
+          }),
         };
       },
-    };
-  },
-
-  addPlugins({ options }) {
-    return [history(options)];
-  },
-});
+    },
+  };
+}

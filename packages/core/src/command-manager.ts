@@ -18,7 +18,7 @@ export class CommandManager {
   constructor(props: { editor: Editor }) {
     this.editor = props.editor;
 
-    this.rawCommands = this.editor.extensionManager.commands;
+    this.rawCommands = this.editor.pluginManager.commands;
   }
 
   get commands(): SingleCommands {
@@ -88,50 +88,6 @@ export class CommandManager {
     return chain;
   }
 
-  // execute(str: string) {
-  //   const [patches, inversePatches] = this.editor.state.apply((state) => {
-  //     const id = Object.keys(state.pages)[0];
-  //     state.pages[id].title = str;
-  //   });
-
-  //   this.changes.set(++this.currentVersion, {
-  //     redo: patches,
-  //     undo: inversePatches,
-  //   });
-
-  //   this.changes.delete(this.currentVersion + 1);
-  //   this.changes.delete(this.currentVersion - this.supportedVersions);
-
-  //   this.canRedo = false;
-  //   this.canUndo = true;
-  // }
-
-  // redo() {
-  //   const patches = this.changes.get(++this.currentVersion);
-
-  //   if (!patches) return;
-
-  //   this.editor.state.apply((state) => {
-  //     applyPatches(state, patches.redo);
-  //   });
-
-  //   this.canRedo = this.changes.has(this.currentVersion + 1);
-  //   this.canUndo = true;
-  // }
-
-  // undo() {
-  //   const patches = this.changes.get(this.currentVersion--);
-
-  //   if (!patches) return;
-
-  //   this.editor.state.apply((state) => {
-  //     applyPatches(state, patches.undo);
-  //   });
-
-  //   this.canRedo = true;
-  //   this.canUndo = this.changes.has(this.currentVersion);
-  // }
-
   buildProps(tr: Transaction): CommandProps {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
@@ -162,44 +118,3 @@ export class CommandManager {
     return props;
   }
 }
-
-// export function createCommandManager<T>(target: T) {
-//   let history: Command<T>[] = [emptyCommand];
-//   let position = 0;
-
-//   const getValue = () => {
-//     return target;
-//   };
-
-//   const execute = (command: Command<T>) => {
-//     if (position < history.length - 1) {
-//       history = history.slice(0, position + 1);
-//     }
-
-//     history.push(command);
-//     position += 1;
-
-//     command.execute(target) as T;
-//   };
-
-//   const redo = () => {
-//     if (position < history.length - 1) {
-//       position += 1;
-//       history[position].execute(target) as T;
-//     }
-//   };
-
-//   const undo = () => {
-//     if (position > 0) {
-//       history[position].undo(target) as T;
-//       position -= 1;
-//     }
-//   };
-
-//   return {
-//     getValue,
-//     execute,
-//     redo,
-//     undo,
-//   };
-// }

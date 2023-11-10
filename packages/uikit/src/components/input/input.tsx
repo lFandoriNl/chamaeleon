@@ -11,7 +11,7 @@ export type InputProps = HTMLAttributes<HTMLInputElement> & {
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { className, size = 'md', ...rest } = props;
+  const { className, size = 'md', error: _, ...rest } = props;
 
   const { id, isError, isDisabled } = useFormControl(props);
 

@@ -10,7 +10,8 @@
     "lint": "turbo lint",
     "check-types": "turbo check-types",
     "clean": "turbo clean --concurrency 20",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "release": "turbo run build lint test && changeset publish"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
@@ -28,8 +29,9 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react": "^7.33.2",
-    "happy-dom": "^11.2.0",
+    "jsdom": "^22.1.0",
     "kill-port": "2.0.1",
+    "lerna": "^7.4.2",
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0",
     "prettier-plugin-tailwindcss": "^0.5.5",

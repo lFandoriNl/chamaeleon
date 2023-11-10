@@ -7,7 +7,7 @@ export default defineConfig((options: Options) => ({
   },
   format: ['cjs', 'esm'],
   dts: true,
-  sourcemap: true,
+  sourcemap: false,
   clean: true,
   minify: true,
   external: [],

@@ -1,16 +1,16 @@
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
 import { EditorState } from './editor-state';
-import { Plugin, PluginSpec } from './plugin';
+import { Plugin } from './plugin';
 
 import { Schema } from '../model/schema';
 
 type AppendTransactionParameters = Parameters<
-  NonNullable<PluginSpec<any>['appendTransaction']>
+  NonNullable<Plugin['appendTransaction']>
 >;
 
 type AppendTransactionReturn = ReturnType<
-  NonNullable<PluginSpec<any>['appendTransaction']>
+  NonNullable<Plugin['appendTransaction']>
 >;
 
 describe('EditorState', () => {
@@ -70,14 +70,14 @@ describe('EditorState', () => {
 
     state = state.reconfigure({
       plugins: [
-        new Plugin({
-          type: 'common',
+        {
+          name: 'test1',
           appendTransaction: appendedTransactionFirst,
-        }),
-        new Plugin({
-          type: 'common',
+        },
+        {
+          name: 'test2',
           appendTransaction: appendedTransactionSecond,
-        }),
+        },
       ],
     });
 

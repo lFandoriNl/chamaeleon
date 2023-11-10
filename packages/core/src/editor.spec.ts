@@ -8,11 +8,32 @@ describe('Editor', () => {
   beforeEach(() => {
     editor = new Editor({
       blocks: {},
+      plugins: [
+        {
+          name: 'page',
+          apply(_, { addBlock }) {
+            addBlock({
+              name: 'page',
+              props: {
+                title: {
+                  default: '',
+                },
+              },
+            });
+          },
+        },
+      ],
     });
   });
 
   it('should insert page with default title', () => {
-    editor.commands.addPage(null);
+    editor.commands.insertContent(editor.schema.spec.rootBlockId, {
+      id: editor.schema.spec.rootBlockId,
+      type: 'page',
+      props: {
+        title: '',
+      },
+    });
 
     editor.commands.select();
 
@@ -26,12 +47,21 @@ describe('Editor', () => {
   });
 
   it('should insert page as children', () => {
-    editor.commands.addPage(null);
+    editor.commands.insertContent(editor.schema.spec.rootBlockId, {
+      id: editor.schema.spec.rootBlockId,
+      type: 'page',
+      props: {
+        title: '',
+      },
+    });
 
     editor.commands.select();
 
-    editor.commands.addPage(editor.state.activeId!, {
-      title: 'Nested page',
+    editor.commands.insertContent(editor.state.activeId!, {
+      type: 'page',
+      props: {
+        title: 'Nested page',
+      },
     });
 
     editor.commands.select();
@@ -42,7 +72,16 @@ describe('Editor', () => {
   });
 
   it('should chain commands', () => {
-    editor.chain.addPage(null).select().run();
+    editor.chain
+      .insertContent(editor.schema.spec.rootBlockId, {
+        id: editor.schema.spec.rootBlockId,
+        type: 'page',
+        props: {
+          title: '',
+        },
+      })
+      .select()
+      .run();
 
     expect(editor.state.activeBlock!.props.title).toBe(
       editor.schema.blockType('page').defaultProps!.title,
@@ -51,7 +90,15 @@ describe('Editor', () => {
   });
 
   it('should chain commands without apply', () => {
-    editor.chain.addPage(null).select();
+    editor.chain
+      .insertContent(editor.schema.spec.rootBlockId, {
+        id: editor.schema.spec.rootBlockId,
+        type: 'page',
+        props: {
+          title: '',
+        },
+      })
+      .select();
 
     expect(editor.state.blocks).toEqual({});
     expect(editor.state.activeId).toEqual(null);

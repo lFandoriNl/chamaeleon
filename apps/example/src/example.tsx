@@ -2,10 +2,14 @@ import { useEffect, useRef } from 'react';
 
 import { Editor } from '@chamaeleon/core';
 import { Page } from '@chamaeleon/extension-page';
-import { Row, Column } from '@chamaeleon/extension-grid';
+import { GridPack } from '@chamaeleon/extension-grid';
 import { Text } from '@chamaeleon/extension-typography';
 import { Persist } from '@chamaeleon/extension-persist';
-import { History, HistoryKey } from '@chamaeleon/extension-history';
+import {
+  History,
+  historyName,
+  HistoryState,
+} from '@chamaeleon/extension-history';
 import { AddBlockMenu } from '@chamaeleon/extension-add-block-menu';
 import { ConfigurationDrawer } from '@chamaeleon/extension-configuration-drawer';
 import {
@@ -17,12 +21,12 @@ import {
 import { ChamaeleonDevtools } from '@chamaeleon/devtools';
 
 import { Button } from '@chamaeleon/uikit';
-import { Button as ButtonExtension } from './button';
+import { Button as ButtonPlugin } from './button';
 
 const Content = () => {
   const [state, editor] = useEditorSelector(({ editor }) => editor.state);
 
-  const historyState = HistoryKey.getState(state);
+  const historyState = editor.getPluginState<HistoryState>(historyName);
 
   const isStateEmpty = Object.keys(state.blocks).length === 0;
 
@@ -30,11 +34,10 @@ const Content = () => {
 
   useEffect(() => {
     if (drawerRef.current) {
-      editor.configureExtension(ConfigurationDrawer, (extension) =>
-        extension.configure({
-          element: drawerRef.current,
-        }),
-      );
+      editor.setPluginState(ConfigurationDrawer(), (prev) => ({
+        ...prev,
+        element: drawerRef.current!,
+      }));
     }
   }, []);
 
@@ -165,20 +168,26 @@ const Content = () => {
 };
 
 const editor = new Editor({
-  extensions: [
-    Persist.configure({
+  plugins: [
+    Persist({
       // expireIn: 1 * 60 * 1000,
     }),
-    History.configure({ limit: 100 }),
-    AddBlockMenu,
-    ConfigurationDrawer,
-    ButtonExtension,
-    Page,
-    Row,
-    Column,
-    Text,
+    History({ limit: 100 }),
+    AddBlockMenu(),
+    ConfigurationDrawer(),
+    Page(),
+    GridPack,
+    Text(),
+    ButtonPlugin(),
   ],
-  loggers: [ChamaeleonDevtools.logger],
+  loggers: [
+    ChamaeleonDevtools.logger,
+    // {
+    //   ...console,
+    //   action: (data) => console.log(data),
+    //   system: (data) => console.log(data),
+    // },
+  ],
 });
 
 // @ts-expect-error
@@ -188,9 +197,9 @@ if (reduxDevToolsExtension) {
   const devTools = reduxDevToolsExtension.connect({});
 
   editor.on('transaction', ({ editor, transaction }) => {
-    if (transaction.getMeta(HistoryKey)) {
+    if (transaction.getMeta(historyName)) {
       return devTools.send(
-        `${transaction.getMeta(HistoryKey)}-transaction`,
+        `${transaction.getMeta(historyName)}-transaction`,
         editor.state,
       );
     }

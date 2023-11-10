@@ -1,6 +1,8 @@
-import { Extension } from '@chamaeleon/core';
+import { Plugin } from '@chamaeleon/core';
+
+import { StorageAdapter } from './storage-adapter';
+
 import { StorageOptions } from './types';
-import { StorageAdapter } from './storege-adapter';
 
 declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
@@ -12,62 +14,58 @@ declare module '@chamaeleon/core' {
 }
 
 type PersistOptions = StorageOptions & {
-  persistedKey: string;
+  persistedKey?: string;
 };
 
-let storageAdapter!: StorageAdapter;
+export function Persist(options: PersistOptions = {}): Plugin {
+  let storageAdapter!: StorageAdapter;
 
-export const Persist = Extension.create<PersistOptions>({
-  name: 'persist',
+  const persistedKey = options.persistedKey || '__chamaeleon_persisted__';
+  const storage = options.storage || localStorage;
 
-  addOptions() {
-    return {
-      persistedKey: '__chamaeleon_persisted__',
-      storage: window.localStorage,
-    };
-  },
+  return {
+    name: 'persist',
+    async init(editor) {
+      storageAdapter = new StorageAdapter({
+        expireIn: options.expireIn,
+        storage: storage,
+      });
 
-  addCommands({ options }) {
-    return {
-      persist: () => {
-        return ({ editor }) => {
-          storageAdapter.setItem(
-            options.persistedKey,
-            editor.state as unknown as Record<string, unknown>,
-          );
-        };
-      },
-      clearPersisted: () => {
-        return () => {
-          storageAdapter.removeItem(options.persistedKey);
-        };
-      },
-    };
-  },
+      const data = await storageAdapter.getItem(persistedKey);
 
-  async init({ editor, options }) {
-    storageAdapter = new StorageAdapter({
-      expireIn: options.expireIn,
-      storage: options.storage,
-    });
+      const result = editor.state.fromJSON(data);
 
-    const data = await storageAdapter.getItem(options.persistedKey);
+      if (!result.success) return;
 
-    const result = editor.state.fromJSON(data);
+      editor.view.updateState(result.state);
+    },
+    apply(editor, { addCommands }) {
+      editor.on('transaction', ({ transaction }) => {
+        if (transaction.steps.length === 0) return;
 
-    if (!result.success) return;
+        const { state } = editor;
 
-    editor.view.updateState(result.state);
-  },
+        storageAdapter.setItem(
+          persistedKey,
+          state as unknown as Record<string, unknown>,
+        );
+      });
 
-  onTransaction({ editor, options }, { transaction }) {
-    if (transaction.steps.length === 0) return;
-
-    const { state } = editor;
-
-    storageAdapter.setItem(
-      options.persistedKey,
-      state as unknown as Record<string, unknown>,
-    );
-  },
-});
+      addCommands({
+        persist: () => {
+          return () => {
+            storageAdapter.setItem(
+              persistedKey,
+              editor.state as unknown as Record<string, unknown>,
+            );
+          };
+        },
+        clearPersisted: () => {
+          return () => {
+            storageAdapter.removeItem(persistedKey);
+          };
+        },
+      });
+    },
+  };
+}

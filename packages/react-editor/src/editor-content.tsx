@@ -10,19 +10,13 @@ const EditorContentPortals = () => {
 
   return (
     <div className="editor-content-portals">
-      {Array.from(editor.view.pluginViews).map(([_, pluginView]) => {
-        if (pluginView.type !== 'common') return null;
+      {editor.view.pluginCommonViews.map(
+        ({ name, params: { filter, component: Component } }) => {
+          if (filter && !filter()) return null;
 
-        const { renderRules, updateParams, view } = pluginView;
-
-        const canRender = renderRules.conditionals
-          .map((cond) => cond())
-          .every(Boolean);
-
-        if (!canRender) return null;
-
-        return view.render?.(...updateParams());
-      })}
+          return <Component key={name} editor={editor} />;
+        },
+      )}
     </div>
   );
 };
@@ -35,7 +29,7 @@ export const EditorContent = ({ editor }: EditorContentProps) => {
   const [rootPage] = useEditorSelector(({ editor }) => editor.state.rootPage);
 
   return (
-    <editor.view.ExtensionProviders
+    <editor.view.PluginProviders
       Renderer={(props: { block: Block }) => (
         <Renderer block={props.block} editor={editor} componentType="editor" />
       )}
@@ -69,6 +63,6 @@ export const EditorContent = ({ editor }: EditorContentProps) => {
 
         <EditorContentPortals />
       </div>
-    </editor.view.ExtensionProviders>
+    </editor.view.PluginProviders>
   );
 };

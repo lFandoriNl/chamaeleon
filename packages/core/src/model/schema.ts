@@ -1,7 +1,8 @@
 import { CSSProperties } from 'react';
+
 import { Block } from './block';
 import { Fragment } from './fragment';
-import { Entries } from '../types';
+import { mergeDeep } from '../utilities/merge-deep';
 
 export type Props = {
   readonly [prop: string]: any;
@@ -77,73 +78,6 @@ export type Style = Partial<{
   readonly [element: string]: Partial<CSSProperties>;
 }>;
 
-function computeStyle(style: BlockType['style'], value: Style | null) {
-  const built: Style = {};
-
-  Object.entries(style).forEach(([element, cssProperties]) => {
-    if (!cssProperties) return;
-
-    Object.entries(cssProperties).forEach(([name, cssProperty]) => {
-      // @ts-expect-error
-      let given = value && value[element] && value[element][name];
-
-      if (given === undefined) {
-        given = cssProperty.default || '';
-      }
-
-      if (!built[element]) {
-        built[element] = {};
-      }
-
-      // @ts-expect-error
-      built[element][name] = given;
-    });
-  });
-
-  return built;
-}
-
-function initStyle(style: BlockSpec['style']) {
-  const result: BlockType['style'] = {
-    root: {},
-  };
-
-  if (style) {
-    Object.entries(style).forEach(([element, cssPropertiesSpec]) => {
-      (
-        Object.entries(cssPropertiesSpec) as Entries<{
-          [name in keyof CSSProperties & unknown]: {
-            default?: CSSProperties[name];
-          };
-        }>
-      ).forEach(([name, cssPropertySpec]) => {
-        if (!result[element]) {
-          result[element] = {};
-        }
-
-        // @ts-expect-error
-        result[element][name] = new CSSProperty<CSSProperties[typeof name]>(
-          cssPropertySpec,
-        );
-      });
-    });
-  }
-
-  return result;
-}
-
-export type CSSPropertySpec<T = any> = {
-  default?: T;
-};
-
-class CSSProperty<T = any> {
-  default?: T;
-
-  constructor(options: CSSPropertySpec<T>) {
-    this.default = options.default;
-  }
-}
-
 // Helper type for getting [element: 'root' | string] keys
 type Elements = {
   readonly root: any;
@@ -162,9 +96,7 @@ export interface BlockSpec {
   props?: { [name: string]: PropertySpec };
   style?: {
     [element in keyof Elements]: {
-      [name in keyof CSSProperties]: {
-        default?: CSSProperties[name];
-      };
+      [name in keyof CSSProperties]: CSSProperties[name];
     };
   };
 
@@ -180,7 +112,7 @@ export class BlockType {
 
   style: {
     [element in keyof Elements]: {
-      [name in keyof CSSProperties]: CSSProperty<CSSProperties[name]>;
+      [name in keyof CSSProperties]: CSSProperties[name];
     };
   };
 
@@ -192,7 +124,7 @@ export class BlockType {
     this.props = initProps(spec.props);
     this.defaultProps = defaultProps(this.props);
 
-    this.style = initStyle(spec.style);
+    this.style = spec.style || { root: {} };
   }
 
   computeProps(props: Props | null): Props {
@@ -203,12 +135,10 @@ export class BlockType {
     return computeProps(this.props, props);
   }
 
-  computeStyle(style: Style | null): Props {
+  computeStyle(style: Style | null) {
     if (!style) {
       return {};
     }
-
-    return computeStyle(this.style, style);
   }
 
   create(
@@ -220,7 +150,7 @@ export class BlockType {
     return new Block(
       this,
       this.computeProps(props),
-      this.computeStyle(style),
+      mergeDeep(this.style, style || {}),
       Fragment.from(content),
       id,
     );

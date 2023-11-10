@@ -25,6 +25,7 @@ export function createChainableState(config: {
     activeBlock: state.activeBlock,
     rootPage: state.rootPage,
     getBlock: state.getBlock.bind({ ...state, blocks }),
+    getPluginState: state.getPluginState.bind(state),
     apply: state.apply.bind(state),
     filterTransaction: state.filterTransaction.bind(state),
     applyTransaction: state.applyTransaction.bind(state),

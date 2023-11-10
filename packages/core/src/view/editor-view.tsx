@@ -1,18 +1,12 @@
 import React from 'react';
 
-import { PropertyConfigurationRender } from './property-configuration-render';
+import { PropsConfigurationRender } from './props-configuration-render';
 import { StyleConfigurationRender } from './style-configuration-render';
 
 import { Editor } from '../editor';
 import { Block } from '../model';
-import {
-  EditorState,
-  Plugin,
-  PluginType,
-  PluginView,
-  Transaction,
-} from '../state';
-import { AnyExtension, BlockViewRendererPack, Provider } from '../types';
+import { EditorState, Plugin, PluginApplyMethods, Transaction } from '../state';
+import { BlockViewRendererPack, Provider } from '../types';
 
 import { ActionPopover } from './ui/action-popover';
 import { DragButton } from './ui/drag-button';
@@ -37,25 +31,20 @@ type Props<T extends keyof EditorView['rawUI']> = Omit<
 
 export type EditorViewOptions = {
   state: EditorState;
-  blockViews?: Record<AnyExtension['name'], BlockViewRendererPack>;
+  blockViews?: Record<Block['type']['name'], BlockViewRendererPack>;
   dispatchTransaction?: (tr: Transaction) => void;
   propertyConfigurationRender?: React.FunctionComponent<{ view: EditorView }>;
   styleConfigurationRender?: React.FunctionComponent<{ view: EditorView }>;
   ui?: Partial<EditorView['rawUI']>;
-  extensionProviders?: Provider[];
 };
 
 export class EditorView {
-  editor: Editor;
+  state!: EditorState;
 
-  state: EditorState;
-
-  private _options: EditorViewOptions;
-
-  propertyConfiguration: {
+  propsConfiguration: {
     Render: React.FunctionComponent<{ view: EditorView }>;
   } = {
-    Render: PropertyConfigurationRender,
+    Render: PropsConfigurationRender,
   };
 
   styleConfiguration: {
@@ -64,20 +53,20 @@ export class EditorView {
     Render: StyleConfigurationRender,
   };
 
-  pluginViews: Map<
-    Plugin['key'],
-    {
-      [type in PluginType]: {
-        type: type;
-        plugin: Plugin<any, type>;
-        renderRules: {
-          conditionals: Array<() => boolean>;
-        };
-        updateParams: () => Parameters<NonNullable<PluginView['render']>>;
-        view: ReturnType<NonNullable<Plugin<any, type>['spec']['view']>>;
-      };
-    }[PluginType]
-  > = new Map();
+  pluginCommonViews: Array<{
+    name: Plugin['name'];
+    params: Parameters<PluginApplyMethods['addView']>[0];
+  }> = [];
+
+  pluginPropsViews: Array<{
+    name: Plugin['name'];
+    params: Parameters<PluginApplyMethods['addPropsView']>[0];
+  }> = [];
+
+  pluginStyleViews: Array<{
+    name: Plugin['name'];
+    params: Parameters<PluginApplyMethods['addStyleView']>[0];
+  }> = [];
 
   rawUI = {
     ActionPopover,
@@ -92,7 +81,7 @@ export class EditorView {
     [name in keyof EditorView['rawUI']]: React.FunctionComponent<Props<name>>;
   };
 
-  ExtensionProviders: Provider = ({ editor, children }) => (
+  PluginProviders: Provider = ({ editor, children }) => (
     <EditorInstanceContext.Provider value={editor}>
       {children}
     </EditorInstanceContext.Provider>
@@ -108,13 +97,14 @@ export class EditorView {
   Block = BlockRoot;
   Dropzone = Dropzone;
 
-  constructor(editor: Editor, options: EditorViewOptions) {
-    this.editor = editor;
-
-    this._options = options;
+  constructor(
+    public editor: Editor,
+    public options: EditorViewOptions,
+  ) {
+    this.state = options.state;
 
     if (options.propertyConfigurationRender) {
-      this.propertyConfiguration.Render = options.propertyConfigurationRender;
+      this.propsConfiguration.Render = options.propertyConfigurationRender;
     }
 
     this.rawUI = {
@@ -124,45 +114,11 @@ export class EditorView {
 
     this.injectViewToUI();
 
-    this.state = options.state;
-
     this.dispatch = this.dispatch.bind(this);
-
-    if (
-      this.options.extensionProviders &&
-      this.options.extensionProviders.length
-    ) {
-      this.ExtensionProviders = this.options.extensionProviders.reduce(
-        (Prev, Current) => {
-          // eslint-disable-next-line react/display-name
-          return ({ Renderer, editor, children }) => (
-            <Prev Renderer={Renderer} editor={editor}>
-              <Current Renderer={Renderer} editor={editor}>
-                {children}
-              </Current>
-            </Prev>
-          );
-        },
-        this.ExtensionProviders,
-      );
-
-      this.ExtensionProviders.displayName = 'ExtensionProviders';
-    }
-  }
-
-  get options() {
-    if (this._options.state != this.state) {
-      this._options = {
-        ...this._options,
-        state: this.state,
-      };
-    }
-
-    return this._options;
   }
 
   dispatch(tr: Transaction) {
-    const { dispatchTransaction } = this._options;
+    const { dispatchTransaction } = this.options;
 
     if (dispatchTransaction) {
       dispatchTransaction.call(this, tr);
@@ -172,29 +128,50 @@ export class EditorView {
   }
 
   updateState(state: EditorState) {
-    const prevState = this.state;
-
     this.state = state;
-
-    this.updatePluginViews(prevState);
   }
 
   setOptions(options: Partial<EditorViewOptions>) {
-    this._options = {
-      ...this._options,
+    this.options = {
+      ...this.options,
       ...options,
       ui: {
-        ...this._options.ui,
+        ...this.options.ui,
         ...options.ui,
       },
     };
 
     this.rawUI = {
       ...this.rawUI,
-      ...this._options.ui,
+      ...this.options.ui,
     };
 
     this.injectViewToUI();
+  }
+
+  setPluginViews(
+    common: EditorView['pluginCommonViews'],
+    props: EditorView['pluginPropsViews'],
+    style: EditorView['pluginStyleViews'],
+  ) {
+    this.pluginCommonViews = common;
+    this.pluginPropsViews = props;
+    this.pluginStyleViews = style;
+  }
+
+  setPluginProviders(pluginProviders: Provider[] = []) {
+    this.PluginProviders = pluginProviders.reduce((Prev, Current) => {
+      // eslint-disable-next-line react/display-name
+      return ({ Renderer, editor, children }) => (
+        <Prev Renderer={Renderer} editor={editor}>
+          <Current Renderer={Renderer} editor={editor}>
+            {children}
+          </Current>
+        </Prev>
+      );
+    }, this.PluginProviders);
+
+    this.PluginProviders.displayName = 'PluginProviders';
   }
 
   getBlockViews(name: Block['type']['name']) {
@@ -225,99 +202,5 @@ export class EditorView {
       },
       {} as EditorView['ui'],
     );
-  }
-
-  private updatePluginViews(prevState: EditorState) {
-    if (prevState.plugins != this.state.plugins) {
-      this.destroyPluginViews();
-    }
-
-    this.state.plugins.forEach((plugin) => {
-      if (!plugin.spec.view) return;
-
-      if (plugin.is('common')) {
-        this.pluginViews.set(plugin.key, {
-          type: 'common',
-          plugin,
-          renderRules: {
-            conditionals: [],
-          },
-          updateParams: () => [this, prevState],
-          view: plugin.spec.view({
-            editor: this.editor,
-            view: this,
-          }),
-        });
-      }
-
-      if (plugin.is('property-configuration')) {
-        this.pluginViews.set(plugin.key, {
-          type: 'property-configuration',
-          plugin,
-          renderRules: {
-            conditionals: [
-              () => {
-                const { property } = plugin.spec;
-                const { state } = this;
-                const { activeBlock } = state;
-
-                if (!activeBlock) return false;
-
-                const isMissingProperty =
-                  activeBlock.type.props[property.name] === undefined;
-
-                const propertyMatch = property.propertyMatch ?? true;
-
-                if (property.applicable) {
-                  if (propertyMatch && isMissingProperty) {
-                    return false;
-                  }
-
-                  const allowBlocks = state.schema
-                    .getAllowContent(property.applicable || {})
-                    .map((blockType) => blockType.name);
-
-                  return allowBlocks.includes(activeBlock.type.name);
-                } else {
-                  if (!propertyMatch) return false;
-
-                  return !isMissingProperty;
-                }
-              },
-            ],
-          },
-          updateParams: () => [this, prevState],
-          view: plugin.spec.view({
-            editor: this.editor,
-            view: this,
-          }),
-        });
-      }
-
-      if (plugin.is('style-configuration')) {
-        this.pluginViews.set(plugin.key, {
-          type: 'style-configuration',
-          plugin,
-          renderRules: {
-            conditionals: [() => Boolean(this.state.activeBlock)],
-          },
-          updateParams: () => [this, prevState],
-          view: plugin.spec.view({
-            editor: this.editor,
-            view: this,
-          }),
-        });
-      }
-    });
-  }
-
-  private destroyPluginViews() {
-    Array.from(this.pluginViews)
-      .reverse()
-      .forEach(([_, { view }]) => {
-        view.destroy?.();
-      });
-
-    this.pluginViews.clear();
   }
 }

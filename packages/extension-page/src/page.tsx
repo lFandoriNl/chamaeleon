@@ -1,4 +1,4 @@
-import { BlockExtension, Block, JSONContent } from '@chamaeleon/core';
+import { Block, JSONContent, Plugin } from '@chamaeleon/core';
 
 declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
@@ -11,93 +11,93 @@ declare module '@chamaeleon/core' {
   }
 }
 
-export const Page = BlockExtension.create({
-  name: 'page',
+export function Page(): Plugin {
+  const pageName = 'page';
 
-  allowContent: {
-    rootable: true,
-  },
+  return {
+    name: pageName,
+    apply(editor, { addCommands, addBlock }) {
+      addCommands({
+        addPage: (target, props) => {
+          return ({ commands }) => {
+            if (target) {
+              commands.insertContent(target, {
+                type: pageName,
+                props,
+              });
+            } else {
+              commands.insertContent(editor.schema.spec.rootBlockId, {
+                id: editor.schema.spec.rootBlockId,
+                type: pageName,
+                props,
+              });
+            }
+          };
+        },
+      });
 
-  addProperties() {
-    return {
-      title: {
-        default: 'Enter your page title',
-      },
-    };
-  },
+      addBlock({
+        name: 'page',
+        allowContent: {
+          rootable: true,
+        },
+        props: {
+          title: {
+            default: 'Enter your page title',
+          },
+        },
+        components: {
+          view: ({ children }) => {
+            return children;
+          },
+          editor: ({ block, children }) => {
+            const { ui } = editor.view;
 
-  addCommands() {
-    return {
-      addPage: (target, props) => {
-        return ({ commands, editor }) => {
-          if (target) {
-            commands.insertContent(target, {
-              type: Page.name,
-              props,
-            });
-          } else {
-            commands.insertContent(editor.schema.spec.rootBlockId, {
-              id: editor.schema.spec.rootBlockId,
-              type: Page.name,
-              props,
-            });
-          }
-        };
-      },
-    };
-  },
-
-  addBlockViews() {
-    return {
-      natural: ({ children }) => {
-        return children;
-      },
-      editor: ({ block, children, editor }) => {
-        const { ui } = editor.view;
-
-        return (
-          <>
-            {block.children.isEmpty ? (
-              <div className="flex flex-col items-center justify-center p-5">
-                <p className="pb-4 text-xl">
-                  {"It's empty here yet, add your first block"}
-                </p>
-
-                <ui.ActionAddBlockButton
-                  onClick={(event) => {
-                    editor.commands.intention(
-                      block.id,
-                      'add-block',
-                      event.nativeEvent,
-                    );
-                  }}
-                />
-              </div>
-            ) : (
+            return (
               <>
-                <editor.view.Dropzone block={block}>
-                  <div className="e-page">{children}</div>
-                </editor.view.Dropzone>
+                {block.children.isEmpty ? (
+                  <div className="flex flex-col items-center justify-center p-5">
+                    <p className="pb-4 text-xl">
+                      {"It's empty here yet, add your first block"}
+                    </p>
 
-                <div className="flex items-center justify-center p-8">
-                  <ui.ActionAddBlockButton
-                    onClick={(event) => {
-                      editor.commands.intention(
-                        block.id,
-                        'add-block',
-                        event.nativeEvent,
-                      );
-                    }}
-                  />
-                </div>
+                    <ui.ActionAddBlockButton
+                      onClick={(event) => {
+                        editor.commands.intention(
+                          block.id,
+                          'add-block',
+                          event.nativeEvent,
+                        );
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <editor.view.Dropzone block={block}>
+                      <div className="e-page">{children}</div>
+                    </editor.view.Dropzone>
+
+                    <div className="flex items-center justify-center p-8">
+                      <ui.ActionAddBlockButton
+                        onClick={(event) => {
+                          editor.commands.intention(
+                            block.id,
+                            'add-block',
+                            event.nativeEvent,
+                          );
+                        }}
+                      />
+                    </div>
+                  </>
+                )}
               </>
-            )}
-          </>
-        );
-      },
-      palette: () => {
-        return <div>Page</div>;
-      },
-    };
-  },
-});
+            );
+          },
+          palette: () => {
+            return <div>Page</div>;
+          },
+        },
+      });
+    },
+  };
+}

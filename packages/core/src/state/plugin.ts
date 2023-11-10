@@ -1,37 +1,14 @@
 import { Editor } from '../editor';
-import { EditorView } from '../view';
-import { BlockSpec, Style } from '../model';
+import { Block, BlockSpec, Style } from '../model';
+import {
+  BlockViewRendererPack,
+  Properties,
+  Provider,
+  RawCommands,
+} from '../types';
 
 import { EditorState, EditorStateConfig } from './editor-state';
 import { Transaction } from './transaction';
-
-const keys: Record<string, number> = {};
-
-function createKey(name: string) {
-  if (name in keys) {
-    return name + '$' + ++keys[name];
-  }
-
-  keys[name] = 0;
-
-  return name + '$';
-}
-
-export class PluginKey<PluginState = any> {
-  key: string;
-
-  constructor(name = 'key') {
-    this.key = createKey(name);
-  }
-
-  get(state: EditorState): Plugin<PluginState> | undefined {
-    return state.config.pluginsByKey[this.key];
-  }
-
-  getState(state: EditorState): PluginState {
-    return (state as any)[this.key];
-  }
-}
 
 export type StateField<T> = {
   init: (config: EditorStateConfig, instance: EditorState) => T;
@@ -46,88 +23,78 @@ export type StateField<T> = {
   fromJSON?: (config: EditorStateConfig, value: any, state: EditorState) => T;
 };
 
-export type PluginType =
-  | 'common'
-  | 'property-configuration'
-  | 'style-configuration';
+export type PluginCommonComponent = React.FunctionComponent<{ editor: Editor }>;
 
-export type PluginSpec<PluginState, T extends PluginType = PluginType> = {
-  common: {
-    key?: PluginKey;
-    type: 'common';
-    state?: StateField<PluginState>;
-    view?: (context: { editor: Editor; view: EditorView }) => PluginView;
-    filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
-    appendTransaction?: (
-      transactions: readonly Transaction[],
-      oldState: EditorState,
-      newState: EditorState,
-    ) => Transaction | null | undefined;
-  };
-  'property-configuration': {
-    key?: PluginKey;
-    type: 'property-configuration';
-    property: {
-      name: string;
-      /**
-       * @default true
-       */
-      propertyMatch?: boolean;
-      applicable?: BlockSpec['allowContent'];
-    };
-    state?: StateField<PluginState>;
-    view: (context: { editor: Editor; view: EditorView }) => PluginView;
-    filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
-    appendTransaction?: (
-      transactions: readonly Transaction[],
-      oldState: EditorState,
-      newState: EditorState,
-    ) => Transaction | null | undefined;
-  };
-  'style-configuration': {
-    key?: PluginKey;
-    type: 'style-configuration';
-    cssProperty: {
-      some?: Array<keyof NonNullable<BlockSpec['style']>['root']>;
-      every?: Array<keyof NonNullable<BlockSpec['style']>['root']>;
-    };
-    state?: StateField<PluginState>;
-    view: (context: { editor: Editor; view: EditorView }) => StylePluginView;
-    filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
-    appendTransaction?: (
-      transactions: readonly Transaction[],
-      oldState: EditorState,
-      newState: EditorState,
-    ) => Transaction | null | undefined;
-  };
-}[T];
+export type PluginPropsComponent = React.FunctionComponent<{
+  editor: Editor;
+  block: Block;
+}>;
 
-export interface PluginView {
-  render?: (view: EditorView, prevState: EditorState) => React.ReactNode;
-  destroy?: () => void;
-}
+export type PluginStyleComponent = React.FunctionComponent<{
+  editor: Editor;
+  layer: keyof Style;
+  styleSpec: React.CSSProperties;
+  style: React.CSSProperties;
+  block: Block;
+}>;
 
-export interface StylePluginView {
-  render?: (
-    element: keyof Style,
-    view: EditorView,
-    prevState: EditorState,
-  ) => React.ReactNode;
-  destroy?: () => void;
-}
+export type PluginApplyMethods<PluginState = any> = {
+  addCommands: (commands: Partial<RawCommands>) => void;
 
-export class Plugin<PluginState = any, T extends PluginType = PluginType> {
-  key: string;
+  addProvider: (provider: Provider) => void;
 
-  constructor(readonly spec: PluginSpec<PluginState, T>) {
-    this.key = spec.key ? spec.key.key : createKey('plugin');
-  }
+  addBlock: (spec: {
+    name: string;
+    allowContent?: BlockSpec['allowContent'];
+    withValue?: BlockSpec['withValue'];
+    withChildren?: BlockSpec['withChildren'];
+    rootable?: BlockSpec['rootable'];
+    structural?: BlockSpec['structural'];
+    props?: Properties;
+    style?: BlockSpec['style'];
+    components?: BlockViewRendererPack;
+  }) => void;
 
-  getState(state: EditorState): PluginState {
-    return (state as any)[this.key];
-  }
+  addView: (params: {
+    filter?: () => boolean;
+    component: PluginCommonComponent;
+  }) => void;
 
-  is<U extends T>(type: U): this is Plugin<PluginState, U> {
-    return this.spec.type === type;
-  }
-}
+  addPropsView: (params: {
+    filter: (block: Block) => boolean;
+    component: PluginPropsComponent;
+  }) => void;
+
+  addStyleView: (params: {
+    filter: (
+      styleSpec: React.CSSProperties,
+      block: Block,
+      layer: keyof Style,
+    ) => boolean;
+    component: PluginStyleComponent;
+  }) => void;
+
+  getState: () => PluginState;
+  setState: (
+    state: PluginState | ((prevState: PluginState) => PluginState),
+  ) => void;
+  usePluginState: () => [
+    PluginState,
+    PluginApplyMethods<PluginState>['setState'],
+  ];
+};
+
+export type Plugin<PluginState = any> = {
+  name: string;
+  state?: StateField<PluginState>;
+  init?: (editor: Editor) => Promise<void> | void;
+  apply?: (editor: Editor, methods: PluginApplyMethods<PluginState>) => void;
+  filterTransaction?: (tr: Transaction, state: EditorState) => boolean;
+  appendTransaction?: (
+    transactions: readonly Transaction[],
+    oldState: EditorState,
+    newState: EditorState,
+  ) => Transaction | null | undefined;
+};
+
+export type InferPluginState<T> = T extends Plugin<infer R> ? R : any;

@@ -1,9 +1,18 @@
 import { describe, it, expect, vi } from 'vitest';
 
-import { Editor } from '@chamaeleon/core';
+import { Editor, Plugin } from '@chamaeleon/core';
 import { Persist } from './persist';
 
 describe('Persist', () => {
+  const page: Plugin = {
+    name: 'page',
+    apply(_, { addBlock }) {
+      addBlock({
+        name: 'page',
+      });
+    },
+  };
+
   const persistedKey = 'testKey';
 
   const storage = {
@@ -17,8 +26,8 @@ describe('Persist', () => {
 
     const editor = new Editor({
       blocks: {},
-      extensions: [
-        Persist.configure({
+      plugins: [
+        Persist({
           persistedKey,
           storage,
         }),
@@ -36,7 +45,9 @@ describe('Persist', () => {
     const stored = {
       data: {
         blocks: {
-          root: new Editor().schema
+          root: new Editor({
+            plugins: [page],
+          }).schema
             .block('page', undefined, undefined, [], 'root')
             .toJSON(),
         },
@@ -47,11 +58,12 @@ describe('Persist', () => {
 
     const editor = new Editor({
       blocks: {},
-      extensions: [
-        Persist.configure({
+      plugins: [
+        Persist({
           persistedKey,
           storage,
         }),
+        page,
       ],
     });
 
@@ -65,16 +77,26 @@ describe('Persist', () => {
 
     const editor = new Editor({
       blocks: {},
-      extensions: [
-        Persist.configure({
+      plugins: [
+        Persist({
           persistedKey,
           storage,
         }),
+        page,
       ],
     });
 
     editor.on('ready', () => {
-      editor.chain.addPage(null).select().run();
+      editor.chain
+        .insertContent(editor.schema.spec.rootBlockId, {
+          id: editor.schema.spec.rootBlockId,
+          type: 'page',
+          props: {
+            title: '',
+          },
+        })
+        .select()
+        .run();
 
       expect(storage.setItem).toBeCalledWith(
         persistedKey,
@@ -91,8 +113,8 @@ describe('Persist', () => {
 
     const editor = new Editor({
       blocks: {},
-      extensions: [
-        Persist.configure({
+      plugins: [
+        Persist({
           persistedKey,
           storage,
         }),

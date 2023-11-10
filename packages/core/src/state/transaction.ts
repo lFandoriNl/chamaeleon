@@ -1,6 +1,6 @@
 import { Blocks, EditorState } from './editor-state';
 import { Transform } from '../transform';
-import { Plugin, PluginKey } from './plugin';
+import { Plugin } from './plugin';
 import { Block } from '../model';
 import { Step } from '../transform/step';
 
@@ -35,14 +35,14 @@ export class Transaction extends Transform {
     return this;
   }
 
-  setMeta(key: string | Plugin | PluginKey, value: any): this {
-    this.meta[typeof key == 'string' ? key : key.key] = value;
+  setMeta(key: string | Plugin, value: any): this {
+    this.meta[typeof key == 'string' ? key : key.name] = value;
 
     return this;
   }
 
-  getMeta(key: string | Plugin | PluginKey) {
-    return this.meta[typeof key == 'string' ? key : key.key];
+  getMeta(key: string | Plugin) {
+    return this.meta[typeof key == 'string' ? key : key.name];
   }
 
   addStep(step: Step, blocks: Blocks) {

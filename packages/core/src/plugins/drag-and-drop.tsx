@@ -6,11 +6,11 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 
-import { Extension } from '../extension';
 import { Block } from '../model';
 import { Provider } from '../types';
-import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { Plugin } from '..';
 
 function DragOverlayActiveBlock({
   Renderer,
@@ -23,7 +23,7 @@ function DragOverlayActiveBlock({
   return (
     <DragOverlay>
       {activeBlock && (
-        <div className="">
+        <div>
           <Renderer block={activeBlock} />
         </div>
       )}
@@ -261,10 +261,11 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
   );
 };
 
-export const DragAndDrop = Extension.create({
-  name: 'DragAndDrop',
-
-  addProvider() {
-    return DragAndDropProvider;
-  },
-});
+export function DragAndDrop(): Plugin {
+  return {
+    name: 'drag-and-drop',
+    apply(_, methods) {
+      methods.addProvider(DragAndDropProvider);
+    },
+  };
+}
