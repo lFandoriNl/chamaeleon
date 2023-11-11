@@ -1,18 +1,20 @@
-# Change Log
+# @chamaeleon/core
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## 0.11.0
 
-# [0.10.0](https://github.com/lFandoriNl/chamaeleon/compare/@chamaeleon/core@0.8.1...@chamaeleon/core@0.10.0) (2023-11-10)
+### Minor Changes
 
-### Features
+- Replacing peerDependencies with dependencies without duplicating the bundle, due to the fact that only types are used
+- Renaming plugin packages
 
-- change plugin api
-- combining extensions with plugins
+## 0.10.0
 
-## Below is the old style changelog
+### Minor Changes
 
-# 0.9.0
+- Change plugin api
+- Combining extensions with plugins
+
+## 0.9.0
 
 ### Minor Changes
 
@@ -24,19 +26,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Updated dependencies
   - @chamaeleon/uikit@0.3.0
 
-# 0.8.1
+## 0.8.1
 
 ### Patch Changes
 
 - Fixed crash when dragging a block
 
-# 0.8.0
+## 0.8.0
 
 ### Minor Changes
 
 - Page, Row, Column, Text have been moved from the core into a separate package.
 
-# 0.7.2
+## 0.7.2
 
 ### Patch Changes
 
@@ -52,19 +54,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Updated dependencies
   - @chamaeleon/uikit@0.2.0
 
-# 0.7.0
+## 0.7.0
 
 ### Minor Changes
 
 - Added support for custom loggers
 
-# 0.6.0
+## 0.6.0
 
 ### Minor Changes
 
 - Added `editor.configureExtension` to configure the extension after startup
 
-# 0.5.0
+## 0.5.0
 
 ### Minor Changes
 
@@ -72,13 +74,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Added style plugin for `gap`
 - Changed `plugin.view` function signature, from `(view: EditorView)` to `(context: { editor: Editor; view: EditorView })`
 
-# 0.4.1
+## 0.4.1
 
 ### Patch Changes
 
 - Improved performance by reducing renders
 
-# 0.4.0
+## 0.4.0
 
 ### Minor Changes
 
@@ -91,7 +93,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Updated dependencies
   - @chamaeleon/uikit@0.1.0
 
-# 0.3.0
+## 0.3.0
 
 ### Minor Changes
 
@@ -104,7 +106,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   - @chamaeleon/hooks@0.0.3
   - @chamaeleon/uikit@0.0.3
 
-# 0.2.1
+## 0.2.1
 
 ### Patch Changes
 
@@ -112,26 +114,26 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Updated dependencies
   - @chamaeleon/uikit@0.0.2
 
-# 0.2.0
+## 0.2.0
 
 ### Minor Changes
 
-- Added serialization and deserialization of state for persist-plugin package
+- Added serialization and deserialization of state for plugin-persist package
 
-# 0.1.0
+## 0.1.0
 
 ### Minor Changes
 
-- Create history-plugin package
+- Create plugin-history package
 
-# 0.0.2
+## 0.0.2
 
 ### Patch Changes
 
 - Updated dependencies
   - @chamaeleon/uikit@0.0.1
 
-# 0.0.1
+## 0.0.1
 
 ### Patch Changes
 

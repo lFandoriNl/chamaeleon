@@ -1,6 +1,6 @@
 {
-  "name": "@chamaeleon/react-editor",
-  "description": "Chamaeleon react editor",
+  "name": "@chamaeleon/plugin-add-block-menu",
+  "description": "Chamaeleon plugin for adding blocks",
   "private": false,
   "version": "0.2.0",
   "publishConfig": {
@@ -11,7 +11,7 @@
     "chamaeleon",
     "page builder",
     "editor",
-    "react editor"
+    "add blocks"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -37,21 +37,24 @@
     "clean": "rm -r dist && rm -r .turbo"
   },
   "peerDependencies": {
-    "react": "18.2.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "dependencies": {
     "@chamaeleon/core": "workspace:^",
-    "@chamaeleon/uikit": "workspace:^"
+    "@chamaeleon/hooks": "workspace:^"
   },
   "devDependencies": {
     "@types/react": "18.2.15",
-    "react": "18.2.0",
+    "@types/react-dom": "18.2.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/lFandoriNl/chamaeleon",
-    "directory": "packages/react-editor"
+    "directory": "packages/plugin-add-block-menu"
   }
 }

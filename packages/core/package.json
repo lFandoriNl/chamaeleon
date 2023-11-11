@@ -2,7 +2,7 @@
   "name": "@chamaeleon/core",
   "description": "Core Chamaeleon page builder platform",
   "private": false,
-  "version": "0.10.0",
+  "version": "0.11.0",
   "publishConfig": {
     "access": "public"
   },
@@ -48,8 +48,8 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@chamaeleon/hooks": "workspace:~",
-    "@chamaeleon/uikit": "workspace:~",
+    "@chamaeleon/hooks": "workspace:^",
+    "@chamaeleon/uikit": "workspace:^",
     "@dnd-kit/core": "6.0.8",
     "@dnd-kit/sortable": "7.0.2",
     "@dnd-kit/utilities": "3.2.1",

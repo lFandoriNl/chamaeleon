@@ -38,8 +38,8 @@ By default there are no blocks in chameleon, you can install basic plugins to ge
 This happens by passing plugins to editor options.
 
 ```ts
-import { Page } from '@chamaeleon/page-plugin';
-import { Row, Column } from '@chamaeleon/grid-plugin';
+import { Page } from '@chamaeleon/plugin-page';
+import { Row, Column } from '@chamaeleon/plugin-grid';
 
 const editor = new Editor({
   plugins: [Page(), Row(), Column()],
@@ -49,8 +49,8 @@ const editor = new Editor({
 Blocks alone will not be enough; you will also need pop-up menus for adding new blocks and configuration menus where you can change block parameters. You can also add them.
 
 ```ts
-import { AddBlockMenu } from '@chamaeleon/add-block-menu-plugin';
-import { ConfigurationDrawer } from '@chamaeleon/configuration-drawer-plugin';
+import { AddBlockMenu } from '@chamaeleon/plugin-add-block-menu';
+import { ConfigurationDrawer } from '@chamaeleon/plugin-configuration-drawer';
 
 const editor = new Editor({
   plugins: [AddBlockMenu(), ConfigurationDrawer()],
@@ -65,7 +65,7 @@ And the `ConfigurationDrawer` provides a drawer where the settings for the activ
 
 <img alt="ConfigurationDrawer" src="./configuration-drawer-demo.png" height="400">
 
-Specifically, these plugins intercept a special transaction with a meta tag - intention, which means that the user calls a certain function, like [this](../../packages/configuration-drawer-plugin/src/configuration-drawer.tsx#L56)
+Specifically, these plugins intercept a special transaction with a meta tag - intention, which means that the user calls a certain function, like [this](../../packages/plugin-configuration-drawer/src/configuration-drawer.tsx#L56)
 
 `ConfigurationDrawer` requires additional settings; it needs to be passed a node where it will be rendered using ReactPortal
 
@@ -109,7 +109,7 @@ const Example = () => {
 ## Undo redo commands
 
 ```ts
-import { History } from '@chamaeleon/history-plugin';
+import { History } from '@chamaeleon/plugin-history';
 
 const editor = new Editor({
   plugins: [History()],
@@ -119,7 +119,7 @@ const editor = new Editor({
 By default, the history limit is 1000 commands, you can configure the plugin to increase or decrease this limit
 
 ```ts
-import { History } from '@chamaeleon/history-plugin';
+import { History } from '@chamaeleon/plugin-history';
 
 const editor = new Editor({
   plugins: [History({ limit: 100 })],
@@ -144,7 +144,7 @@ const Example = () => {
 ## Persist state
 
 ```ts
-import { Persist } from '@chamaeleon/persist-plugin';
+import { Persist } from '@chamaeleon/plugin-persist';
 
 const editor = new Editor({
   plugins: [Persist()],

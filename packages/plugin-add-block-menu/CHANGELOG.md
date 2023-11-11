@@ -1,4 +1,4 @@
-# @chamaeleon/react-editor
+# @chamaeleon/plugin-add-block-menu
 
 ## 0.2.0
 
@@ -23,7 +23,6 @@
 ### Patch Changes
 
 - Updated dependencies
-  - @chamaeleon/uikit@0.3.0
   - @chamaeleon/core@0.9.0
 
 ## 0.0.15
@@ -46,6 +45,7 @@
 
 - Moved react to peerDependencies
 - Updated dependencies
+  - @chamaeleon/hooks@0.0.4
   - @chamaeleon/uikit@0.2.1
   - @chamaeleon/core@0.7.2
 
@@ -102,6 +102,7 @@
 
 - Updated dependencies
   - @chamaeleon/core@0.3.0
+  - @chamaeleon/hooks@0.0.3
   - @chamaeleon/uikit@0.0.3
 
 ## 0.0.5
@@ -110,6 +111,7 @@
 
 - Add README.md & update package.json fields
 - Updated dependencies
+  - @chamaeleon/hooks@0.0.2
   - @chamaeleon/uikit@0.0.2
   - @chamaeleon/core@0.2.1
 
@@ -132,6 +134,7 @@
 ### Patch Changes
 
 - Updated dependencies
+  - @chamaeleon/hooks@0.0.1
   - @chamaeleon/uikit@0.0.1
   - @chamaeleon/core@0.0.2
 

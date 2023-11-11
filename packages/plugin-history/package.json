@@ -1,8 +1,8 @@
 {
-  "name": "@chamaeleon/react-editor",
-  "description": "Chamaeleon react editor",
+  "name": "@chamaeleon/plugin-history",
+  "description": "Chamaeleon plugin history for undo redo commands",
   "private": false,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publishConfig": {
     "access": "public"
   },
@@ -11,7 +11,8 @@
     "chamaeleon",
     "page builder",
     "editor",
-    "react editor"
+    "history",
+    "undo redo"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -33,25 +34,18 @@
     "dev": "tsup --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "test": "echo 'No test specified'",
-    "clean": "rm -r dist && rm -r .turbo"
-  },
-  "peerDependencies": {
-    "react": "18.2.0"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
-    "@chamaeleon/core": "workspace:^",
-    "@chamaeleon/uikit": "workspace:^"
+    "@chamaeleon/core": "workspace:^"
   },
   "devDependencies": {
-    "@types/react": "18.2.15",
-    "react": "18.2.0",
-    "tailwind-config": "workspace:*",
     "tsup": "^7.2.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/lFandoriNl/chamaeleon",
-    "directory": "packages/react-editor"
+    "directory": "packages/plugin-history"
   }
 }

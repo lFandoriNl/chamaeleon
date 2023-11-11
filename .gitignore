@@ -14,7 +14,10 @@ packages/*/node_modules
 apps/*/node_modules
 
 # production
-/build
+dist/**
+/dist
+apps/*/dist
+packages/*/dist
 
 # misc
 .DS_Store
@@ -37,7 +40,3 @@ yarn.lock
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-dist/**
-/dist
-packages/*/dist

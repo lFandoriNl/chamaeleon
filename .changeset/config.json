@@ -1,11 +1,14 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.1/schema.json",
-  "changelog": "@changesets/cli/changelog",
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "lFandoriNl/chamaeleon" }
+  ],
   "commit": false,
-  "fixed": [],
-  "linked": [],
-  "access": "restricted",
+  "access": "public",
   "baseBranch": "master",
-  "updateInternalDependencies": "patch",
-  "ignore": []
+  "updateInternalDependencies": "minor",
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "onlyUpdatePeerDependentsWhenOutOfRange": true
+  }
 }
