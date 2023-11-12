@@ -10,8 +10,9 @@
     "lint": "turbo lint",
     "check-types": "turbo check-types",
     "clean": "turbo clean --concurrency 20",
-    "format": "prettier --write .",
-    "prepublishOnly": "turbo run build lint test"
+    "prettier": "prettier --write \"**/*.{js,ts,tsx,md}\"",
+    "version-packages": "pnpm changeset version && pnpm prettier",
+    "release": "pnpm build && pnpm changeset publish"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
