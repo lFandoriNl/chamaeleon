@@ -124,9 +124,11 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
         const activeId = active.id as Block['id'];
         const overId = over.id as Block['id'];
 
-        const { containerId: activeContainerId } = active.data.current.sortable;
+        const activeContainerId = active.data.current.sortable?.containerId;
 
-        const { containerId: overContainerId } = over.data.current.sortable;
+        const overContainerId = over.data.current.sortable?.containerId;
+
+        if (!activeContainerId || !overContainerId) return;
 
         editor.view.dragAndDrop.state.changeOverContainerId(overContainerId);
 

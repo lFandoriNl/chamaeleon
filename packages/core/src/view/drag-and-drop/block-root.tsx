@@ -99,7 +99,6 @@ export const BlockRoot = forwardRef<HTMLElement, BlockProps>(
             ...firstChild.props.style,
             ...style,
           },
-          ...attributes,
           ...(withActivator ? {} : { ...attributes, ...listeners }),
           'data-block-id': id,
         })}

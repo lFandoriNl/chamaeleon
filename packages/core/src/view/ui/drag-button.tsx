@@ -21,6 +21,7 @@ export const DragButton = forwardRef<HTMLButtonElement, DragButtonProps>(
           {...props}
           ref={useCombinedRefs<HTMLButtonElement>(ref, dndConnector.ref)}
           className="relative -top-1 cursor-grab rounded bg-slate-400"
+          {...dndConnector.attributes}
           {...dndConnector.listeners}
         >
           <MdDragIndicator size={20} color="#fff" />
