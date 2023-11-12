@@ -1,4 +1,5 @@
 import { Plugin, Block, JSONContent } from '@chamaeleon/core';
+import { useRef } from 'react';
 
 declare module '@chamaeleon/core' {
   interface Commands<ReturnType> {
@@ -30,11 +31,9 @@ export function Text(): Plugin {
 
       addBlock({
         name: 'text',
-        allowContent: {},
-        withValue: true,
         props: {
-          value: {
-            default: 'Enter your text',
+          content: {
+            default: '',
           },
         },
         components: {
@@ -46,16 +45,48 @@ export function Text(): Plugin {
             );
           },
           editor: ({ block }) => {
+            const { ui } = editor.view;
+
+            const referenceRef = useRef<HTMLButtonElement>(null);
+
             return (
-              <input
-                className="e-text"
-                placeholder="Enter your text"
-                value={block.props.value}
-                style={block.style.root}
-                onChange={(event) => {
-                  editor.commands.changeValue(block.id, event.target.value);
-                }}
-              />
+              <editor.view.Block id={block.id} ref={referenceRef}>
+                <textarea
+                  className="e-text"
+                  placeholder="Enter your text"
+                  value={block.props.content}
+                  style={block.style.root}
+                  onChange={(event) => {
+                    editor.commands.changeProperty(
+                      block.id,
+                      'content',
+                      event.target.value,
+                    );
+                  }}
+                />
+
+                <ui.ActionPopover
+                  referenceRef={referenceRef}
+                  placement="top-start"
+                >
+                  <ui.DragButton />
+                </ui.ActionPopover>
+
+                <ui.ActionPopover
+                  referenceRef={referenceRef}
+                  placement="top-end"
+                >
+                  <ui.ActionSettingsButton
+                    onClick={(event) => {
+                      editor.commands.intention(
+                        block.id,
+                        'change-properties',
+                        event.nativeEvent,
+                      );
+                    }}
+                  />
+                </ui.ActionPopover>
+              </editor.view.Block>
             );
           },
           palette: () => {
