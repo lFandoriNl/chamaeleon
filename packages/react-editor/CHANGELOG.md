@@ -1,5 +1,12 @@
 # @chamaeleon/react-editor
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`53c67c5`](https://github.com/lFandoriNl/chamaeleon/commit/53c67c58095a9b0d4c364332e6a06a55048414b4)]:
+  - @chamaeleon/core@0.11.1
+
 ## 0.2.0
 
 ### Minor Changes
