@@ -26,7 +26,7 @@ export function Builder() {
           <EditorContent editor={editor} />
         </div>
 
-        <div ref={drawerRef} className="sticky top-0 self-start" />
+        <div ref={drawerRef} className="relative top-0 self-start md:sticky" />
       </div>
     </>
   );
