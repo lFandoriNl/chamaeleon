@@ -2,43 +2,24 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import clsx from 'clsx';
 
-import { Instance, Placement, Rect, createPopper } from '@popperjs/core';
+import {
+  computePosition,
+  autoUpdate,
+  flip,
+  shift,
+  limitShift,
+  offset as offsetMiddleware,
+  Placement,
+  OffsetOptions,
+} from '@floating-ui/dom';
 
 import { EditorView } from '../editor-view';
-
-function offset({
-  placement,
-  popper,
-}: {
-  placement: Placement;
-  reference: Rect;
-  popper: Rect;
-}) {
-  const offsetMap = {
-    auto: [],
-    'auto-start': [],
-    'auto-end': [],
-    'top-start': [0, -popper.height - 4],
-    top: [],
-    'top-end': [popper.width / 2, -popper.height / 2],
-    'right-start': [],
-    right: [],
-    'right-end': [],
-    'bottom-start': [],
-    bottom: [],
-    'bottom-end': [],
-    'left-start': [],
-    left: [0, -popper.width / 2],
-    'left-end': [],
-  };
-
-  return offsetMap[placement];
-}
 
 export type ActionPopoverProps = {
   referenceRef: React.RefObject<HTMLElement | undefined>;
   className?: string;
   placement?: Placement;
+  offset?: OffsetOptions;
   children: React.ReactNode;
 } & {
   view: EditorView;
@@ -49,6 +30,7 @@ export function ActionPopover(props: ActionPopoverProps) {
     referenceRef,
     className,
     placement = 'top-end',
+    offset,
     children,
     view,
   } = props;
@@ -59,14 +41,11 @@ export function ActionPopover(props: ActionPopoverProps) {
 
   const popperRef = useRef<HTMLDivElement>(null);
 
-  const popperInstance = useRef<Instance | null>(null);
-
   useEffect(() => {
-    const referenceElement = referenceRef.current;
-
-    if (!referenceElement) throw new Error('Reference element not found');
-
     if (!popperRef.current) return;
+
+    const referenceElement = referenceRef.current;
+    if (!referenceElement) throw new Error('Reference element not found');
 
     const open = () => setOpen(true);
     const close = () => setOpen(false);
@@ -77,19 +56,41 @@ export function ActionPopover(props: ActionPopoverProps) {
     referenceElement.addEventListener('focus', open);
     referenceElement.addEventListener('blur', close);
 
-    popperRef.current.addEventListener('mouseover', open);
-    popperRef.current.addEventListener('mouseleave', close);
+    const popperElement = popperRef.current;
 
-    popperInstance.current = createPopper(referenceElement, popperRef.current, {
-      placement,
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset,
-          },
-        },
-      ],
+    const cleanup = autoUpdate(referenceElement, popperElement, () => {
+      computePosition(referenceElement, popperElement, {
+        placement,
+        middleware: [
+          flip(),
+          shift({ limiter: limitShift() }),
+          offsetMiddleware(
+            offset !== undefined
+              ? offset
+              : ({ placement, rects: { floating } }) => {
+                  switch (placement) {
+                    case 'top-start':
+                      return {
+                        mainAxis: -floating.height - 4,
+                      };
+                    case 'top-end':
+                      return {
+                        crossAxis: floating.width / 2,
+                        mainAxis: -floating.height / 2,
+                      };
+
+                    default:
+                      return 0;
+                  }
+                },
+          ),
+        ],
+      }).then(({ x, y }) => {
+        Object.assign(popperElement.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+        });
+      });
     });
 
     return () => {
@@ -99,32 +100,21 @@ export function ActionPopover(props: ActionPopoverProps) {
       referenceElement.removeEventListener('focus', open);
       referenceElement.removeEventListener('blur', close);
 
-      if (popperRef.current) {
-        popperRef.current.removeEventListener('mouseover', open);
-        popperRef.current.removeEventListener('mouseleave', close);
-      }
-
-      if (popperInstance.current) {
-        popperInstance.current.destroy();
-      }
-
-      popperInstance.current = null;
+      cleanup();
     };
   }, [referenceRef.current, children]);
-
-  useEffect(() => {
-    popperInstance.current?.update();
-  });
 
   return ReactDOM.createPortal(
     <div
       ref={popperRef}
       className={clsx(
-        'z-50',
+        'top-0, absolute left-0 z-50 w-max',
         isOpen ? 'visible' : 'invisible',
         isDragging && 'invisible',
         className,
       )}
+      onMouseOver={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
     >
       {children}
     </div>,

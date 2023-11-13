@@ -1,7 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import clsx from 'clsx';
 
-import { createPopper } from '@popperjs/core';
+import {
+  computePosition,
+  autoUpdate,
+  flip,
+  shift,
+  limitShift,
+} from '@floating-ui/dom';
 
 import { useOnClickOutside } from '@chamaeleon/hooks';
 
@@ -33,22 +39,32 @@ export const Menu = ({
 
     if (!anchorElement || !dropdownElement) return;
 
-    const popper = createPopper(anchorElement, dropdownElement, {
-      placement: 'bottom-start',
+    console.log(anchorElement, dropdownElement);
+
+    const cleanup = autoUpdate(anchorElement, dropdownElement, () => {
+      computePosition(anchorElement, dropdownElement, {
+        placement: 'bottom-start',
+        middleware: [flip(), shift({ limiter: limitShift() })],
+      }).then(({ x, y }) => {
+        Object.assign(dropdownElement.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+        });
+      });
     });
 
     setShow(true);
 
-    const handleClick = () => {
+    const open = () => {
       setShow(true);
     };
 
-    anchorElement.addEventListener('click', handleClick);
+    anchorElement.addEventListener('click', open);
 
     return () => {
-      anchorElement.removeEventListener('click', handleClick);
+      anchorElement.removeEventListener('click', open);
 
-      popper.destroy();
+      cleanup();
     };
   }, [dropdownRef.current]);
 
@@ -62,6 +78,7 @@ export const Menu = ({
       ref={dropdownRef}
       className={clsx(
         show ? 'block' : 'hidden',
+        'top-0, absolute left-0 w-max',
         'z-50 float-left mt-2 min-w-[12rem] rounded py-2 shadow-md',
         'bg-gray-50',
       )}

@@ -42,7 +42,8 @@
   },
   "dependencies": {
     "@chamaeleon/core": "workspace:^",
-    "@chamaeleon/hooks": "workspace:^"
+    "@chamaeleon/hooks": "workspace:^",
+    "@floating-ui/dom": "^1.5.3"
   },
   "devDependencies": {
     "@types/react": "18.2.15",

@@ -11,7 +11,7 @@ type DrawerProps = {
 export const Drawer = ({
   className,
   open,
-  size = '400px',
+  size = '500px',
   children,
 }: DrawerProps) => {
   if (!open) return null;
@@ -20,7 +20,7 @@ export const Drawer = ({
     <div
       tabIndex={-1}
       className={clsx(
-        'flex h-full flex-shrink-0 flex-col border-b border-l bg-white outline-0',
+        'z-[100] flex h-full flex-shrink-0 flex-col border-b border-l bg-white outline-0 max-md:fixed max-md:inset-0 max-md:!w-full',
         className,
       )}
       style={{ width: size }}
