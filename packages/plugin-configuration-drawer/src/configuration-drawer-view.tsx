@@ -47,11 +47,7 @@ export const ConfigurationDrawerView = ({
   editor,
 }: ConfigurationDrawerViewProps) => {
   return (
-    <Drawer
-      open={open}
-      size="500px"
-      onClose={editor.commands.closeConfiguration}
-    >
+    <Drawer open={open} onClose={editor.commands.closeConfiguration}>
       <BlockConfiguration
         view={editor.view}
         extra={
