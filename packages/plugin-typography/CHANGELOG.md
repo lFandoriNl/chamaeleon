@@ -1,5 +1,14 @@
 # @chamaeleon/plugin-typography
 
+## 0.4.1
+
+### Patch Changes
+
+- [`d300681`](https://github.com/lFandoriNl/chamaeleon/commit/d300681a096861ff09a403ccf17ae5ff0d22017b) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - remove overflow text
+
+- Updated dependencies [[`f3ecd89`](https://github.com/lFandoriNl/chamaeleon/commit/f3ecd8948f721706363a277637d39b9bb15d6db6)]:
+  - @chamaeleon/core@0.12.0
+
 ## 0.4.0
 
 ### Minor Changes

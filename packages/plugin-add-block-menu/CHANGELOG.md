@@ -1,5 +1,16 @@
 # @chamaeleon/plugin-add-block-menu
 
+## 0.3.0
+
+### Minor Changes
+
+- [`f3ecd89`](https://github.com/lFandoriNl/chamaeleon/commit/f3ecd8948f721706363a277637d39b9bb15d6db6) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - migrate from @popperjs to @floating-ui
+
+### Patch Changes
+
+- Updated dependencies [[`f3ecd89`](https://github.com/lFandoriNl/chamaeleon/commit/f3ecd8948f721706363a277637d39b9bb15d6db6)]:
+  - @chamaeleon/core@0.12.0
+
 ## 0.2.1
 
 ### Patch Changes
