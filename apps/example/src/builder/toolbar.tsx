@@ -1,5 +1,5 @@
-import { HistoryState, historyName } from '@chamaeleon/plugin-history';
 import { useEditorSelector } from '@chamaeleon/react-editor';
+import { HistoryState, historyName } from '@chamaeleon/plugin-history';
 import { Button } from '@chamaeleon/uikit';
 
 type ToolbarProps = {
@@ -8,10 +8,13 @@ type ToolbarProps = {
 
 export function Toolbar({ className }: ToolbarProps) {
   const [state, editor] = useEditorSelector(({ editor }) => editor.state);
-
-  const historyState = editor.getPluginState<HistoryState>(historyName);
+  const [historyState] = useEditorSelector(({ editor }) =>
+    editor.getPluginState<HistoryState>(historyName),
+  );
 
   const isStateEmpty = Object.keys(state.blocks).length === 0;
+
+  const isShowPresets = localStorage.getItem('showPresets') === 'true';
 
   return (
     <div className={className}>
@@ -59,72 +62,74 @@ export function Toolbar({ className }: ToolbarProps) {
               window.location.reload();
             }}
           >
-            Reload
+            Reset state
           </Button>
         </div>
       </div>
 
-      <div className="flex flex-col space-y-2 p-2 sm:flex-row sm:space-x-2 sm:space-y-0">
-        <Button
-          color="secondary"
-          disabled={!isStateEmpty}
-          onClick={() => {
-            editor.chain.addPage(null).select().run();
-            editor.chain.addRow('root').select().run();
-            editor.chain.addColumn(editor.state.activeId!).select().run();
-            editor.chain.addRow('root').select().run();
-          }}
-        >
-          Preset default
-        </Button>
+      {isShowPresets && (
+        <div className="flex flex-col space-y-2 p-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+          <Button
+            color="secondary"
+            disabled={!isStateEmpty}
+            onClick={() => {
+              editor.chain.addPage(null).select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addColumn(editor.state.activeId!).select().run();
+              editor.chain.addRow('root').select().run();
+            }}
+          >
+            Preset default
+          </Button>
 
-        <Button
-          color="secondary"
-          disabled={!isStateEmpty}
-          onClick={() => {
-            editor.chain.addPage(null).select().run();
-            editor.chain.addRow('root').select().run();
-            editor.chain.addRow('root').select().run();
-            editor.chain.addRow('root').select().run();
-          }}
-        >
-          Preset only rows
-        </Button>
+          <Button
+            color="secondary"
+            disabled={!isStateEmpty}
+            onClick={() => {
+              editor.chain.addPage(null).select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+            }}
+          >
+            Preset only rows
+          </Button>
 
-        <Button
-          color="secondary"
-          disabled={!isStateEmpty}
-          onClick={() => {
-            editor.chain.addPage(null).select().run();
-            editor.chain.addRow('root').select().run();
-            editor.chain.addRow('root').select().run();
-            editor.chain.addRow('root').select().run();
-            editor.chain.addColumn(editor.state.activeId!).run();
-            editor.chain.addRow('root').select().run();
-            editor.chain.addRow('root').select().run();
-          }}
-        >
-          Preset rows with nested columns
-        </Button>
+          <Button
+            color="secondary"
+            disabled={!isStateEmpty}
+            onClick={() => {
+              editor.chain.addPage(null).select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addColumn(editor.state.activeId!).run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+            }}
+          >
+            Preset rows with nested columns
+          </Button>
 
-        <Button
-          color="secondary"
-          disabled={!isStateEmpty}
-          onClick={() => {
-            editor.chain.addPage(null).select().run();
-            editor.chain.addRow('root').select().run();
-            editor.chain.addRow('root').select().run();
-            editor.chain.addRow('root').select().run();
-            editor.chain
-              .addColumn(editor.state.activeId!)
-              .addColumn(editor.state.activeId!)
-              .addColumn(editor.state.activeId!)
-              .run();
-          }}
-        >
-          Preset row with columns
-        </Button>
-      </div>
+          <Button
+            color="secondary"
+            disabled={!isStateEmpty}
+            onClick={() => {
+              editor.chain.addPage(null).select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain.addRow('root').select().run();
+              editor.chain
+                .addColumn(editor.state.activeId!)
+                .addColumn(editor.state.activeId!)
+                .addColumn(editor.state.activeId!)
+                .run();
+            }}
+          >
+            Preset row with columns
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
