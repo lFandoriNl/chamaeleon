@@ -1,5 +1,11 @@
 # @chamaeleon/core
 
+## 0.12.0
+
+### Minor Changes
+
+- [`f3ecd89`](https://github.com/lFandoriNl/chamaeleon/commit/f3ecd8948f721706363a277637d39b9bb15d6db6) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - migrate from @popperjs to @floating-ui
+
 ## 0.11.1
 
 ### Patch Changes

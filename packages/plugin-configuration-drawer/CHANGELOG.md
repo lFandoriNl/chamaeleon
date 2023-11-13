@@ -1,5 +1,14 @@
 # @chamaeleon/plugin-configuration-drawer
 
+## 0.5.2
+
+### Patch Changes
+
+- [`e921f53`](https://github.com/lFandoriNl/chamaeleon/commit/e921f531c6ad61a65351c66406ec0b462b579ba3) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - increase default drawer size to 500px
+
+- Updated dependencies [[`f3ecd89`](https://github.com/lFandoriNl/chamaeleon/commit/f3ecd8948f721706363a277637d39b9bb15d6db6)]:
+  - @chamaeleon/core@0.12.0
+
 ## 0.5.1
 
 ### Patch Changes

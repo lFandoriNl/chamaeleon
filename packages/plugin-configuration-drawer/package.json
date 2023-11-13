@@ -2,7 +2,7 @@
   "name": "@chamaeleon/plugin-configuration-drawer",
   "description": "Chameleon plugin for editing block parameters",
   "private": false,
-  "version": "0.5.1",
+  "version": "0.5.2",
   "publishConfig": {
     "access": "public"
   },
