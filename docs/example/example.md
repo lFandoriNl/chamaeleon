@@ -179,7 +179,7 @@ editor.commands.clearPersisted();
 
 ## Writing your own plugins
 
-Chamaeleon is primarily a platform for creating ui-builder, because out of the box it provides a small number of blocks, these are a page, a row, a column, a text. During the development process, the basic blocks will be replenished.
+Chamaeleon is primarily a framework for creating ui-builder, because out of the box it provides a small number of blocks, these are a page, a row, a column, a text. During the development process, the basic blocks will be replenished.
 
 Therefore, you will have to create your own plugins to add support for your blocks.
 

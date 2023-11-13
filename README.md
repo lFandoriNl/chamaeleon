@@ -13,7 +13,7 @@
 
 ## Overview
 
-Chamaeleon is a dynamic and versatile project designed to provide a flexible and extensible platform for building web pages. It is built on architecture that supports plugins, allowing users to customize and enhance their web development experience.
+Chamaeleon is a dynamic and versatile project designed to provide a flexible and extensible framework for building web pages. It is built on architecture that supports plugins, allowing users to customize and enhance their web development experience.
 
 ### Capabilities
 
@@ -23,7 +23,7 @@ Chamaeleon provides interface building capabilities for creating web pages. It a
 
 #### Extensible Architecture
 
-Chamaeleon is based on an extensible architecture based on plugins. This design allows users to add new features and functionality to the platform, expanding its functionality to meet their specific needs, be it a new block or new ways to customize block parameter changes or block styles and more.
+Chamaeleon is based on an extensible architecture based on plugins. This design allows users to add new features and functionality to the framework, expanding its functionality to meet their specific needs, be it a new block or new ways to customize block parameter changes or block styles and more.
 
 #### Overriding Built-in Components
 
