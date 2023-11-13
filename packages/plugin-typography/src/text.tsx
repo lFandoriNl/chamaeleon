@@ -39,7 +39,7 @@ export function Text(): Plugin {
         components: {
           view: ({ block }) => {
             return (
-              <p className="e-text" style={block.style.root}>
+              <p className="e-text w-full" style={block.style.root}>
                 {block.props.value}
               </p>
             );
@@ -52,7 +52,7 @@ export function Text(): Plugin {
             return (
               <editor.view.Block id={block.id} ref={referenceRef}>
                 <textarea
-                  className="e-text"
+                  className="e-text w-full"
                   placeholder="Enter your text"
                   value={block.props.content}
                   style={block.style.root}
