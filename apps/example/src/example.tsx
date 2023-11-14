@@ -31,11 +31,11 @@ const editor = new Editor({
   ],
   loggers: [
     ChamaeleonDevtools.logger,
-    // {
-    //   ...console,
-    //   action: (data) => console.log(data),
-    //   system: (data) => console.log(data),
-    // },
+    {
+      ...console,
+      action: (data) => console.log(data),
+      system: (data) => console.log(data),
+    },
   ],
 });
 

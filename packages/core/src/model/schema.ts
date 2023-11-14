@@ -157,8 +157,6 @@ export class BlockType {
   }
 
   isAllowedContent(block: Block) {
-    if (!block.type.spec.allowContent) return true;
-
     return this.schema
       .getAllowContent(this.spec.allowContent)
       .some((blockType) => blockType.name === block.type.name);

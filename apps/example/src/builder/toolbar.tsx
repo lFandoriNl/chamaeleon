@@ -73,10 +73,12 @@ export function Toolbar({ className }: ToolbarProps) {
             color="secondary"
             disabled={!isStateEmpty}
             onClick={() => {
-              editor.chain.addPage(null).select().run();
-              editor.chain.addRow('root').select().run();
-              editor.chain.addColumn(editor.state.activeId!).select().run();
-              editor.chain.addRow('root').select().run();
+              editor.chain.addPage(null).addRow('root').select().run();
+
+              editor.chain
+                .addColumn(editor.state.activeId!)
+                .addRow('root')
+                .run();
             }}
           >
             Preset default
@@ -86,10 +88,12 @@ export function Toolbar({ className }: ToolbarProps) {
             color="secondary"
             disabled={!isStateEmpty}
             onClick={() => {
-              editor.chain.addPage(null).select().run();
-              editor.chain.addRow('root').select().run();
-              editor.chain.addRow('root').select().run();
-              editor.chain.addRow('root').select().run();
+              editor.chain
+                .addPage(null)
+                .addRow('root')
+                .addRow('root')
+                .addRow('root')
+                .run();
             }}
           >
             Preset only rows
@@ -99,34 +103,37 @@ export function Toolbar({ className }: ToolbarProps) {
             color="secondary"
             disabled={!isStateEmpty}
             onClick={() => {
-              editor.chain.addPage(null).select().run();
-              editor.chain.addRow('root').select().run();
-              editor.chain.addRow('root').select().run();
-              editor.chain.addRow('root').select().run();
-              editor.chain.addColumn(editor.state.activeId!).run();
-              editor.chain.addRow('root').select().run();
-              editor.chain.addRow('root').select().run();
-            }}
-          >
-            Preset rows with nested columns
-          </Button>
+              editor.chain
+                .addPage(null)
+                .addRow('root')
+                .addRow('root')
+                .addRow('root')
+                .select()
+                .run();
 
-          <Button
-            color="secondary"
-            disabled={!isStateEmpty}
-            onClick={() => {
-              editor.chain.addPage(null).select().run();
-              editor.chain.addRow('root').select().run();
-              editor.chain.addRow('root').select().run();
-              editor.chain.addRow('root').select().run();
               editor.chain
                 .addColumn(editor.state.activeId!)
                 .addColumn(editor.state.activeId!)
+                .select()
+                .run();
+
+              editor.chain
+                .command(({ commands }) => {
+                  commands.insertContent(editor.state.activeId!, {
+                    type: 'button',
+                  });
+                })
+                .run();
+
+              editor.chain.addRow('root').select().run();
+
+              editor.chain
                 .addColumn(editor.state.activeId!)
+                .addRow('root')
                 .run();
             }}
           >
-            Preset row with columns
+            Preset rows with nested columns
           </Button>
         </div>
       )}

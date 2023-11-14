@@ -119,6 +119,7 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
         );
 
         editor.logger.info([
+          'drag start',
           'start drag, active block - ' + blockToLog(activeBlock),
           'available drop blocks - ' + availableDropBlocks.join(', '),
         ]);
@@ -126,6 +127,8 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
         editor.view.dragAndDrop.state.changeActiveBlock(activeBlock);
       }}
       onDragCancel={() => {
+        editor.logger.info('drag cancel');
+
         editor.view.dragAndDrop.state.resetActiveBlock();
       }}
       onDragOver={({ active, over }) => {
@@ -212,19 +215,6 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
           return;
         }
 
-        logger.log(
-          'over is nested in source' +
-            activeContainer.hasNestedBlock(overBlock.id, editor.state.blocks),
-        );
-
-        logger.log(
-          'target is nested in source' +
-            activeContainer.hasNestedBlock(
-              overContainer.id,
-              editor.state.blocks,
-            ),
-        );
-
         if (
           isAllowedOverBlock &&
           !activeContainer.hasNestedBlock(overBlock.id, editor.state.blocks)
@@ -258,7 +248,7 @@ const DragAndDropProvider: Provider = ({ Renderer, editor, children }) => {
       }}
       onDragEnd={({ over }) => {
         editor.logger.info(
-          'end drag, over block - ' +
+          'drag end, over block - ' +
             (over
               ? blockToLog(editor.state.getBlock(over.id as Block['id']))
               : 'null'),
