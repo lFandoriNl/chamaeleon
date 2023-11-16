@@ -1,4 +1,5 @@
 import { useCallback, useSyncExternalStore } from 'react';
+import { nanoid } from 'nanoid';
 
 import { Editor } from './editor';
 import { EditorView } from './view';
@@ -117,22 +118,25 @@ export class PluginManager extends EventEmitter<{
             this.blockViews[spec.name] = spec.components;
           }
         },
-        addView: (params) => {
+        addView: (view) => {
           this.pluginViews.common.push({
+            id: nanoid(10),
             name: plugin.name,
-            params,
+            view,
           });
         },
-        addPropsView: (params) => {
+        addPropsView: (view) => {
           this.pluginViews.props.push({
+            id: nanoid(10),
             name: plugin.name,
-            params,
+            view,
           });
         },
-        addStyleView: (params) => {
+        addStyleView: (view) => {
           this.pluginViews.style.push({
+            id: nanoid(10),
             name: plugin.name,
-            params,
+            view,
           });
         },
         getState: () => {

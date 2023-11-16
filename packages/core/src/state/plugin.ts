@@ -38,6 +38,28 @@ export type PluginStyleComponent = React.FunctionComponent<{
   block: Block;
 }>;
 
+export type PluginCommonView = {
+  name?: string;
+  filter?: () => boolean;
+  component: PluginCommonComponent;
+};
+
+export type PluginPropsView = {
+  name?: string;
+  filter: (block: Block) => boolean;
+  component: PluginPropsComponent;
+};
+
+export type PluginStyleView = {
+  name?: string;
+  filter: (
+    styleSpec: React.CSSProperties,
+    block: Block,
+    layer: keyof Style,
+  ) => boolean;
+  component: PluginStyleComponent;
+};
+
 export type PluginApplyMethods<PluginState = any> = {
   addCommands: (commands: Partial<RawCommands>) => void;
 
@@ -55,24 +77,11 @@ export type PluginApplyMethods<PluginState = any> = {
     components?: BlockViewRendererPack;
   }) => void;
 
-  addView: (params: {
-    filter?: () => boolean;
-    component: PluginCommonComponent;
-  }) => void;
+  addView: (view: PluginCommonView) => void;
 
-  addPropsView: (params: {
-    filter: (block: Block) => boolean;
-    component: PluginPropsComponent;
-  }) => void;
+  addPropsView: (view: PluginPropsView) => void;
 
-  addStyleView: (params: {
-    filter: (
-      styleSpec: React.CSSProperties,
-      block: Block,
-      layer: keyof Style,
-    ) => boolean;
-    component: PluginStyleComponent;
-  }) => void;
+  addStyleView: (view: PluginStyleView) => void;
 
   getState: () => PluginState;
   setState: (

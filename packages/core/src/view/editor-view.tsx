@@ -5,7 +5,14 @@ import { StyleConfigurationRender } from './style-configuration-render';
 
 import { Editor } from '../editor';
 import { Block } from '../model';
-import { EditorState, Plugin, PluginApplyMethods, Transaction } from '../state';
+import {
+  EditorState,
+  Plugin,
+  PluginCommonView,
+  PluginPropsView,
+  PluginStyleView,
+  Transaction,
+} from '../state';
 import { BlockViewRendererPack, Provider } from '../types';
 
 import { ActionPopover } from './ui/action-popover';
@@ -54,18 +61,21 @@ export class EditorView {
   };
 
   pluginCommonViews: Array<{
+    id: string;
     name: Plugin['name'];
-    params: Parameters<PluginApplyMethods['addView']>[0];
+    view: PluginCommonView;
   }> = [];
 
   pluginPropsViews: Array<{
+    id: string;
     name: Plugin['name'];
-    params: Parameters<PluginApplyMethods['addPropsView']>[0];
+    view: PluginPropsView;
   }> = [];
 
   pluginStyleViews: Array<{
+    id: string;
     name: Plugin['name'];
-    params: Parameters<PluginApplyMethods['addStyleView']>[0];
+    view: PluginStyleView;
   }> = [];
 
   rawUI = {

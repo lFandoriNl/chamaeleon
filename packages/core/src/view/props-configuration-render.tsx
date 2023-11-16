@@ -14,11 +14,11 @@ export const PropsConfigurationRender = ({
   return (
     <div className="property-configuration-place">
       {view.pluginPropsViews.map(
-        ({ name, params: { filter, component: Component } }) => {
+        ({ id, view: { filter, component: Component } }) => {
           if (!filter(activeBlock)) return null;
 
           return (
-            <Component key={name} editor={view.editor} block={activeBlock} />
+            <Component key={id} editor={view.editor} block={activeBlock} />
           );
         },
       )}

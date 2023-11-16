@@ -9,10 +9,6 @@ export default defineConfig({
     starlight({
       title: 'Chamaeleon Docs',
       favicon: '/favicon.png',
-      logo: {
-        src: './src/assets/chamaeleon.png',
-        replacesTitle: true,
-      },
       social: {
         github: 'https://github.com/lFandoriNl/chamaeleon',
       },

@@ -8,6 +8,9 @@ export {
   type PluginCommonComponent,
   type PluginPropsComponent,
   type PluginStyleComponent,
+  type PluginCommonView,
+  type PluginPropsView,
+  type PluginStyleView,
   type InferPluginState,
 } from './state';
 export { Block } from './model';

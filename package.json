@@ -5,6 +5,8 @@
   ],
   "scripts": {
     "build": "turbo build",
+    "build-example": "turbo build --filter example",
+    "build-docs": "turbo build --filter docs",
     "dev": "turbo dev --concurrency 20",
     "test": "turbo test",
     "lint": "turbo lint",

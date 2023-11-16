@@ -22,7 +22,7 @@ export const StyleConfigurationRender = ({
               <p className="border-b pb-2 text-lg text-gray-500">{layer}</p>
 
               {view.pluginStyleViews.map(
-                ({ name, params: { filter, component: Component } }) => {
+                ({ id, view: { filter, component: Component } }) => {
                   const { activeBlock } = view.state;
 
                   if (!activeBlock) return null;
@@ -31,7 +31,7 @@ export const StyleConfigurationRender = ({
 
                   return (
                     <Component
-                      key={layer + name}
+                      key={id}
                       editor={view.editor}
                       layer={layer}
                       styleSpec={cssProperties}
