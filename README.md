@@ -11,7 +11,7 @@
 
 ## Documentation
 
-The full documentation is available on [chamaeleon.dev](https://chamaeleon.dev).
+The full documentation is available on [chamaeleon-docs](https://chamaeleon-docs.vercel.app).
 
 ## Overview
 
