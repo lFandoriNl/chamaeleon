@@ -11,10 +11,10 @@ const EditorContentPortals = () => {
   return (
     <div className="editor-content-portals">
       {editor.view.pluginCommonViews.map(
-        ({ name, params: { filter, component: Component } }) => {
+        ({ id, view: { filter, component: Component } }) => {
           if (filter && !filter()) return null;
 
-          return <Component key={name} editor={editor} />;
+          return <Component key={id} editor={editor} />;
         },
       )}
     </div>
@@ -23,9 +23,10 @@ const EditorContentPortals = () => {
 
 type EditorContentProps = {
   editor: Editor;
+  empty?: React.ReactElement;
 };
 
-export const EditorContent = ({ editor }: EditorContentProps) => {
+export const EditorContent = ({ editor, empty }: EditorContentProps) => {
   const [rootPage] = useEditorSelector(({ editor }) => editor.state.rootPage);
 
   return (
@@ -39,7 +40,7 @@ export const EditorContent = ({ editor }: EditorContentProps) => {
         {rootPage ? (
           <Renderer block={rootPage} editor={editor} componentType="editor" />
         ) : (
-          <div className="editor-root">
+          empty || (
             <div className="flex justify-center p-10">
               <Button
                 color="secondary"
@@ -56,9 +57,7 @@ export const EditorContent = ({ editor }: EditorContentProps) => {
                 Add first page
               </Button>
             </div>
-
-            <EditorContentPortals />
-          </div>
+          )
         )}
 
         <EditorContentPortals />
