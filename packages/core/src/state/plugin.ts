@@ -78,9 +78,7 @@ export type PluginApplyMethods<PluginState = any> = {
   }) => void;
 
   addView: (view: PluginCommonView) => void;
-
   addPropsView: (view: PluginPropsView) => void;
-
   addStyleView: (view: PluginStyleView) => void;
 
   getState: () => PluginState;

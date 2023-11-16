@@ -55,6 +55,7 @@ export function ConfigurationDrawer(
       });
 
       addView({
+        name: editor.pluginViewTokens.configuration,
         component: () => {
           const { element, open } = getState();
 

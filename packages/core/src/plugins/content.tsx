@@ -8,6 +8,7 @@ export function Content(): Plugin {
     name: 'content-prop',
     apply(editor, { addPropsView }) {
       addPropsView({
+        name: 'content',
         filter: (block) => {
           return block.props.content !== undefined;
         },

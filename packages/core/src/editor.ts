@@ -41,6 +41,11 @@ export class Editor extends EventEmitter<EditorEvents> {
     plugins: [],
   };
 
+  pluginViewTokens = {
+    configuration: 'configuration',
+    addBlockInline: 'addBlockInline',
+  } as const;
+
   logger: Logger = {
     log: (data) => this.loggers.forEach((logger) => logger.log(data)),
     info: (data) => this.loggers.forEach((logger) => logger.info(data)),

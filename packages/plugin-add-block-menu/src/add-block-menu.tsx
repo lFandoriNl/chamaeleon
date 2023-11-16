@@ -61,6 +61,7 @@ export function AddBlockMenu(
       });
 
       addView({
+        name: editor.pluginViewTokens.addBlockInline,
         component: () => {
           const { state } = editor;
 

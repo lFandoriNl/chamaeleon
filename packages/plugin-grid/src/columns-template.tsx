@@ -70,6 +70,7 @@ export function ColumnsTemplate(): Plugin {
 
     apply(editor, { addPropsView }) {
       addPropsView({
+        name: 'row-columns',
         filter: (block) => block.type.name === 'row',
 
         component: ({ block }) => {

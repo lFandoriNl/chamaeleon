@@ -15,6 +15,7 @@ export function Margin(): Plugin {
 
     apply(editor, { addStyleView }) {
       addStyleView({
+        name: 'margin',
         filter: (styleSpec) => {
           return ['margin', ...margins].some((property) => {
             return property in styleSpec;

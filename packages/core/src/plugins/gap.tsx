@@ -8,6 +8,7 @@ export function Gap(): Plugin {
 
     apply(editor, { addStyleView }) {
       addStyleView({
+        name: 'gap',
         filter: (styleSpec) => {
           return ['gap', 'rowGap', 'columnGap'].some((property) => {
             return property in styleSpec;

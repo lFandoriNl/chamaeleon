@@ -62,19 +62,16 @@ export class EditorView {
 
   pluginCommonViews: Array<{
     id: string;
-    name: Plugin['name'];
     view: PluginCommonView;
   }> = [];
 
   pluginPropsViews: Array<{
     id: string;
-    name: Plugin['name'];
     view: PluginPropsView;
   }> = [];
 
   pluginStyleViews: Array<{
     id: string;
-    name: Plugin['name'];
     view: PluginStyleView;
   }> = [];
 

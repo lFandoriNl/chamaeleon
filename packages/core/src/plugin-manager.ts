@@ -121,21 +121,18 @@ export class PluginManager extends EventEmitter<{
         addView: (view) => {
           this.pluginViews.common.push({
             id: nanoid(10),
-            name: plugin.name,
             view,
           });
         },
         addPropsView: (view) => {
           this.pluginViews.props.push({
             id: nanoid(10),
-            name: plugin.name,
             view,
           });
         },
         addStyleView: (view) => {
           this.pluginViews.style.push({
             id: nanoid(10),
-            name: plugin.name,
             view,
           });
         },
