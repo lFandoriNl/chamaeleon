@@ -1,0 +1,30 @@
+---
+title: Welcome to Chamaeleon
+description: Start making your code more flexible with Chamaeleon.
+template: splash
+hero:
+  tagline: Chamaeleon is a framework that aims to provide a flexible and extensible framework for creating a web builder!
+  image:
+    file: ../../assets/chamaeleon.png
+  actions:
+    - text: Get started
+      link: /getting-started/setup/
+      icon: right-arrow
+      variant: primary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Main features
+
+<CardGrid stagger>
+  <Card title="Drag and drop" icon="bars">
+    Add drag and drop capabilities to your components using built-in features.
+  </Card>
+  <Card title="Collaborative" icon="microsoftTeams">
+    Use real-time collaboration tools.
+  </Card>
+  <Card title="Plugin API" icon="puzzle">
+    Make your dream builder with flexible plugins.
+  </Card>
+</CardGrid>

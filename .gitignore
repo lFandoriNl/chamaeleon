@@ -37,6 +37,9 @@ yarn.lock
 # vercel
 .vercel
 
+# astro
+.astro
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

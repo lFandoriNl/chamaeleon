@@ -1,19 +1,21 @@
 # Chamaeleon
 
+- [Documentation](#documentation)
 - [Overview](#overview)
   - [Building pages](#building-pages)
   - [Extensible Architecture](#extensible-architecture)
   - [Overriding Built-in Components](#overriding-built-in-components)
 - [Demo](#demo)
 - [Goals for 1.0.0](#goals-for-the-first-release-version-100)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Example](#example)
 - [Local setup](#local-setup)
+
+## Documentation
+
+The full documentation is available on [chamaeleon.dev](https://chamaeleon.dev).
 
 ## Overview
 
-Chamaeleon is a dynamic and versatile project designed to provide a flexible and extensible framework for building web pages. It is built on architecture that supports plugins, allowing users to customize and enhance their web development experience.
+Chamaeleon is a framework that aims to provide a flexible and extensible framework for creating a web builder. It's built on a plugin-friendly architecture, allowing you to make your builder however you want.
 
 ### Capabilities
 
@@ -58,7 +60,7 @@ Chamaeleon provides the ability to override the editor UI components, allowing u
 
 ### Documentation
 
-- ❌ documentation site
+- ✅ documentation site
 - ❌ guidelines for converting an existing code base to Chamaeleon
 
 ### Plugin API
@@ -96,55 +98,13 @@ Chamaeleon provides the ability to override the editor UI components, allowing u
   - ❌ checkbox block
   - ❌ radio button block
 
-## Prerequisites
+## Local setup
 
-This project is a monorepository that uses **pnpm** for managing packages. **pnpm** is a fast, disk space efficient package manager that helps to work with monorepos.
-
-Before you begin, ensure you have met the following requirements:
-
-Installing **pnpm**
+Before you start, make sure you have **pnpm** installed, if not, install it:
 
 ```
 npm install -g pnpm
 ```
-
-## Installation
-
-For basic use you need to install the core and react-editor:
-
-```shell
-npm i react react-dom @chamaeleon/core @chamaeleon/react-editor
-```
-
-If you want to install base blocks:
-
-```shell
-npm i @chamaeleon/plugin-page @chamaeleon/plugin-grid @chamaeleon/plugin-typography
-```
-
-If you want to connect built-in plugins for editing and adding blocks, then run:
-
-```shell
-npm i @chamaeleon/plugin-add-block-menu @chamaeleon/plugin-configuration-drawer
-```
-
-You may also want to install an plugin for the undo redo commands:
-
-```shell
-npm i @chamaeleon/plugin-history
-```
-
-If you need support persisted state:
-
-```shell
-npm i @chamaeleon/plugin-persist
-```
-
-## Example
-
-[View examples](./docs/example/example.md)
-
-## Local setup
 
 To set up Chamaeleon locally, you'll need to clone the repository.
 
