@@ -1,3 +1,3 @@
-import { Margin, Gap } from '../plugins';
+import { Indentation, Gap } from '../plugins';
 
-export const BaseStylePack = [Margin(), Gap()];
+export const BaseStylePack = [Indentation(), Gap()];

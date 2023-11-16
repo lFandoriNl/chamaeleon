@@ -16,7 +16,8 @@ export function Button(): Plugin {
         },
         style: {
           root: {
-            margin: 0,
+            margin: undefined,
+            padding: undefined,
           },
         },
         components: {
