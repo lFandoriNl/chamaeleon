@@ -60,7 +60,7 @@ export function Toolbar({ className }: ToolbarProps) {
         </div>
       </div>
 
-      {isShowPresets && (
+      {/* {isShowPresets && (
         <div className="flex flex-col space-y-2 p-2 sm:flex-row sm:space-x-2 sm:space-y-0">
           <Button
             color="blue"
@@ -129,7 +129,7 @@ export function Toolbar({ className }: ToolbarProps) {
             Preset rows with nested columns
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

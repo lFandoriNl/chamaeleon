@@ -156,7 +156,7 @@ export function Column(): Plugin {
                       editor.commands.intention(
                         block.id,
                         'change-properties',
-                        event.nativeEvent,
+                        event.currentTarget,
                       );
                     }}
                   />
