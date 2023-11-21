@@ -1,5 +1,5 @@
-import React, { HTMLAttributes, useState } from 'react';
 import clsx from 'clsx';
+import React, { HTMLAttributes, useState } from 'react';
 
 export type SwitchProps = HTMLAttributes<HTMLInputElement> & {
   className?: string;

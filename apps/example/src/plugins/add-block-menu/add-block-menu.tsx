@@ -1,6 +1,5 @@
-import ReactDOM from 'react-dom';
-
 import { Block, Plugin } from '@chamaeleon/core';
+import ReactDOM from 'react-dom';
 
 import { Menu } from './menu';
 

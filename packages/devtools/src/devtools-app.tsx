@@ -1,15 +1,12 @@
-import { useState } from 'react';
+import { useStore } from '@nanostores/react';
 import clsx from 'clsx';
 import { Resizable } from 're-resizable';
+import { useState } from 'react';
 
-import { useStore } from '@nanostores/react';
-
-import { LogItem } from './log-item';
-
-import { $logs } from './state';
-
-import { Level } from './types';
 import { ChamaeleonIcon } from './chamaeleon-icon';
+import { LogItem } from './log-item';
+import { $logs } from './state';
+import { Level } from './types';
 import { useScrollContainer } from './use-scroll-container';
 
 const levelColors: Record<Level, string> = {

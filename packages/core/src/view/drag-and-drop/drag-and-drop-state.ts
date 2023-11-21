@@ -1,5 +1,4 @@
 import { EventEmitter } from '../../event-emitter';
-
 import { Block } from '../../model';
 
 export class DragAndDropState extends EventEmitter<{

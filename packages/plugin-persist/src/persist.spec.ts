@@ -1,6 +1,6 @@
+import { Editor, Plugin } from '@chamaeleon/core';
 import { describe, it, expect, vi } from 'vitest';
 
-import { Editor, Plugin } from '@chamaeleon/core';
 import { Persist } from './persist';
 
 describe('Persist', () => {

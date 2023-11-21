@@ -1,15 +1,14 @@
-import { useCallback, useSyncExternalStore } from 'react';
 import { nanoid } from 'nanoid';
+import { useCallback, useSyncExternalStore } from 'react';
 
 import { Editor } from './editor';
-import { EditorView } from './view';
+import { EventEmitter } from './event-emitter';
+import { getPropertiesFromSpec } from './helpers/get-properties-from-spec';
 import { Block, BlockSpec, Schema } from './model';
 import { Plugin, PluginApplyMethods } from './state';
 import { BlockViewRendererPack, Provider, RawCommands } from './types';
-import { EventEmitter } from './event-emitter';
-
 import { isFunction } from './utilities/is-function';
-import { getPropertiesFromSpec } from './helpers/get-properties-from-spec';
+import { EditorView } from './view';
 
 function throwIfHasDuplicatePlugins(plugins: Plugin[]) {
   const countPluginsByName: Partial<Record<Plugin['name'], number>> = {};

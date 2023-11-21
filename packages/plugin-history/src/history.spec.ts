@@ -1,6 +1,6 @@
+import { Editor, Plugin } from '@chamaeleon/core';
 import { describe, it, beforeEach, expect } from 'vitest';
 
-import { Editor, Plugin } from '@chamaeleon/core';
 import { History } from './history';
 
 describe('History', () => {

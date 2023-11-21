@@ -1,7 +1,6 @@
-import { useRef } from 'react';
-
-import { Button as UIButton } from '@mantine/core';
 import { Plugin } from '@chamaeleon/core';
+import { Button as UIButton } from '@mantine/core';
+import { useRef } from 'react';
 
 import { DragButton } from '../shared/builder-ui/drag-button';
 import { SettingButton } from '../shared/builder-ui/settings-button';

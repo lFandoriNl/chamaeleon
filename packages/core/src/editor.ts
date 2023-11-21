@@ -1,4 +1,9 @@
-import { EditorView, EditorViewOptions } from './view';
+import { CommandManager } from './command-manager';
+import { EventEmitter } from './event-emitter';
+import { Schema } from './model';
+import { PluginManager } from './plugin-manager';
+import { Commands, DragAndDrop } from './plugins';
+import { BasePropsPack, BaseStylePack } from './plugins-pack';
 import {
   EditorState,
   InferPluginState,
@@ -6,17 +11,9 @@ import {
   RawBlocks,
   Transaction,
 } from './state';
-import { Schema } from './model';
-
-import { PluginManager } from './plugin-manager';
-import { CommandManager } from './command-manager';
-import { EventEmitter } from './event-emitter';
-
-import { BasePropsPack, BaseStylePack } from './plugins-pack';
-import { Commands, DragAndDrop } from './plugins';
-
 import { Logger, EditorEvents, SingleCommands } from './types';
 import { isFunction } from './utilities/is-function';
+import { EditorView, EditorViewOptions } from './view';
 
 export type EditorOptions = Pick<
   EditorViewOptions,

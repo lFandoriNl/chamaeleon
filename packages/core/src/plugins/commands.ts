@@ -1,5 +1,5 @@
-import { Plugin } from '../state';
 import * as commands from '../commands';
+import { Plugin } from '../state';
 
 export function Commands(): Plugin {
   return {

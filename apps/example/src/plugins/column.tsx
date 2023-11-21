@@ -1,7 +1,6 @@
-import { useRef } from 'react';
-import clsx from 'clsx';
-
 import { Block, Plugin, JSONContent } from '@chamaeleon/core';
+import clsx from 'clsx';
+import { useRef } from 'react';
 
 import { AddBlockButton } from '../shared/builder-ui/add-block-button';
 import { DragButton } from '../shared/builder-ui/drag-button';

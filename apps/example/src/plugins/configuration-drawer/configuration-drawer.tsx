@@ -1,6 +1,6 @@
+import { Block, Plugin } from '@chamaeleon/core';
 import ReactDOM from 'react-dom';
 
-import { Block, Plugin } from '@chamaeleon/core';
 import { ConfigurationDrawerView } from './configuration-drawer-view';
 
 declare module '@chamaeleon/core' {

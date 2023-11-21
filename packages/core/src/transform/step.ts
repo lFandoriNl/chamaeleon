@@ -1,6 +1,7 @@
 import { enablePatches, produce, Patch } from 'immer';
-import { Blocks } from '../state';
+
 import { Block } from '../model';
+import { Blocks } from '../state';
 
 enablePatches();
 

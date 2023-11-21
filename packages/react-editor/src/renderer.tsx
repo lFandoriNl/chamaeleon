@@ -1,6 +1,6 @@
+import { Editor, Block, BlockViewRendererPack } from '@chamaeleon/core';
 import React from 'react';
 
-import { Editor, Block, BlockViewRendererPack } from '@chamaeleon/core';
 import { useBlock } from './use-block';
 
 type RendererProps = {

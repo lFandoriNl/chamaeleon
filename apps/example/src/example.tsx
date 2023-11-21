@@ -1,22 +1,19 @@
 import { Editor } from '@chamaeleon/core';
-import { EditorProvider } from '@chamaeleon/react-editor';
-import { Persist } from '@chamaeleon/plugin-persist';
-import { History } from '@chamaeleon/plugin-history';
-
 import { ChamaeleonDevtools } from '@chamaeleon/devtools';
+import { History } from '@chamaeleon/plugin-history';
+import { Persist } from '@chamaeleon/plugin-persist';
+import { EditorProvider } from '@chamaeleon/react-editor';
+import { Flex } from '@mantine/core';
 
+import { Builder } from './builder';
+import { connectToReduxDevtools } from './connect-to-redux-devtools';
 import { AddBlockMenu } from './plugins/add-block-menu';
+import { Button as ButtonPlugin } from './plugins/button';
+import { Column } from './plugins/column';
+import { ColumnsTemplate } from './plugins/columns-template';
 import { ConfigurationDrawer } from './plugins/configuration-drawer';
 import { Page } from './plugins/page';
 import { Row } from './plugins/row';
-import { Column } from './plugins/column';
-import { ColumnsTemplate } from './plugins/columns-template';
-import { Button as ButtonPlugin } from './plugins/button';
-
-import { Builder } from './builder';
-
-import { connectToReduxDevtools } from './connect-to-redux-devtools';
-import { Flex } from '@mantine/core';
 
 const editor = new Editor({
   plugins: [

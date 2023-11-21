@@ -1,10 +1,9 @@
+import { EditorContent, useEditor } from '@chamaeleon/react-editor';
+import { Button, Flex } from '@mantine/core';
 import { useEffect, useRef } from 'react';
 
-import { EditorContent, useEditor } from '@chamaeleon/react-editor';
 import { ConfigurationDrawer } from '../plugins/configuration-drawer';
-
 import { Toolbar } from './toolbar';
-import { Button, Flex } from '@mantine/core';
 
 export function Builder() {
   const editor = useEditor();

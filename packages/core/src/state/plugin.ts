@@ -6,7 +6,6 @@ import {
   Provider,
   RawCommands,
 } from '../types';
-
 import { EditorState, EditorStateConfig } from './editor-state';
 import { Transaction } from './transaction';
 

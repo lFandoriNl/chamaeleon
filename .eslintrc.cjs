@@ -16,9 +16,47 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'react'],
+  plugins: ['@typescript-eslint', 'react', 'import'],
   ignorePatterns: ['**/dist/*'],
   rules: {
+    'import/order': [
+      1,
+      {
+        groups: ['external', 'internal', ['parent', 'sibling', 'index']],
+        distinctGroup: false,
+        pathGroups: [
+          {
+            pattern: 'react',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: 'src/__generated__/**',
+            group: 'internal',
+            position: 'before',
+          },
+          {
+            pattern: 'src/**/*',
+            group: 'parent',
+            position: 'before',
+          },
+          {
+            pattern: './**',
+            group: 'sibling',
+            position: 'after',
+          },
+          {
+            pattern: '**',
+            group: 'external',
+          },
+        ],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+      },
+    ],
     'no-unused-vars': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/no-unused-vars': [

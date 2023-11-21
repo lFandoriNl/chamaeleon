@@ -1,5 +1,5 @@
-import { HTMLAttributes, forwardRef } from 'react';
 import clsx from 'clsx';
+import { HTMLAttributes, forwardRef } from 'react';
 
 import { useFormControlContext } from './form-control';
 

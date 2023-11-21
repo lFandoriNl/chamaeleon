@@ -1,7 +1,8 @@
 import { applyPatches } from 'immer';
+
+import { Block, Fragment } from '../model';
 import { Blocks } from '../state';
 import { Step, StepResult } from './step';
-import { Block, Fragment } from '../model';
 
 export class RemoveStep extends Step {
   constructor(

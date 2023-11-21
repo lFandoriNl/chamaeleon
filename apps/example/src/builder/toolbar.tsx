@@ -1,5 +1,5 @@
-import { useEditorSelector } from '@chamaeleon/react-editor';
 import { HistoryState, historyName } from '@chamaeleon/plugin-history';
+import { useEditorSelector } from '@chamaeleon/react-editor';
 import { Button, Text } from '@mantine/core';
 
 type ToolbarProps = {

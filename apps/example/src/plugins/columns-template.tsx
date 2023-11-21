@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import clsx from 'clsx';
-
 import { Plugin } from '@chamaeleon/core';
 import { Button, TextInput } from '@mantine/core';
+import clsx from 'clsx';
+import { useState } from 'react';
 
 const splitColumns = (template: string) => {
   return template.split('+').map(Number).filter(Boolean);

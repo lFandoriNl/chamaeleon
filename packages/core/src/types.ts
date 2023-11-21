@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Commands } from '.';
 import { Editor } from './editor';
-import { EditorView } from './view';
-import { EditorState, Transaction } from './state';
 import { Block, BlockSpec } from './model';
+import { EditorState, Transaction } from './state';
+import { EditorView } from './view';
 
 export type Provider = React.FunctionComponent<{
   Renderer: React.FunctionComponent<{ block: Block }>;

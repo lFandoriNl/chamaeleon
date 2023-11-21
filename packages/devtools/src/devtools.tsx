@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 
-import { createLogger } from './logger';
 import { DevtoolsApp } from './devtools-app';
+import { createLogger } from './logger';
 import { addLogItem } from './state';
 
 const logger = createLogger({ addLogItem });

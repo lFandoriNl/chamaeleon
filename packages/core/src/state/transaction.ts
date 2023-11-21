@@ -1,8 +1,8 @@
-import { Blocks, EditorState } from './editor-state';
-import { Transform } from '../transform';
-import { Plugin } from './plugin';
 import { Block } from '../model';
+import { Transform } from '../transform';
 import { Step } from '../transform/step';
+import { Blocks, EditorState } from './editor-state';
+import { Plugin } from './plugin';
 
 export class Transaction extends Transform {
   activeId: EditorState['activeId'];

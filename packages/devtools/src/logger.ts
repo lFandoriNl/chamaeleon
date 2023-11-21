@@ -1,5 +1,4 @@
 import { addLogItem } from './state';
-
 import { Entries, Logger, Level, Data } from './types';
 
 type CreateLoggerOptions = {

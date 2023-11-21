@@ -1,6 +1,5 @@
-import { Flex, Text } from '@mantine/core';
-
 import { Plugin } from '@chamaeleon/core';
+import { Flex, Text } from '@mantine/core';
 
 import { AddBlockButton } from '../shared/builder-ui/add-block-button';
 

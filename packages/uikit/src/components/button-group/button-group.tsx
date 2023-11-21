@@ -1,5 +1,5 @@
-import React, { HTMLAttributes } from 'react';
 import clsx from 'clsx';
+import React, { HTMLAttributes } from 'react';
 
 import { ButtonProps } from '../button';
 

@@ -1,6 +1,3 @@
-import React, { useRef, useState, useEffect } from 'react';
-import clsx from 'clsx';
-
 import {
   computePosition,
   autoUpdate,
@@ -8,9 +5,11 @@ import {
   shift,
   limitShift,
 } from '@floating-ui/dom';
+import { Button, Flex } from '@mantine/core';
+import clsx from 'clsx';
+import React, { useRef, useState, useEffect } from 'react';
 
 import { useOnClickOutside } from '../../shared/hooks/use-on-click-outside';
-import { Button, Flex } from '@mantine/core';
 
 type MenuProps = {
   anchorEl: HTMLElement | null;

@@ -1,9 +1,8 @@
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
+import { Schema } from '../model/schema';
 import { EditorState } from './editor-state';
 import { Plugin } from './plugin';
-
-import { Schema } from '../model/schema';
 
 type AppendTransactionParameters = Parameters<
   NonNullable<Plugin['appendTransaction']>

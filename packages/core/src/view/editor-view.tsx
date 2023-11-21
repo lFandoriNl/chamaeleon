@@ -10,8 +10,6 @@ import {
   Transaction,
 } from '../state';
 import { BlockViewRendererPack, Provider } from '../types';
-
-import { ActionPopover } from './ui/action-popover';
 import {
   DragAndDropState,
   useDragAndDropState,
@@ -20,6 +18,7 @@ import {
   BlockRoot,
   Dropzone,
 } from './drag-and-drop';
+import { ActionPopover } from './ui/action-popover';
 import { EditorInstanceContext } from './use-editor-instance';
 
 type Props<T extends keyof EditorView['rawUI']> = Omit<

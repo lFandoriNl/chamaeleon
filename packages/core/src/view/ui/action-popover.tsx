@@ -1,7 +1,3 @@
-import React, { useState, useRef, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import clsx from 'clsx';
-
 import {
   computePosition,
   autoUpdate,
@@ -12,6 +8,9 @@ import {
   Placement,
   OffsetOptions,
 } from '@floating-ui/dom';
+import clsx from 'clsx';
+import React, { useState, useRef, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 
 import { EditorView } from '../editor-view';
 

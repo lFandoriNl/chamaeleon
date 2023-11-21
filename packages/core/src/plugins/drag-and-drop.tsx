@@ -9,9 +9,9 @@ import {
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 
+import { Plugin } from '..';
 import { Block } from '../model';
 import { Provider } from '../types';
-import { Plugin } from '..';
 
 function DragOverlayActiveBlock({
   Renderer,

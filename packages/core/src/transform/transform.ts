@@ -1,12 +1,11 @@
 import { Block, Style } from '../model';
 import { Blocks } from '../state/editor-state';
-
-import { Step } from './step';
 import { InsertStep } from './insert-step';
-import { RemoveStep } from './remove-step';
-import { PropertyStep } from './property-step';
-import { StyleStep } from './style-step';
 import { MoveStep } from './move-step';
+import { PropertyStep } from './property-step';
+import { RemoveStep } from './remove-step';
+import { Step } from './step';
+import { StyleStep } from './style-step';
 
 class TransformError extends Error {
   name = 'TransformError' as const;

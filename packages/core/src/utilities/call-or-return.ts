@@ -1,5 +1,5 @@
-import { isFunction } from './is-function';
 import { MaybeReturnType } from '../types';
+import { isFunction } from './is-function';
 
 export function callOrReturn<T>(
   value: T,

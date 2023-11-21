@@ -1,7 +1,8 @@
 import { applyPatches } from 'immer';
+
+import { Block, Style } from '../model';
 import { Blocks } from '../state';
 import { Step, StepResult } from './step';
-import { Block, Style } from '../model';
 
 export class StyleStep extends Step {
   constructor(

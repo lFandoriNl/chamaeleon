@@ -1,8 +1,6 @@
-import { Fragment } from 'react';
-
-import { CloseButton, Flex, Text } from '@mantine/core';
-
 import { EditorView, Editor } from '@chamaeleon/core';
+import { CloseButton, Flex, Text } from '@mantine/core';
+import { Fragment } from 'react';
 
 import { Drawer } from './drawer';
 

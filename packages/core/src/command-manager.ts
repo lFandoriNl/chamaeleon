@@ -1,8 +1,6 @@
 import { Editor } from './editor';
-import { Transaction } from './state';
-
 import { createChainableState } from './helpers/create-chainable-state';
-
+import { Transaction } from './state';
 import {
   ChainedCommands,
   CommandProps,

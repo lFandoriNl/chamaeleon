@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {
   createContext,
   forwardRef,
@@ -5,11 +6,10 @@ import {
   useContext,
   useId,
 } from 'react';
-import clsx from 'clsx';
 
-import { FormLabelProps } from './form-label';
-import { FormHelperTextProps } from './form-helper-text';
 import { FromErrorMessageProps } from './form-error';
+import { FormHelperTextProps } from './form-helper-text';
+import { FormLabelProps } from './form-label';
 
 export type FromControlOptions = {
   error?: boolean;

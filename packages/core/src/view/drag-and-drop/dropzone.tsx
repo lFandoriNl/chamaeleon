@@ -1,11 +1,9 @@
+import { useCombinedRefs } from '@chamaeleon/hooks';
+import { SortableContext } from '@dnd-kit/sortable';
 import React, { forwardRef, useContext } from 'react';
 
-import { SortableContext } from '@dnd-kit/sortable';
-
-import { useCombinedRefs } from '@chamaeleon/hooks';
-
-import { DndConnectorContext } from './block-root';
 import { Block } from '../../model';
+import { DndConnectorContext } from './block-root';
 
 type DropzoneProps = {
   block?: Block;

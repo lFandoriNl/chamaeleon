@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useRef } from 'react';
-import { DragAndDropState } from './drag-and-drop-state';
+
 import { useEditorInstance } from '../use-editor-instance';
+import { DragAndDropState } from './drag-and-drop-state';
 
 type Selector<T> = (state: DragAndDropState) => T;
 

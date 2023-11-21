@@ -1,7 +1,6 @@
 import { Plugin } from '@chamaeleon/core';
 
 import { StorageAdapter } from './storage-adapter';
-
 import { StorageOptions } from './types';
 
 declare module '@chamaeleon/core' {

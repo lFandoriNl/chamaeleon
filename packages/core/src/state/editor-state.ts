@@ -1,9 +1,7 @@
-import { Transaction } from './transaction';
-import { Plugin, StateField } from './plugin';
-
 import { Block, Fragment, Schema } from '../model';
-
 import { JSONContent } from '../types';
+import { Plugin, StateField } from './plugin';
+import { Transaction } from './transaction';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 function bind<T extends Function>(f: T, self?: any): T {

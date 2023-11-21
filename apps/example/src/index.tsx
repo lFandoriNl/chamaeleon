@@ -1,5 +1,5 @@
-import ReactDOM from 'react-dom/client';
 import { MantineProvider, createTheme } from '@mantine/core';
+import ReactDOM from 'react-dom/client';
 
 import { ErrorBoundary } from './app/error-boundary';
 import { Example } from './example';

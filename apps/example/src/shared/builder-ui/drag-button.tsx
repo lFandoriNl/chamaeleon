@@ -1,9 +1,7 @@
-import { forwardRef } from 'react';
-
-import { ActionIcon, ActionIconProps, ElementProps } from '@mantine/core';
-import { MdDragIndicator } from 'react-icons/md';
-
 import { useEditor } from '@chamaeleon/react-editor';
+import { ActionIcon, ActionIconProps, ElementProps } from '@mantine/core';
+import { forwardRef } from 'react';
+import { MdDragIndicator } from 'react-icons/md';
 
 import { useCombinedRefs } from '../hooks/use-combined-refs';
 

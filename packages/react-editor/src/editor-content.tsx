@@ -1,5 +1,4 @@
 import { Editor, Block } from '@chamaeleon/core';
-import { Button } from '@chamaeleon/uikit';
 
 import { Renderer } from './renderer';
 import { useEditorSelector } from './use-editor-selector';

@@ -1,6 +1,5 @@
 import { Block } from '../../model';
 import { useEditorInstance } from '../use-editor-instance';
-
 import { useDragAndDropState } from './use-drag-and-drop-state';
 
 export function useDragAndDropBlockState(block: Block) {

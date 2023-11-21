@@ -1,7 +1,8 @@
 import { applyPatches } from 'immer';
+
+import { Block } from '../model';
 import { Blocks } from '../state';
 import { Step, StepResult } from './step';
-import { Block } from '../model';
 
 export class PropertyStep extends Step {
   constructor(

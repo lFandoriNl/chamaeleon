@@ -1,8 +1,8 @@
 import { CSSProperties } from 'react';
 
+import { mergeDeep } from '../utilities/merge-deep';
 import { Block } from './block';
 import { Fragment } from './fragment';
-import { mergeDeep } from '../utilities/merge-deep';
 
 export type Props = {
   readonly [prop: string]: any;

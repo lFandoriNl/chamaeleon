@@ -1,14 +1,12 @@
-import React, { forwardRef, useContext, useMemo } from 'react';
-
+import { useCombinedRefs } from '@chamaeleon/hooks';
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
-
-import { useCombinedRefs } from '@chamaeleon/hooks';
+import { CSS } from '@dnd-kit/utilities';
+import React, { forwardRef, useContext, useMemo } from 'react';
 
 import { Block } from '../../model';
-import { useSortable } from './use-sortable';
 import { useEditorInstance } from '../use-editor-instance';
-import { CSS } from '@dnd-kit/utilities';
+import { useSortable } from './use-sortable';
 
 type BlockProps = {
   id: Block['id'];
