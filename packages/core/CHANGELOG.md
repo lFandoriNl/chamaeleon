@@ -1,5 +1,23 @@
 # @chamaeleon/core
 
+## 0.13.0
+
+### Minor Changes
+
+- [`4b700c8`](https://github.com/lFandoriNl/chamaeleon/commit/4b700c833b54f2760125459f79d57bdea96fc62f) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Transition to a headless approach
+
+- [`6d41538`](https://github.com/lFandoriNl/chamaeleon/commit/6d41538585606e109615c2006541167913e0a837) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Add a plugin view name to indicate its impact, override or show conflicts
+
+- [`fac1845`](https://github.com/lFandoriNl/chamaeleon/commit/fac1845cdd56446f789c04fd4bf2c530fe611ad6) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Add plugin view tokens
+
+- [`99ec42b`](https://github.com/lFandoriNl/chamaeleon/commit/99ec42b8fe8da6d28f7bb9b0ae3d6c28f6c7baa4) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Add padding plugin
+
+### Patch Changes
+
+- [`b986b4c`](https://github.com/lFandoriNl/chamaeleon/commit/b986b4cc5b31773f79f70f9de6484b3fac74af95) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - add touch events for dnd triggers
+
+- [`5958003`](https://github.com/lFandoriNl/chamaeleon/commit/59580033dbde0a73e828a44364fcad4fdae44f39) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Fix the definition of isAllowedContent for a block, affecting the correct operation of drag and drop
+
 ## 0.12.0
 
 ### Minor Changes
