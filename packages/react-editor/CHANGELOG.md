@@ -1,5 +1,18 @@
 # @chamaeleon/react-editor
 
+## 0.3.0
+
+### Minor Changes
+
+- [`4b700c8`](https://github.com/lFandoriNl/chamaeleon/commit/4b700c833b54f2760125459f79d57bdea96fc62f) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Transition to a headless approach
+
+- [`b1ba3cf`](https://github.com/lFandoriNl/chamaeleon/commit/b1ba3cfe5deb470903f7eb76713248824a725772) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Add `empty` view props for `EditorContent` when there are no blocks to render
+
+### Patch Changes
+
+- Updated dependencies [[`4b700c8`](https://github.com/lFandoriNl/chamaeleon/commit/4b700c833b54f2760125459f79d57bdea96fc62f), [`b986b4c`](https://github.com/lFandoriNl/chamaeleon/commit/b986b4cc5b31773f79f70f9de6484b3fac74af95), [`5958003`](https://github.com/lFandoriNl/chamaeleon/commit/59580033dbde0a73e828a44364fcad4fdae44f39), [`6d41538`](https://github.com/lFandoriNl/chamaeleon/commit/6d41538585606e109615c2006541167913e0a837), [`fac1845`](https://github.com/lFandoriNl/chamaeleon/commit/fac1845cdd56446f789c04fd4bf2c530fe611ad6), [`99ec42b`](https://github.com/lFandoriNl/chamaeleon/commit/99ec42b8fe8da6d28f7bb9b0ae3d6c28f6c7baa4)]:
+  - @chamaeleon/core@0.13.0
+
 ## 0.2.2
 
 ### Patch Changes
