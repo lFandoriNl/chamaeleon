@@ -1,0 +1,35 @@
+{
+  "name": "survey-form-base",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.tsx",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "test": "echo 'No test specified'"
+  },
+  "dependencies": {
+    "@chamaeleon/core": "^0.13.0",
+    "@chamaeleon/plugin-history": "^0.3.3",
+    "@chamaeleon/plugin-persist": "^0.3.3",
+    "@chamaeleon/react-editor": "^0.3.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@floating-ui/dom": "^1.5.3",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/material": "^5.14.18",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.48.2"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "@vitejs/plugin-react": "4.0.4",
+    "vite": "4.4.9"
+  }
+}
