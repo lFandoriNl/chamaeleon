@@ -1,6 +1,6 @@
-import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwind from '@astrojs/tailwind';
+import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,6 +22,10 @@ export default defineConfig({
               link: '/getting-started/setup/',
             },
           ],
+        },
+        {
+          label: 'Writing projects with chameleon',
+          autogenerate: { directory: 'writing-projects-with-chameleon' },
         },
         {
           label: 'Write plugin guides',

@@ -4,7 +4,7 @@
 - [Overview](#overview)
   - [Building pages](#building-pages)
   - [Extensible Architecture](#extensible-architecture)
-  - [Overriding Built-in Components](#overriding-built-in-components)
+  - [Drag And Drop](#drag-and-drop)
 - [Demo](#demo)
 - [Goals for 1.0.0](#goals-for-the-first-release-version-100)
 - [Local setup](#local-setup)
@@ -27,9 +27,9 @@ Chamaeleon provides interface building capabilities for creating web pages. It a
 
 Chamaeleon is based on an extensible architecture based on plugins. This design allows users to add new features and functionality to the framework, expanding its functionality to meet their specific needs, be it a new block or new ways to customize block parameter changes or block styles and more.
 
-#### Overriding Built-in Components
+#### Drag And Drop
 
-Chamaeleon provides the ability to override the editor UI components, allowing users to change the appearance and functionality of built-in components. This feature provides users with the flexibility to customize the look and feel of the editor, enhancing their web development experience.
+Chameleon provides Drag And Drop capabilities out of the box
 
 ## Demo
 
@@ -86,17 +86,6 @@ Chamaeleon provides the ability to override the editor UI components, allowing u
   - share cursor
 - ✅ inline menu to adding a block - **plugin-add-block-menu**
 - ✅ drawer for editing block parameters - **plugin-configuration-drawer**
-- built-in blocks
-  - ✅ page block - **plugin-page**
-  - ✅ grid building blocks - **plugin-grid**
-  - ❌ text block - **plugin-typography** (now a primitive implementation)
-    - single line text
-    - multiline text
-    - WYSIWYG editor
-  - ❌ button block
-  - ❌ select block
-  - ❌ checkbox block
-  - ❌ radio button block
 
 ## Local setup
 
