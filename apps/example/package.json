@@ -20,9 +20,6 @@
     "@chamaeleon/core": "workspace:^",
     "@chamaeleon/react-editor": "workspace:^",
     "@chamaeleon/uikit": "workspace:^",
-    "@chamaeleon/plugin-page": "workspace:^",
-    "@chamaeleon/plugin-grid": "workspace:^",
-    "@chamaeleon/plugin-typography": "workspace:^",
     "@chamaeleon/plugin-history": "workspace:^",
     "@chamaeleon/plugin-persist": "workspace:^",
     "@chamaeleon/devtools": "workspace:^"
