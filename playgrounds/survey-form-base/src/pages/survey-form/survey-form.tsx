@@ -21,6 +21,7 @@ export function SurveyForm() {
   const onSubmit: SubmitHandler<FormState> = (data) => {
     console.log(data);
   };
+
   return (
     <Stack component="form" spacing={4} onSubmit={handleSubmit(onSubmit)}>
       <Paper sx={{ p: 4 }}>
