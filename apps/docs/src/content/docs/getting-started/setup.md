@@ -46,6 +46,6 @@ const Example = () => {
 };
 ```
 
-This is the most minimal set. By default, the chameleon has only basic capabilities. To expand their number you need to provide him with plugins.
+This is the most minimal set. By default, the Chamaeleon has only basic capabilities. To expand their number you need to provide him with plugins.
 
-By default there are no blocks in chameleon, you have to add them yourself from your own components, in the next section we will look at how to transition an existing project to chameleon.
+By default there are no blocks in Chamaeleon, you have to add them yourself from your own components, in the next section we will look at how to transition an existing project to Chamaeleon.

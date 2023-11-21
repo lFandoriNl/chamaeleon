@@ -1,5 +1,5 @@
 {
-  "name": "survey-form-base",
+  "name": "survey-form-chamaeleon",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,8 +12,13 @@
     "test": "echo 'No test specified'"
   },
   "dependencies": {
+    "@chamaeleon/core": "^0.13.0",
+    "@chamaeleon/plugin-history": "^0.3.3",
+    "@chamaeleon/plugin-persist": "^0.3.3",
+    "@chamaeleon/react-editor": "^0.3.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@floating-ui/dom": "^1.5.3",
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
