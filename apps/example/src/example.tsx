@@ -1,20 +1,22 @@
 import { Editor } from '@chamaeleon/core';
-import { Page } from '@chamaeleon/plugin-page';
-import { GridPack } from '@chamaeleon/plugin-grid';
-import { Text } from '@chamaeleon/plugin-typography';
+import { EditorProvider } from '@chamaeleon/react-editor';
 import { Persist } from '@chamaeleon/plugin-persist';
 import { History } from '@chamaeleon/plugin-history';
-import { AddBlockMenu } from '@chamaeleon/plugin-add-block-menu';
-import { ConfigurationDrawer } from '@chamaeleon/plugin-configuration-drawer';
-import { EditorProvider } from '@chamaeleon/react-editor';
 
 import { ChamaeleonDevtools } from '@chamaeleon/devtools';
 
+import { AddBlockMenu } from './plugins/add-block-menu';
+import { ConfigurationDrawer } from './plugins/configuration-drawer';
+import { Page } from './plugins/page';
+import { Row } from './plugins/row';
+import { Column } from './plugins/column';
+import { ColumnsTemplate } from './plugins/columns-template';
 import { Button as ButtonPlugin } from './plugins/button';
 
 import { Builder } from './builder';
 
 import { connectToReduxDevtools } from './connect-to-redux-devtools';
+import { Flex } from '@mantine/core';
 
 const editor = new Editor({
   plugins: [
@@ -25,9 +27,12 @@ const editor = new Editor({
     AddBlockMenu(),
     ConfigurationDrawer(),
     Page(),
-    GridPack,
-    Text(),
+    Row(),
+    Column(),
+    ColumnsTemplate(),
     ButtonPlugin(),
+    // GridPack,
+    // Text(),
   ],
   loggers: [
     ChamaeleonDevtools.logger,
@@ -64,9 +69,9 @@ editor.on('update', ({ transaction }) => {
 export const Example = () => {
   return (
     <EditorProvider value={editor}>
-      <div className="flex flex-col">
+      <Flex direction="column">
         <Builder />
-      </div>
+      </Flex>
 
       <ChamaeleonDevtools.Render />
     </EditorProvider>

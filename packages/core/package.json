@@ -26,12 +26,6 @@
       "import": "./dist/index.js",
       "module": "./dist/index.js",
       "require": "./dist/index.cjs"
-    },
-    "./dist/tailwind-plugin": {
-      "types": "./dist/tailwind-plugin.d.ts",
-      "import": "./dist/tailwind-plugin.js",
-      "module": "./dist/tailwind-plugin.js",
-      "require": "./dist/tailwind-plugin.cjs"
     }
   },
   "scripts": {

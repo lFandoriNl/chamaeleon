@@ -1,6 +1,7 @@
 export * from './command';
 export * from './intention';
 export * from './select';
+export * from './insert-root-content';
 export * from './insert-content';
 export * from './remove-content';
 export * from './append-blocks';

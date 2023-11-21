@@ -7,14 +7,14 @@ declare module '..' {
       intention: (
         target: Block['id'],
         type: 'add-block' | 'change-properties',
-        event?: Event,
+        element?: HTMLElement,
       ) => ReturnType;
     };
   }
 }
 
 export const intention: RawCommands['intention'] =
-  (target, type, event) =>
+  (target, type, element) =>
   ({ tr }) => {
-    tr.setMeta('intention', { target, type, event });
+    tr.setMeta('intention', { target, type, element });
   };

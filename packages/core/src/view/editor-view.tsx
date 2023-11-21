@@ -1,13 +1,9 @@
 import React from 'react';
 
-import { PropsConfigurationRender } from './props-configuration-render';
-import { StyleConfigurationRender } from './style-configuration-render';
-
 import { Editor } from '../editor';
 import { Block } from '../model';
 import {
   EditorState,
-  Plugin,
   PluginCommonView,
   PluginPropsView,
   PluginStyleView,
@@ -16,11 +12,6 @@ import {
 import { BlockViewRendererPack, Provider } from '../types';
 
 import { ActionPopover } from './ui/action-popover';
-import { DragButton } from './ui/drag-button';
-import { AddExtraBlock } from './ui/add-extra-block';
-import { ActionButton } from './ui/action-button';
-import { ActionAddBlockButton } from './ui/action-add-block-button';
-import { ActionSettingsButton } from './ui/action-settings-button';
 import {
   DragAndDropState,
   useDragAndDropState,
@@ -48,18 +39,6 @@ export type EditorViewOptions = {
 export class EditorView {
   state!: EditorState;
 
-  propsConfiguration: {
-    Render: React.FunctionComponent<{ view: EditorView }>;
-  } = {
-    Render: PropsConfigurationRender,
-  };
-
-  styleConfiguration: {
-    Render: React.FunctionComponent<{ view: EditorView }>;
-  } = {
-    Render: StyleConfigurationRender,
-  };
-
   pluginCommonViews: Array<{
     id: string;
     view: PluginCommonView;
@@ -77,11 +56,6 @@ export class EditorView {
 
   rawUI = {
     ActionPopover,
-    DragButton,
-    AddExtraBlock,
-    ActionButton,
-    ActionAddBlockButton,
-    ActionSettingsButton,
   };
 
   ui!: {
@@ -109,10 +83,6 @@ export class EditorView {
     public options: EditorViewOptions,
   ) {
     this.state = options.state;
-
-    if (options.propertyConfigurationRender) {
-      this.propsConfiguration.Render = options.propertyConfigurationRender;
-    }
 
     this.rawUI = {
       ...this.rawUI,

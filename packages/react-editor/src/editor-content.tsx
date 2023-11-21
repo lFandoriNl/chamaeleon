@@ -40,24 +40,7 @@ export const EditorContent = ({ editor, empty }: EditorContentProps) => {
         {rootPage ? (
           <Renderer block={rootPage} editor={editor} componentType="editor" />
         ) : (
-          empty || (
-            <div className="flex justify-center p-10">
-              <Button
-                color="secondary"
-                onClick={() => {
-                  editor.chain
-                    .insertContent(editor.schema.spec.rootBlockId, {
-                      id: editor.schema.spec.rootBlockId,
-                      type: 'page',
-                    })
-                    .select()
-                    .run();
-                }}
-              >
-                Add first page
-              </Button>
-            </div>
-          )
+          empty
         )}
 
         <EditorContentPortals />

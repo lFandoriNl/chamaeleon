@@ -1,14 +1,22 @@
 import ReactDOM from 'react-dom/client';
+import { MantineProvider, createTheme } from '@mantine/core';
 
 import { ErrorBoundary } from './app/error-boundary';
 import { Example } from './example';
 
+import '@mantine/core/styles/global.css';
+import '@mantine/core/styles.css';
+
 import './styles/global.css';
+
+const theme = createTheme({});
 
 const App = () => {
   return (
     <ErrorBoundary fallback={<div>Something wrong</div>}>
-      <Example />
+      <MantineProvider theme={theme}>
+        <Example />
+      </MantineProvider>
     </ErrorBoundary>
   );
 };

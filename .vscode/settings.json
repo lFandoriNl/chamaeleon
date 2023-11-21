@@ -1,4 +1,11 @@
 {
-  "cSpell.words": ["clsx", "immer", "rootable", "tailwindcss"],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "cSpell.words": ["clsx", "immer", "Mantine", "rootable", "tailwindcss"],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cssVariables.lookupFiles": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.less",
+    "node_modules/@mantine/core/esm/index.css"
+  ]
 }

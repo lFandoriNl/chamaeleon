@@ -1,7 +1,10 @@
 import { useRef } from 'react';
 
+import { Button as UIButton } from '@mantine/core';
 import { Plugin } from '@chamaeleon/core';
-import { Button as UIButton } from '@chamaeleon/uikit';
+
+import { DragButton } from '../shared/builder-ui/drag-button';
+import { SettingButton } from '../shared/builder-ui/settings-button';
 
 export function Button(): Plugin {
   return {
@@ -34,7 +37,7 @@ export function Button(): Plugin {
             return (
               <>
                 <editor.view.Block id={block.id} ref={referenceRef}>
-                  <UIButton style={block.style.root}>
+                  <UIButton color="blue" style={block.style.root}>
                     {block.props.content}
                   </UIButton>
 
@@ -42,19 +45,19 @@ export function Button(): Plugin {
                     referenceRef={referenceRef}
                     placement="top-start"
                   >
-                    <ui.DragButton />
+                    <DragButton />
                   </ui.ActionPopover>
 
                   <ui.ActionPopover
                     referenceRef={referenceRef}
                     placement="top-end"
                   >
-                    <ui.ActionSettingsButton
+                    <SettingButton
                       onClick={(event) => {
                         editor.commands.intention(
                           block.id,
                           'change-properties',
-                          event.nativeEvent,
+                          event.currentTarget,
                         );
                       }}
                     />

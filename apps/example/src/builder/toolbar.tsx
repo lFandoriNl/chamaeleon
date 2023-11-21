@@ -1,6 +1,6 @@
 import { useEditorSelector } from '@chamaeleon/react-editor';
 import { HistoryState, historyName } from '@chamaeleon/plugin-history';
-import { Button } from '@chamaeleon/uikit';
+import { Button, Text } from '@mantine/core';
 
 type ToolbarProps = {
   className?: string;
@@ -20,43 +20,36 @@ export function Toolbar({ className }: ToolbarProps) {
     <div className={className}>
       <div className="flex flex-col space-x-2 p-2 sm:flex-row">
         <div className="space-x-2">
-          <Button color="secondary" onClick={() => editor.commands.undo()}>
+          <Button color="blue" onClick={() => editor.commands.undo()}>
             Undo
           </Button>
 
-          <Button color="secondary" onClick={() => editor.commands.redo()}>
+          <Button color="blue" onClick={() => editor.commands.redo()}>
             Redo
           </Button>
         </div>
 
         <div className="flex items-center space-x-2 py-4 sm:py-0">
-          <p className="inline text-base">
+          <Text>
             Current version: {historyState.currentVersion + 1}
             {' / '}
             {historyState.supportedVersions}
-          </p>
-
-          <span>|</span>
-
-          <p className="inline text-base">
+            <span>|</span>
             History stack: {historyState.historyTransactions.length}
-          </p>
+          </Text>
         </div>
 
         <div className="space-x-2">
-          <Button color="secondary" onClick={() => editor.commands.persist()}>
+          <Button color="blue" onClick={() => editor.commands.persist()}>
             Persist
           </Button>
 
-          <Button
-            color="secondary"
-            onClick={() => editor.commands.clearPersisted()}
-          >
+          <Button color="blue" onClick={() => editor.commands.clearPersisted()}>
             Clear
           </Button>
 
           <Button
-            color="secondary"
+            color="blue"
             onClick={() => {
               editor.commands.clearPersisted();
               window.location.reload();
@@ -70,7 +63,7 @@ export function Toolbar({ className }: ToolbarProps) {
       {isShowPresets && (
         <div className="flex flex-col space-y-2 p-2 sm:flex-row sm:space-x-2 sm:space-y-0">
           <Button
-            color="secondary"
+            color="blue"
             disabled={!isStateEmpty}
             onClick={() => {
               editor.chain.addPage(null).addRow('root').select().run();
@@ -85,7 +78,7 @@ export function Toolbar({ className }: ToolbarProps) {
           </Button>
 
           <Button
-            color="secondary"
+            color="blue"
             disabled={!isStateEmpty}
             onClick={() => {
               editor.chain
@@ -100,7 +93,7 @@ export function Toolbar({ className }: ToolbarProps) {
           </Button>
 
           <Button
-            color="secondary"
+            color="blue"
             disabled={!isStateEmpty}
             onClick={() => {
               editor.chain
