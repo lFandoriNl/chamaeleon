@@ -1,5 +1,11 @@
 # @chamaeleon/core
 
+## 0.13.1
+
+### Patch Changes
+
+- [`2c6029a`](https://github.com/lFandoriNl/chamaeleon/commit/2c6029aca2d47b291be06da1e89987eb8d220bac) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Fix ActionPopover, migrate tailwind to inline style
+
 ## 0.13.0
 
 ### Minor Changes
