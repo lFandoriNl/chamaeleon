@@ -3,7 +3,6 @@ import { EventEmitter } from './event-emitter';
 import { Schema } from './model';
 import { PluginManager } from './plugin-manager';
 import { Commands, DragAndDrop } from './plugins';
-import { BasePropsPack, BaseStylePack } from './plugins-pack';
 import {
   EditorState,
   InferPluginState,
@@ -116,12 +115,7 @@ export class Editor extends EventEmitter<EditorEvents> {
   }
 
   private createPluginManager() {
-    const corePlugins = [
-      Commands(),
-      DragAndDrop(),
-      BasePropsPack,
-      BaseStylePack,
-    ];
+    const corePlugins = [Commands(), DragAndDrop()];
 
     const allPlugins = [...corePlugins, ...this.options.plugins];
 
