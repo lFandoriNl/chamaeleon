@@ -106,12 +106,16 @@ export function ActionPopover(props: ActionPopoverProps) {
   return ReactDOM.createPortal(
     <div
       ref={popperRef}
-      className={clsx(
-        'top-0, absolute left-0 z-50 w-max',
-        isOpen ? 'visible' : 'invisible',
-        isDragging && 'invisible',
-        className,
-      )}
+      className={className}
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: 'max-content',
+        zIndex: 50,
+        ...(isOpen ? { visibility: 'visible' } : { visibility: 'hidden' }),
+        ...(isDragging && { visibility: 'hidden' }),
+      }}
       onMouseOver={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
