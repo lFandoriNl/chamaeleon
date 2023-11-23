@@ -7,7 +7,7 @@ This plugin allows you to persist your state in the storage you need, `localStor
 
 ## Installation
 
-```sh
+```sh frame="none"
 npm i @chamaeleon/plugin-persist
 ```
 

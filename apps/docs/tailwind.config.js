@@ -2,25 +2,25 @@ import starlightPlugin from '@astrojs/tailwind';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: ['./public/**/*.js', './src/**/*.{astro,html,js,md,mdx}'],
   theme: {
     extend: {
       colors: {
         accent: {
-          200: '#8bd3fa',
-          600: '#0075a0',
-          900: '#00374e',
-          950: '#002839',
+          200: '#82dccc',
+          600: '#007d6f',
+          900: '#003c34',
+          950: '#002b25',
         },
         gray: {
-          100: '#f6f6f6',
-          200: '#eeeeee',
-          300: '#c2c2c2',
-          400: '#8b8b8b',
-          500: '#585858',
-          700: '#383838',
-          800: '#272727',
-          900: '#181818',
+          100: '#f5f6f8',
+          200: '#ebeef2',
+          300: '#bec2c7',
+          400: '#858d94',
+          500: '#525960',
+          700: '#323940',
+          800: '#21282e',
+          900: '#16191b',
         },
       },
     },

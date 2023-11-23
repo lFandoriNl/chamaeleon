@@ -7,7 +7,7 @@ This plugin provides `undo` and `redo` capabilities using two new commands.
 
 ## Installation
 
-```sh
+```sh frame="none"
 npm i @chamaeleon/plugin-history
 ```
 

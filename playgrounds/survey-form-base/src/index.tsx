@@ -5,7 +5,7 @@ import {
 } from '@mui/material/styles';
 import ReactDOM from 'react-dom/client';
 
-import { Example } from './example';
+import { Demo } from './demo';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -20,7 +20,7 @@ const App = () => {
   return (
     <CssVarsProvider theme={theme}>
       <CssBaseline />
-      <Example />
+      <Demo />
     </CssVarsProvider>
   );
 };

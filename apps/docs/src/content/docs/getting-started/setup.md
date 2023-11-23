@@ -13,7 +13,7 @@ It is assumed that you have already installed `react` and `react-dom`.
 
 For basic use you need to install the `core` and `react-editor`:
 
-```sh
+```sh frame="none"
 npm i @chamaeleon/core @chamaeleon/react-editor
 ```
 

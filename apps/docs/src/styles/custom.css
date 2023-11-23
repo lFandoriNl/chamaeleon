@@ -1,33 +1,114 @@
 /* Dark mode colors. */
 :root {
-  --sl-color-accent-low: #002839;
-  --sl-color-accent: #00739d;
-  --sl-color-accent-high: #8bd3fa;
+  --sl-color-accent-low: #002b25;
+  --sl-color-accent: #007b6d;
+  --sl-color-accent-high: #82dccc;
   --sl-color-white: #ffffff;
-  --sl-color-gray-1: #eeeeee;
-  --sl-color-gray-2: #c2c2c2;
-  --sl-color-gray-3: #8b8b8b;
-  --sl-color-gray-4: #585858;
-  --sl-color-gray-5: #383838;
-  --sl-color-gray-6: #272727;
-  --sl-color-black: #181818;
+  --sl-color-gray-1: #ebeef2;
+  --sl-color-gray-2: #bec2c7;
+  --sl-color-gray-3: #858d94;
+  --sl-color-gray-4: #525960;
+  --sl-color-gray-5: #323940;
+  --sl-color-gray-6: #21282e;
+  --sl-color-black: #16191b;
 }
 /* Light mode colors. */
 :root[data-theme='light'] {
-  --sl-color-accent-low: #abdffd;
-  --sl-color-accent: #0075a0;
-  --sl-color-accent-high: #00374e;
-  --sl-color-white: #181818;
-  --sl-color-gray-1: #272727;
-  --sl-color-gray-2: #383838;
-  --sl-color-gray-3: #585858;
-  --sl-color-gray-4: #8b8b8b;
-  --sl-color-gray-5: #c2c2c2;
-  --sl-color-gray-6: #eeeeee;
-  --sl-color-gray-7: #f6f6f6;
+  --sl-color-accent-low: #a5e6d9;
+  --sl-color-accent: #007d6f;
+  --sl-color-accent-high: #003c34;
+  --sl-color-white: #16191b;
+  --sl-color-gray-1: #21282e;
+  --sl-color-gray-2: #323940;
+  --sl-color-gray-3: #525960;
+  --sl-color-gray-4: #858d94;
+  --sl-color-gray-5: #bec2c7;
+  --sl-color-gray-6: #ebeef2;
+  --sl-color-gray-7: #f5f6f8;
   --sl-color-black: #ffffff;
+}
+
+body header.header,
+mobile-starlight-toc nav {
+  background-color: #29292954;
+  backdrop-filter: blur(5px);
+}
+
+:root[data-theme='light'] body header.header,
+:root[data-theme='light'] mobile-starlight-toc nav {
+  background-color: #ffffff80;
 }
 
 .hero img {
   max-width: 300px;
+}
+
+@keyframes jumbo {
+  from {
+    background-position:
+      50% 50%,
+      50% 50%;
+  }
+  to {
+    background-position:
+      350% 50%,
+      350% 50%;
+  }
+}
+
+.jumbo {
+  --stripes: repeating-linear-gradient(
+    100deg,
+    #fff 0%,
+    #fff 7%,
+    transparent 10%,
+    transparent 12%,
+    #fff 16%
+  );
+  --stripesDark: repeating-linear-gradient(
+    100deg,
+    #000 0%,
+    #000 7%,
+    transparent 10%,
+    transparent 12%,
+    #000 16%
+  );
+  --rainbow: repeating-linear-gradient(
+    100deg,
+    #60a5fa 10%,
+    #e879f9 15%,
+    #60a5fa 20%,
+    #5eead4 25%,
+    #60a5fa 30%
+  );
+  background-image: var(--stripes), var(--rainbow);
+  background-size: 300%, 200%;
+  background-position:
+    50% 50%,
+    50% 50%;
+
+  filter: blur(10px) invert(100%);
+
+  mask-image: radial-gradient(ellipse at 100% 0%, black 40%, transparent 70%);
+
+  pointer-events: none;
+}
+
+.jumbo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--stripes), var(--rainbow);
+  background-size: 200%, 100%;
+  animation: jumbo 120s linear infinite;
+  background-attachment: fixed;
+  mix-blend-mode: difference;
+}
+
+:root[data-theme='dark'] .jumbo {
+  background-image: var(--stripesDark), var(--rainbow);
+  filter: blur(10px) opacity(50%) saturate(200%);
+}
+:root[data-theme='dark'] .jumbo::after {
+  background-image: var(--stripesDark), var(--rainbow);
 }

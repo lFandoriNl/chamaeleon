@@ -12,7 +12,23 @@ export default defineConfig({
       social: {
         github: 'https://github.com/lFandoriNl/chamaeleon',
       },
+      editLink: {
+        baseUrl:
+          'https://github.com/lFandoriNl/chamaeleon/tree/master/apps/docs',
+      },
       customCss: ['./src/styles/custom.css'],
+      expressiveCode: {
+        styleOverrides: { borderRadius: '0.5rem' },
+      },
+      head: [
+        {
+          tag: 'script',
+          attrs: {
+            src: '/jumbo.js',
+            defer: false,
+          },
+        },
+      ],
       sidebar: [
         {
           label: 'Getting Started',
@@ -24,16 +40,22 @@ export default defineConfig({
           ],
         },
         {
-          label: 'Writing projects with chameleon',
-          autogenerate: { directory: 'writing-projects-with-chameleon' },
+          label: 'Migrate to Chamaeleon',
+          autogenerate: {
+            directory: 'migrate-to-chamaeleon',
+          },
         },
         {
           label: 'Write plugin guides',
-          autogenerate: { directory: 'write-plugin-guides' },
+          autogenerate: {
+            directory: 'write-plugin-guides',
+          },
         },
         {
           label: 'Packages',
-          autogenerate: { directory: 'packages' },
+          autogenerate: {
+            directory: 'packages',
+          },
         },
       ],
     }),

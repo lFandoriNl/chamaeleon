@@ -66,7 +66,7 @@ editor.on('update', ({ transaction }) => {
 export const Example = () => {
   return (
     <EditorProvider value={editor}>
-      <Flex direction="column">
+      <Flex direction="column" className="invisible">
         <Builder />
       </Flex>
 
