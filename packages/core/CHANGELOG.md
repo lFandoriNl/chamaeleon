@@ -1,5 +1,13 @@
 # @chamaeleon/core
 
+## 0.14.0
+
+### Minor Changes
+
+- [`d2c9ef5`](https://github.com/lFandoriNl/chamaeleon/commit/d2c9ef5e86bb80275de44e13ce1a8a7e0830fbd1) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Rename BlockRoot to Draggable & add render prop for children
+
+- [`0e4d5f1`](https://github.com/lFandoriNl/chamaeleon/commit/0e4d5f1ad153705ed3c1dac4a7cef5d9906cfd08) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Add remove command
+
 ## 0.13.2
 
 ### Patch Changes
