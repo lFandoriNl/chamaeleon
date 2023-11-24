@@ -9,7 +9,7 @@ We have a lot of props that require customization, let's do them
 
 ## Paper
 
-Paper lacks the ability to customize its padding. To customize styles, we create a separate `ChangeStyle` plugin for this.
+`Paper` lacks the ability to customize its padding. To customize styles, we create a separate `ChangeStyle` plugin for this.
 
 ```diff lang="ts"
 // builder/plugins/paper.tsx
@@ -118,7 +118,7 @@ const editor = new Editor({
 });
 ```
 
-Now let's add to our BlockSettings the rendering of our components to change styles
+Now let's add to our `BlockSettings` the rendering of our components to change styles
 
 ```diff lang="tsx"
 // builder/plugins/block-settings.tsx
@@ -179,7 +179,7 @@ Great, we now have the ability to edit the padding, now if we need to add it to 
 
 ## Stack
 
-For the stack we need to add `spacing` and `direction` prop settings
+For the `Stack` we need to add `spacing` and `direction` prop settings
 
 ```diff lang="tsx"
 // builder/plugins/stack.tsx
@@ -283,13 +283,212 @@ addPropsView({
           );
         }}
       >
-        {['row', 'row-reverse', 'column', 'column-reverse'].map((option) => (
-          <MenuItem key={option} value={option}>
-            {option}
+        {['row', 'row-reverse', 'column', 'column-reverse'].map((item) => (
+          <MenuItem key={item} value={item}>
+            {item}
           </MenuItem>
         ))}
       </TextField>
     );
   },
+});
+```
+
+## Text
+
+For the `Text` block, add `padding` styles
+
+```diff lang="tsx"
+// builder/plugins/text
+addBlock({
+  name: 'text',
+  props: {
+    content: {
+      default: 'Enter your text',
+    },
+  },
++  style: {
++    root: {
++      padding: '0 0 16px 0',
++    },
++  },
+  components: {
+    view: ({ block }) => {
+      return (
+-        <Typography sx={{ pb: 2 }}>{block.props.content}</Typography>
++        <Typography sx={{ ...block.style.root }}>
++          {block.props.content}
++        </Typography>
+      );
+    },
+-    editor: ({ block }) => {
++    editor: ({ block, editor }) => {
+      const ref = useRef<HTMLParagraphElement>(null);
+
+      return (
+        <>
+-         <Typography sx={{ pb: 2 }}>{block.props.content}</Typography>
++          <Typography ref={ref} sx={{ ...block.style.root }}>
++            {block.props.content}
++          </Typography>
++
++          <editor.view.ui.ActionPopover referenceRef={ref}>
++            <BlockToolbar id={block.id} />
++          </editor.view.ui.ActionPopover>
+        </>
+      );
+    },
+    palette: () => {
+      return <Typography>Text</Typography>;
+    },
+  },
+});
+```
+
+## TextField
+
+For `TextField` you need to add editing `label` and `fieldName` props
+
+```diff lang="tsx"
+// builder/plugins/text-field.tsx
+addBlock({
+  name: 'text-field',
+  props: {
+    label: {
+      default: 'Label',
+    },
+    fieldName: {
+      default: '',
+    },
+  },
+  components: {
+    view: ...
+    editor: ({ block }) => {
++      const ref = useRef<HTMLDivElement>(null);
+
+      const { control } = useFormContext();
+
+      return (
+        <>
+          <Controller
+            name={block.props.fieldName}
+            control={control}
+            shouldUnregister
+            render={({ field }) => (
+              <MuiTextField
+                inputRef={ref}
+                label={block.props.label}
+                variant="outlined"
+                {...field}
+                value={field.value || ''}
+              />
+            )}
+          />
+
++          <editor.view.ui.ActionPopover referenceRef={ref}>
++            <BlockToolbar id={block.id} />
++          </editor.view.ui.ActionPopover>
+        </>
+      );
+    },
+    palette: () => {
+      return <Typography>TextField</Typography>;
+    },
+  },
+});
+```
+
+Since we already have a component for changing the `content` prop, we can generate similar components by changing only the prop keys, collecting them in an array
+
+```diff lang="tsx"
+// builder/plugins/change-props.tsx
++[
++  { label: 'Content', propName: 'content', valueIfEmpty: 'Empty' },
++  { label: 'Label', propName: 'label' },
++  { label: 'FieldName', propName: 'fieldName' },
++].forEach(({ label, propName, valueIfEmpty }) => {
+  addPropsView({
+    filter(block) {
+-      return block.props.content !== undefined;
++      return block.props[propName] !== undefined;
+    },
+    component: ({ block }) => {
+      return (
+        <TextField
+-          label="Content"
+-          value={block.props.content}
++          label={label}
++          value={block.props[propName]}
+          onChange={(event) =>
+            editor.commands.changeProperty(
+              block.id,
+-              "Content",
+-              event.target.value || 'Empty',
++              propName,
++              event.target.value || valueIfEmpty || '',
+            )
+          }
+        />
+      );
+    },
+  });
+});
+```
+
+## Button
+
+Make the rest of the button `type` and `variant` props, as with TextField, you can group selects into an array
+
+```diff lang="tsx"
+// builder/plugins/change-props.tsx
++[
++  {
++    label: 'Direction',
++    propName: 'direction',
++    items: ['row', 'row-reverse', 'column', 'column-reverse'],
++  },
++  {
++    label: 'Type',
++    propName: 'type',
++    items: ['button', 'submit', 'reset'],
++  },
++  {
++    label: 'Variant',
++    propName: 'variant',
++    items: ['contained', 'outlined', 'text'],
++  },
++].forEach(({ label, propName, items }) => {
+  addPropsView({
+    filter(block) {
+-      return block.props[propName] !== undefined;
++      return block.props.direction !== undefined;
+    },
+    component: ({ block }) => {
+      return (
+        <TextField
+          select
+-          label="Direction"
+-          value={block.props.direction}
++          label={label}
++          value={block.props[propName]}
+          onChange={(event) => {
+            editor.commands.changeProperty(
+              block.id,
+-              "direction",
++              propName,
+              event.target.value,
+            );
+          }}
+        >
+-          {['row', 'row-reverse', 'column', 'column-reverse'].map((item) => (
++          {items.map((item) => (
+            <MenuItem key={item} value={item}>
+              {item}
+            </MenuItem>
+          ))}
+        </TextField>
+      );
+    },
+  });
 });
 ```

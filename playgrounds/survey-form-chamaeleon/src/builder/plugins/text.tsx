@@ -1,5 +1,8 @@
 import { Plugin } from '@chamaeleon/core';
 import Typography from '@mui/material/Typography';
+import { useRef } from 'react';
+
+import { BlockToolbar } from '../ui/block-toolbar';
 
 export function Text(): Plugin {
   return {
@@ -12,15 +15,32 @@ export function Text(): Plugin {
             default: 'Enter your text',
           },
         },
+        style: {
+          root: {
+            padding: '0 0 16px 0',
+          },
+        },
         components: {
           view: ({ block }) => {
             return (
-              <Typography sx={{ pb: 2 }}>{block.props.content}</Typography>
+              <Typography sx={{ ...block.style.root }}>
+                {block.props.content}
+              </Typography>
             );
           },
-          editor: ({ block }) => {
+          editor: ({ block, editor }) => {
+            const ref = useRef<HTMLParagraphElement>(null);
+
             return (
-              <Typography sx={{ pb: 2 }}>{block.props.content}</Typography>
+              <>
+                <Typography ref={ref} sx={{ ...block.style.root }}>
+                  {block.props.content}
+                </Typography>
+
+                <editor.view.ui.ActionPopover referenceRef={ref}>
+                  <BlockToolbar id={block.id} />
+                </editor.view.ui.ActionPopover>
+              </>
             );
           },
           palette: () => {

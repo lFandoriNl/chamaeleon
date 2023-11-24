@@ -41,6 +41,7 @@ export function TextField(): Plugin {
                     label={block.props.label}
                     variant="outlined"
                     {...field}
+                    value={field.value || ''}
                   />
                 )}
               />
@@ -53,11 +54,14 @@ export function TextField(): Plugin {
               <Controller
                 name={block.props.fieldName}
                 control={control}
+                shouldUnregister
                 render={({ field }) => (
                   <MuiTextField
+                    inputRef={ref}
                     label={block.props.label}
                     variant="outlined"
                     {...field}
+                    value={field.value || ''}
                   />
                 )}
               />

@@ -118,7 +118,7 @@ export function SurveyForm() {
 +          });
 +        }}
 +      >
-+        Add first page
++        Add root block
 +      </Button>
 +    </Paper>
 +  );

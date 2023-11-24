@@ -81,7 +81,7 @@ mobile-starlight-toc nav {
     #5eead4 25%,
     #60a5fa 30%
   );
-  background-image: var(--stripes), var(--rainbow);
+  /* background-image: var(--stripes), var(--rainbow); */
   background-size: 300%, 200%;
   background-position:
     50% 50%,
@@ -98,7 +98,7 @@ mobile-starlight-toc nav {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: var(--stripes), var(--rainbow);
+  /* background-image: var(--stripes), var(--rainbow); */
   background-size: 200%, 100%;
   animation: jumbo 120s linear infinite;
   background-attachment: fixed;
