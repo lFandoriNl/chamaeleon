@@ -1,5 +1,12 @@
 # @chamaeleon/plugin-history
 
+## 0.3.7
+
+### Patch Changes
+
+- Updated dependencies [[`0a22080`](https://github.com/lFandoriNl/chamaeleon/commit/0a2208086962dc9b81a50c197965597391552f26)]:
+  - @chamaeleon/core@0.15.0
+
 ## 0.3.6
 
 ### Patch Changes

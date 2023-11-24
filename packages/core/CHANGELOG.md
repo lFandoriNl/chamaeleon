@@ -1,5 +1,11 @@
 # @chamaeleon/core
 
+## 0.15.0
+
+### Minor Changes
+
+- [`0a22080`](https://github.com/lFandoriNl/chamaeleon/commit/0a2208086962dc9b81a50c197965597391552f26) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Remove default offset in ActionPopover
+
 ## 0.14.0
 
 ### Minor Changes
