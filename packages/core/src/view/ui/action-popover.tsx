@@ -62,26 +62,7 @@ export function ActionPopover(props: ActionPopoverProps) {
         middleware: [
           flip(),
           shift({ limiter: limitShift() }),
-          offsetMiddleware(
-            offset !== undefined
-              ? offset
-              : ({ placement, rects: { floating } }) => {
-                  switch (placement) {
-                    case 'top-start':
-                      return {
-                        mainAxis: -floating.height - 4,
-                      };
-                    case 'top-end':
-                      return {
-                        crossAxis: floating.width / 2,
-                        mainAxis: -floating.height / 2,
-                      };
-
-                    default:
-                      return 0;
-                  }
-                },
-          ),
+          offsetMiddleware(offset),
         ],
       }).then(({ x, y }) => {
         Object.assign(popperElement.style, {

@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "@chamaeleon/core": "^0.14.0",
-    "@chamaeleon/plugin-history": "^0.3.0",
-    "@chamaeleon/plugin-persist": "^0.3.0",
-    "@chamaeleon/react-editor": "^0.3.0",
+    "@chamaeleon/plugin-history": "^0.3.6",
+    "@chamaeleon/plugin-persist": "^0.3.6",
+    "@chamaeleon/react-editor": "^0.3.3",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
