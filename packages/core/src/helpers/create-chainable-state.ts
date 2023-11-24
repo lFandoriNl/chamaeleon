@@ -26,6 +26,7 @@ export function createChainableState(config: {
     rootPage: state.rootPage,
     getBlock: state.getBlock.bind({ ...state, blocks }),
     getPluginState: state.getPluginState.bind(state),
+    setPluginState: state.setPluginState.bind(state),
     apply: state.apply.bind(state),
     filterTransaction: state.filterTransaction.bind(state),
     applyTransaction: state.applyTransaction.bind(state),
@@ -37,5 +38,6 @@ export function createChainableState(config: {
     applyInner: state.applyInner.bind(state),
     reconfigure: state.reconfigure.bind(state),
     toJSON: state.toJSON.bind(state),
+    fromJSON: state.toJSON.bind(state),
   };
 }

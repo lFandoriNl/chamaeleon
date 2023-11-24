@@ -9,7 +9,7 @@
     "build-docs": "turbo build --filter docs",
     "dev": "turbo dev --concurrency 20",
     "test": "turbo test",
-    "lint": "pnpm lint",
+    "lint": "turbo lint",
     "check-types": "turbo check-types",
     "clean": "turbo clean --concurrency 20",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md}\"",

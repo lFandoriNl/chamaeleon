@@ -7,14 +7,13 @@ type ToolbarProps = {
 };
 
 export function Toolbar({ className }: ToolbarProps) {
-  const [state, editor] = useEditorSelector(({ editor }) => editor.state);
-  const [historyState] = useEditorSelector(({ editor }) =>
+  const [historyState, editor] = useEditorSelector(({ editor }) =>
     editor.getPluginState<HistoryState>(historyName),
   );
 
-  const isStateEmpty = Object.keys(state.blocks).length === 0;
+  // const isStateEmpty = Object.keys(state.blocks).length === 0;
 
-  const isShowPresets = localStorage.getItem('showPresets') === 'true';
+  // const isShowPresets = localStorage.getItem('showPresets') === 'true';
 
   return (
     <div className={className}>
