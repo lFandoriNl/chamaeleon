@@ -17,8 +17,6 @@ export function SurveyFormPage() {
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Stack spacing={4}>
         <Paper sx={{ p: 4 }}>
-          {/* <Typography variant="h5">Survey form</Typography> */}
-
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="h5">Survey form</Typography>
 

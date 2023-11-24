@@ -3,10 +3,7 @@ import { Button, Paper, Stack } from '@mui/material';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 type FormState = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  age: number;
+  [key: string]: any;
 };
 
 export function SurveyForm() {

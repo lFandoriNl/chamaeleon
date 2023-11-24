@@ -12,9 +12,9 @@
     "test": "echo 'No test specified'"
   },
   "dependencies": {
-    "@chamaeleon/core": "file:../../packages/core",
-    "@chamaeleon/plugin-history": "^0.3.3",
-    "@chamaeleon/plugin-persist": "^0.3.3",
+    "@chamaeleon/core": "^0.14.0",
+    "@chamaeleon/plugin-history": "^0.3.0",
+    "@chamaeleon/plugin-persist": "^0.3.0",
     "@chamaeleon/react-editor": "^0.3.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
