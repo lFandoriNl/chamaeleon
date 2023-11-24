@@ -8,7 +8,6 @@ import {
   Placement,
   OffsetOptions,
 } from '@floating-ui/dom';
-import clsx from 'clsx';
 import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 

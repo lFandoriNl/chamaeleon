@@ -3,7 +3,7 @@ import { SortableContext } from '@dnd-kit/sortable';
 import React, { forwardRef, useContext } from 'react';
 
 import { Block } from '../../model';
-import { DndConnectorContext } from './block-root';
+import { DndConnectorContext } from './draggable';
 
 type DropzoneProps = {
   block?: Block;

@@ -15,7 +15,7 @@ import {
   useDragAndDropState,
   useDragAndDropBlockState,
   useDndConnector,
-  BlockRoot,
+  Draggable,
   Dropzone,
 } from './drag-and-drop';
 import { ActionPopover } from './ui/action-popover';
@@ -74,7 +74,7 @@ export class EditorView {
     useDndConnector,
   };
 
-  Block = BlockRoot;
+  Draggable = Draggable;
   Dropzone = Dropzone;
 
   constructor(
