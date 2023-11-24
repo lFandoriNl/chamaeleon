@@ -1,6 +1,6 @@
 import { applyPatches } from 'immer';
 
-import { Block, Fragment } from '../model';
+import { Block } from '../model';
 import { Blocks } from '../state';
 import { Step, StepResult } from './step';
 
@@ -26,19 +26,17 @@ export class RemoveStep extends Step {
           delete draft[id];
         });
       } else {
-        const content = draft[this.target].children;
+        delete draft[this.target];
 
-        if (content.isEmpty) return;
-
-        draft[this.target] = draft[this.target].type.create(
-          draft[this.target].props,
-          draft[this.target].style,
-          Fragment.empty,
-          draft[this.target].id,
-        );
-
-        content.children.forEach((id) => {
-          delete draft[id];
+        Object.entries(draft).forEach(([id, block]) => {
+          if (block.children.has(this.target)) {
+            draft[id] = block.type.create(
+              block.props,
+              block.style,
+              block.children.remove([this.target]),
+              block.id,
+            );
+          }
         });
       }
     });

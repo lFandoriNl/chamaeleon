@@ -4,6 +4,7 @@ export * from './select';
 export * from './insert-root-content';
 export * from './insert-content';
 export * from './remove-content';
+export * from './remove';
 export * from './append-blocks';
 export * from './change-property';
 export * from './change-style';

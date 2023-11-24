@@ -38,8 +38,19 @@ export class Transform {
     return this;
   }
 
+  remove(target: Block['id']) {
+    this.step(new RemoveStep(target));
+
+    this.lastModifiedBlock = target;
+
+    return this;
+  }
+
   removeContent(target: Block['id'], blockIds?: Array<Block['id']>) {
-    this.step(new RemoveStep(target, blockIds));
+    const blockIdsToRemove =
+      blockIds || this.blocks[target].children.children || [];
+
+    this.step(new RemoveStep(target, blockIdsToRemove));
 
     this.lastModifiedBlock = target;
 
