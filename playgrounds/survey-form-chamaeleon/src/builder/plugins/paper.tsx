@@ -6,6 +6,7 @@ import { useRef } from 'react';
 
 import { AddNewBlock } from '../ui/add-new-block';
 import { BlockToolbar } from '../ui/block-toolbar';
+import { useHighlightStyles } from '../ui/use-highlight-styles';
 
 export function Paper(): Plugin {
   return {
@@ -26,22 +27,34 @@ export function Paper(): Plugin {
             return <MuiPaper sx={{ ...block.style.root }}>{children}</MuiPaper>;
           },
           editor: ({ block, children }) => {
+            const { view } = editor;
+
             const ref = useRef<HTMLDivElement>(null);
 
+            const styles = useHighlightStyles(block);
+
             return (
-              <>
-                <MuiPaper ref={ref} sx={{ ...block.style.root }}>
-                  {children}
+              <view.Draggable id={block.id}>
+                <view.Dropzone>
+                  <MuiPaper
+                    ref={ref}
+                    sx={{
+                      ...block.style.root,
+                      ...styles,
+                    }}
+                  >
+                    {children}
 
-                  <Box display="flex" justifyContent="center">
-                    <AddNewBlock id={block.id} />
-                  </Box>
-                </MuiPaper>
+                    <Box display="flex" justifyContent="center">
+                      <AddNewBlock id={block.id} />
+                    </Box>
+                  </MuiPaper>
+                </view.Dropzone>
 
-                <editor.view.ui.ActionPopover referenceRef={ref}>
+                <view.ui.ActionPopover referenceRef={ref}>
                   <BlockToolbar id={block.id} />
-                </editor.view.ui.ActionPopover>
-              </>
+                </view.ui.ActionPopover>
+              </view.Draggable>
             );
           },
           palette: () => {

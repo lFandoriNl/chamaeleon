@@ -6,6 +6,7 @@ import { useRef } from 'react';
 
 import { AddNewBlock } from '../ui/add-new-block';
 import { BlockToolbar } from '../ui/block-toolbar';
+import { useHighlightStyles } from '../ui/use-highlight-styles';
 
 export function Stack(): Plugin {
   return {
@@ -36,26 +37,33 @@ export function Stack(): Plugin {
             );
           },
           editor: ({ block, children }) => {
+            const { view } = editor;
+
             const ref = useRef<HTMLDivElement>(null);
 
+            const styles = useHighlightStyles(block);
+
             return (
-              <>
-                <MuiStack
-                  ref={ref}
-                  spacing={block.props.spacing}
-                  direction={block.props.direction}
-                >
-                  {children}
+              <view.Draggable id={block.id}>
+                <view.Dropzone>
+                  <MuiStack
+                    ref={ref}
+                    spacing={block.props.spacing}
+                    direction={block.props.direction}
+                    sx={styles}
+                  >
+                    {children}
 
-                  <Box display="flex" justifyContent="center">
-                    <AddNewBlock id={block.id} />
-                  </Box>
-                </MuiStack>
+                    <Box display="flex" justifyContent="center">
+                      <AddNewBlock id={block.id} />
+                    </Box>
+                  </MuiStack>
+                </view.Dropzone>
 
-                <editor.view.ui.ActionPopover referenceRef={ref}>
+                <view.ui.ActionPopover referenceRef={ref}>
                   <BlockToolbar id={block.id} />
-                </editor.view.ui.ActionPopover>
-              </>
+                </view.ui.ActionPopover>
+              </view.Draggable>
             );
           },
           palette: () => {

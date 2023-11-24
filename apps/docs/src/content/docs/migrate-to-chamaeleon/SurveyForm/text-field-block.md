@@ -57,7 +57,6 @@ export function TextField(): Plugin {
                 shouldUnregister
                 render={({ field }) => (
                   <MuiTextField
-                    inputRef={ref}
                     label={block.props.label}
                     variant="outlined"
                     {...field}

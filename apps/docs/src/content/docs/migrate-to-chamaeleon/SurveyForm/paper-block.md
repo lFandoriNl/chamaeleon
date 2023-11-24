@@ -82,12 +82,14 @@ export function AddNewBlock({ id }: AddNewBlockProps) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (name: Block['type']['name']) => {
+  const handleClose = (name?: Block['type']['name']) => {
     setAnchorEl(null);
 
-    editor.commands.insertContent(id, {
-      type: name,
-    });
+    if (name) {
+      editor.commands.insertContent(id, {
+        type: name,
+      });
+    }
   };
 
   const allowedBlocksItems = editor.state.schema
@@ -122,7 +124,7 @@ export function AddNewBlock({ id }: AddNewBlockProps) {
       <Menu
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={() => handleClose()}
         MenuListProps={{
           'aria-labelledby': a11yId,
           sx: {

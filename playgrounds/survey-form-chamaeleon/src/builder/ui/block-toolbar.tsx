@@ -1,33 +1,43 @@
 import { Block } from '@chamaeleon/core';
 import { useEditor } from '@chamaeleon/react-editor';
+import DeleteIcon from '@mui/icons-material/Delete';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import SettingsIcon from '@mui/icons-material/Settings';
+import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import IconButton from '@mui/material/IconButton';
 
 export function BlockToolbar({ id }: { id: Block['id'] }) {
   const editor = useEditor();
 
-  return (
-    <ButtonGroup
-      disableElevation
-      variant="contained"
-      aria-label="Block toolbar"
-      sx={{
-        backgroundColor: 'white',
-      }}
-    >
-      <IconButton size="small" aria-label="drag" sx={{ cursor: 'grab' }}>
-        <DragIndicatorIcon />
-      </IconButton>
+  const dndConnector = editor.view.dragAndDrop.useDndConnector();
 
-      <IconButton
-        size="small"
-        aria-label="open block settings"
+  return (
+    <ButtonGroup variant="contained" size="small" aria-label="Block toolbar">
+      {dndConnector.withActivator && (
+        <Button
+          ref={dndConnector.ref}
+          aria-label="Drag"
+          sx={{ cursor: 'grab' }}
+          {...dndConnector.attributes}
+          {...dndConnector.listeners}
+        >
+          <DragIndicatorIcon />
+        </Button>
+      )}
+
+      <Button
+        aria-label="Remove block"
+        onClick={() => editor.commands.remove(id)}
+      >
+        <DeleteIcon />
+      </Button>
+
+      <Button
+        aria-label="Open block settings"
         onClick={() => editor.commands.openBlockSettings(id)}
       >
         <SettingsIcon />
-      </IconButton>
+      </Button>
     </ButtonGroup>
   );
 }

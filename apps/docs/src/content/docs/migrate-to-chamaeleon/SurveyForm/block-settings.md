@@ -182,31 +182,30 @@ Great, our settings are ready! All that remains is to show the toolbar when you 
 
 ```tsx
 // builder/ui/block-toolbar.tsx
-import { Block } from '@chamaeleon/core';
-import { useEditor } from '@chamaeleon/react-editor';
+import DeleteIcon from '@mui/icons-material/Delete';
 import SettingsIcon from '@mui/icons-material/Settings';
+import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import IconButton from '@mui/material/IconButton';
 
 export function BlockToolbar({ id }: { id: Block['id'] }) {
   const editor = useEditor();
 
   return (
-    <ButtonGroup
-      disableElevation
-      variant="contained"
-      aria-label="Block toolbar"
-      sx={{
-        backgroundColor: 'white',
-      }}
-    >
-      <IconButton
+    <ButtonGroup variant="contained" size="small" aria-label="Block toolbar">
+      <Button
+        aria-label="Remove block"
+        onClick={() => editor.commands.remove(id)}
+      >
+        <DeleteIcon />
+      </Button>
+
+      <Button
         size="small"
-        aria-label="open block settings"
+        aria-label="Open block settings"
         onClick={() => editor.commands.openBlockSettings(id)}
       >
         <SettingsIcon />
-      </IconButton>
+      </Button>
     </ButtonGroup>
   );
 }
@@ -215,6 +214,7 @@ export function BlockToolbar({ id }: { id: Block['id'] }) {
 ```diff lang="tsx"
 // builder/plugins/button.tsx
 editor: ({ block }) => {
++  const { view } = editor;
   const { type, variant, content } = block.props;
 
 +  const ref = useRef<HTMLButtonElement>(null);
@@ -226,9 +226,9 @@ editor: ({ block }) => {
         {content}
       </MuiButton>
 
-+      <editor.view.ui.ActionPopover referenceRef={ref}>
++      <view.ui.ActionPopover referenceRef={ref}>
 +        <BlockToolbar id={block.id} />
-+      </editor.view.ui.ActionPopover>
++      </view.ui.ActionPopover>
     </>
   );
 },

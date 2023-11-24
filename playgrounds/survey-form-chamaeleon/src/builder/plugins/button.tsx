@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import { useRef } from 'react';
 
 import { BlockToolbar } from '../ui/block-toolbar';
+import { useHighlightStyles } from '../ui/use-highlight-styles';
 
 export function Button(): Plugin {
   return {
@@ -33,20 +34,24 @@ export function Button(): Plugin {
             );
           },
           editor: ({ block }) => {
+            const { view } = editor;
+
             const { type, variant, content } = block.props;
 
             const ref = useRef<HTMLButtonElement>(null);
 
+            const styles = useHighlightStyles(block);
+
             return (
-              <>
-                <MuiButton ref={ref} type={type} variant={variant}>
+              <view.Draggable id={block.id}>
+                <MuiButton ref={ref} type={type} variant={variant} sx={styles}>
                   {content}
                 </MuiButton>
 
-                <editor.view.ui.ActionPopover referenceRef={ref}>
+                <view.ui.ActionPopover referenceRef={ref}>
                   <BlockToolbar id={block.id} />
-                </editor.view.ui.ActionPopover>
-              </>
+                </view.ui.ActionPopover>
+              </view.Draggable>
             );
           },
           palette: () => {

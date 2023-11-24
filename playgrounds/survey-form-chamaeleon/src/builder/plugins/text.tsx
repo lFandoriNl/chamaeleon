@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { useRef } from 'react';
 
 import { BlockToolbar } from '../ui/block-toolbar';
+import { useHighlightStyles } from '../ui/use-highlight-styles';
 
 export function Text(): Plugin {
   return {
@@ -29,18 +30,22 @@ export function Text(): Plugin {
             );
           },
           editor: ({ block, editor }) => {
+            const { view } = editor;
+
             const ref = useRef<HTMLParagraphElement>(null);
 
+            const styles = useHighlightStyles(block);
+
             return (
-              <>
-                <Typography ref={ref} sx={{ ...block.style.root }}>
+              <view.Draggable id={block.id}>
+                <Typography ref={ref} sx={{ ...block.style.root, ...styles }}>
                   {block.props.content}
                 </Typography>
 
-                <editor.view.ui.ActionPopover referenceRef={ref}>
+                <view.ui.ActionPopover referenceRef={ref}>
                   <BlockToolbar id={block.id} />
-                </editor.view.ui.ActionPopover>
-              </>
+                </view.ui.ActionPopover>
+              </view.Draggable>
             );
           },
           palette: () => {

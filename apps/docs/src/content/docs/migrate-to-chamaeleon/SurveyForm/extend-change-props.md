@@ -35,6 +35,7 @@ addBlock({
 +      return <MuiPaper sx={{ ...block.style.root }}>{children}</MuiPaper>;
     },
      editor: ({ block, children }) => {
++      const { view } = editor;
 +      const ref = useRef<HTMLDivElement>(null);
 
       return (
@@ -48,9 +49,9 @@ addBlock({
             </Box>
           </MuiPaper>
 
-+          <editor.view.ui.ActionPopover referenceRef={ref}>
++          <view.ui.ActionPopover referenceRef={ref}>
 +            <BlockToolbar id={block.id} />
-+          </editor.view.ui.ActionPopover>
++          </view.ui.ActionPopover>
         </>
       )
 ```
@@ -210,6 +211,8 @@ addBlock({
       );
     },
     editor: ({ block, children }) => {
++      const { view } = editor;
+
 +      const ref = useRef<HTMLDivElement>(null);
 
       return (
@@ -227,9 +230,9 @@ addBlock({
             </Box>
           </MuiStack>
 
-+          <editor.view.ui.ActionPopover referenceRef={ref}>
++          <view.ui.ActionPopover referenceRef={ref}>
 +            <BlockToolbar id={block.id} />
-+          </editor.view.ui.ActionPopover>
++          </view.ui.ActionPopover>
         </>
       );
     },
@@ -323,7 +326,9 @@ addBlock({
     },
 -    editor: ({ block }) => {
 +    editor: ({ block, editor }) => {
-      const ref = useRef<HTMLParagraphElement>(null);
++      const { view } = editor;
+
++      const ref = useRef<HTMLParagraphElement>(null);
 
       return (
         <>
@@ -332,9 +337,9 @@ addBlock({
 +            {block.props.content}
 +          </Typography>
 +
-+          <editor.view.ui.ActionPopover referenceRef={ref}>
++          <view.ui.ActionPopover referenceRef={ref}>
 +            <BlockToolbar id={block.id} />
-+          </editor.view.ui.ActionPopover>
++          </view.ui.ActionPopover>
         </>
       );
     },
@@ -364,6 +369,8 @@ addBlock({
   components: {
     view: ...
     editor: ({ block }) => {
++      const { view } = editor;
+
 +      const ref = useRef<HTMLDivElement>(null);
 
       const { control } = useFormContext();
@@ -385,9 +392,9 @@ addBlock({
             )}
           />
 
-+          <editor.view.ui.ActionPopover referenceRef={ref}>
++          <view.ui.ActionPopover referenceRef={ref}>
 +            <BlockToolbar id={block.id} />
-+          </editor.view.ui.ActionPopover>
++          </view.ui.ActionPopover>
         </>
       );
     },

@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { BlockToolbar } from '../ui/block-toolbar';
+import { useHighlightStyles } from '../ui/use-highlight-styles';
 
 export function TextField(): Plugin {
   return {
@@ -40,31 +41,42 @@ export function TextField(): Plugin {
             );
           },
           editor: ({ block }) => {
-            const ref = useRef<HTMLDivElement>(null);
+            const { view } = editor;
+
+            const referenceRef = useRef<HTMLDivElement>(null);
 
             const { control } = useFormContext();
 
-            return (
-              <>
-                <Controller
-                  name={block.props.fieldName}
-                  control={control}
-                  shouldUnregister
-                  render={({ field }) => (
-                    <MuiTextField
-                      inputRef={ref}
-                      label={block.props.label}
-                      variant="outlined"
-                      {...field}
-                      value={field.value || ''}
-                    />
-                  )}
-                />
+            const styles = useHighlightStyles(block);
 
-                <editor.view.ui.ActionPopover referenceRef={ref}>
-                  <BlockToolbar id={block.id} />
-                </editor.view.ui.ActionPopover>
-              </>
+            return (
+              <view.Draggable id={block.id} ref={referenceRef}>
+                {({ ref, attrs, listeners, style }) => (
+                  <>
+                    <Controller
+                      name={block.props.fieldName}
+                      control={control}
+                      shouldUnregister
+                      render={({ field }) => (
+                        <MuiTextField
+                          inputRef={ref}
+                          label={block.props.label}
+                          variant="outlined"
+                          {...field}
+                          value={field.value || ''}
+                          {...attrs}
+                          {...listeners}
+                          sx={{ ...styles, ...style }}
+                        />
+                      )}
+                    />
+
+                    <view.ui.ActionPopover referenceRef={referenceRef}>
+                      <BlockToolbar id={block.id} />
+                    </view.ui.ActionPopover>
+                  </>
+                )}
+              </view.Draggable>
             );
           },
           palette: () => {

@@ -18,9 +18,13 @@ export function Root(): Plugin {
             return children;
           },
           editor: ({ block, children }) => {
+            const { view } = editor;
+
             return (
               <>
-                {children}
+                <view.Dropzone block={block}>
+                  <div>{children}</div>
+                </view.Dropzone>
 
                 <Box display="flex" justifyContent="center">
                   <AddNewBlock id={block.id} />

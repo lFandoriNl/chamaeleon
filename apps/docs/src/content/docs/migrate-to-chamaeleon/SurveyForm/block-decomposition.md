@@ -67,39 +67,29 @@ Let's look at our form in more detail
 </Stack>
 ```
 
-We need to define the functionality of our form as a constructor
-
-Let's make these features first:
+As a result of the tutorial, the following features of our builder will be implemented (each block will have drag and drop)
 
 ```
-- create components
+- persisted state
+- undo redo state
+- create blocks
   - Paper
     - change padding
   - Stack
     - change direction
     - change spacing
   - Typography
+    - change padding
     - change text
   - TextField
     - change label
+    - change field name
   - Button
     - change text
+    - change type
     - change variant
 ```
 
 :::note
 But first we will need to create our main block which will be the parent for all the others, let's call it `root`
 :::
-
-## Block nesting scheme
-
-Now let's visually determine our block nesting, that is, which blocks can be children of each block:
-
-```
-root: *
-paper: *, !root
-stack: *, !root
-typography: *, !root
-text-field: *, !root
-button: *, !root
-```

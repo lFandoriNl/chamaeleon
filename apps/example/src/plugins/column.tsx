@@ -82,7 +82,7 @@ export function Column(): Plugin {
             const referenceRef = useRef<HTMLElement>(null);
 
             return (
-              <editor.view.Block id={block.id} ref={referenceRef}>
+              <editor.view.Draggable id={block.id} ref={referenceRef}>
                 {block.children.isEmpty ? (
                   <div
                     className={clsx(
@@ -160,7 +160,7 @@ export function Column(): Plugin {
                     }}
                   />
                 </ui.ActionPopover>
-              </editor.view.Block>
+              </editor.view.Draggable>
             );
           },
           palette: () => {

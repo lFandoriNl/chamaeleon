@@ -16,7 +16,7 @@ import { SurveyFormPage } from './pages/survey-form/survey-form-page';
 
 const editor = new Editor({
   plugins: [
-    // Persist(),
+    Persist(),
     History(),
     Root(),
     Paper(),

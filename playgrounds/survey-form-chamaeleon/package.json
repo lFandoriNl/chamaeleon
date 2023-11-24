@@ -12,7 +12,7 @@
     "test": "echo 'No test specified'"
   },
   "dependencies": {
-    "@chamaeleon/core": "^0.13.2",
+    "@chamaeleon/core": "file:../../packages/core",
     "@chamaeleon/plugin-history": "^0.3.3",
     "@chamaeleon/plugin-persist": "^0.3.3",
     "@chamaeleon/react-editor": "^0.3.0",

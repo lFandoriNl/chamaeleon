@@ -35,7 +35,7 @@ export function Button(): Plugin {
 
             return (
               <>
-                <editor.view.Block id={block.id} ref={referenceRef}>
+                <editor.view.Draggable id={block.id} ref={referenceRef}>
                   <UIButton color="blue" style={block.style.root}>
                     {block.props.content}
                   </UIButton>
@@ -61,7 +61,7 @@ export function Button(): Plugin {
                       }}
                     />
                   </ui.ActionPopover>
-                </editor.view.Block>
+                </editor.view.Draggable>
               </>
             );
           },
