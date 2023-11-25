@@ -46,15 +46,15 @@ export default defineConfig({
           },
         },
         {
-          label: 'Write plugin guides',
-          autogenerate: {
-            directory: 'write-plugin-guides',
-          },
-        },
-        {
           label: 'Packages',
           autogenerate: {
             directory: 'packages',
+          },
+        },
+        {
+          label: 'Plugin API',
+          autogenerate: {
+            directory: 'plugin-api',
           },
         },
       ],
