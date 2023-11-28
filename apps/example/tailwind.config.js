@@ -1,5 +1,5 @@
-import plugin from 'tailwindcss/plugin';
 import sharedConfig from 'tailwind-config/tailwind.config';
+import plugin from 'tailwindcss/plugin';
 
 /** @type {import('tailwindcss').Config} */
 export default {

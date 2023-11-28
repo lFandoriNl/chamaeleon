@@ -33,15 +33,15 @@ const editor = new Editor({
   ],
   loggers: [
     ChamaeleonDevtools.logger,
-    {
-      ...console,
-      action: (data) => console.log(data),
-      system: (data) => console.log(data),
-    },
+    // {
+    //   ...console,
+    //   action: (data) => console.log(data),
+    //   system: (data) => console.log(data),
+    // },
   ],
 });
 
-connectToReduxDevtools(editor);
+// connectToReduxDevtools(editor);
 
 editor.on('update', ({ transaction }) => {
   console.log('update', {
@@ -66,7 +66,7 @@ editor.on('update', ({ transaction }) => {
 export const Example = () => {
   return (
     <EditorProvider value={editor}>
-      <Flex direction="column" className="invisible">
+      <Flex direction="column">
         <Builder />
       </Flex>
 
