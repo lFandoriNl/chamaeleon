@@ -41,7 +41,7 @@ const editor = new Editor({
   ],
 });
 
-// connectToReduxDevtools(editor);
+connectToReduxDevtools(editor);
 
 editor.on('update', ({ transaction }) => {
   console.log('update', {
@@ -70,7 +70,7 @@ export const Example = () => {
         <Builder />
       </Flex>
 
-      <ChamaeleonDevtools.Render />
+      {/* <ChamaeleonDevtools.Render /> */}
     </EditorProvider>
   );
 };
