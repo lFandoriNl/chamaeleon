@@ -12,23 +12,23 @@
     "test": "echo 'No test specified'"
   },
   "dependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "@floating-ui/dom": "^1.5.3",
-    "@mantine/core": "^7.2.2",
-    "@mantine/hooks": "^7.2.2",
     "@chamaeleon/core": "workspace:^",
     "@chamaeleon/react-editor": "workspace:^",
-    "@chamaeleon/uikit": "workspace:^",
     "@chamaeleon/plugin-history": "workspace:^",
     "@chamaeleon/plugin-persist": "workspace:^",
-    "@chamaeleon/devtools": "workspace:^"
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/material": "^5.14.18",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.48.2"
   },
   "devDependencies": {
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "4.0.4",
-    "tailwind-config": "workspace:*",
     "vite": "4.4.9"
   }
 }
