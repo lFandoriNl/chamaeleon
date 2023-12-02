@@ -12,10 +12,10 @@
     "test": "echo 'No test specified'"
   },
   "dependencies": {
-    "@chamaeleon/core": "^0.15.0",
-    "@chamaeleon/plugin-history": "^0.3.7",
-    "@chamaeleon/plugin-persist": "^0.3.7",
-    "@chamaeleon/react-editor": "^0.3.4",
+    "@chamaeleon/core": "^0.16.0",
+    "@chamaeleon/plugin-history": "^0.3.8",
+    "@chamaeleon/plugin-persist": "^0.3.8",
+    "@chamaeleon/react-editor": "^0.4.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
