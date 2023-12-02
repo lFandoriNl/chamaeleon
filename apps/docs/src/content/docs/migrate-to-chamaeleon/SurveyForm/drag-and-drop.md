@@ -186,7 +186,8 @@ editor: ({ block, children }) => {
           ref={ref}
           spacing={block.props.spacing}
           direction={block.props.direction}
-+          sx={styles}
+-          sx={{ px: 2 }}
++          sx={{ px: 2, ...styles }}
         >
           {children}
 

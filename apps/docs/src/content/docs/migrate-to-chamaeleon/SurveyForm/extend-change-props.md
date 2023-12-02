@@ -222,6 +222,7 @@ addBlock({
 +            ref={ref}
 +            spacing={block.props.spacing}
 +            direction={block.props.direction}
++            sx={{ px: 2 }}
 +          >
             {children}
 
