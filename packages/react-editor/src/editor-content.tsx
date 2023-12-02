@@ -27,23 +27,22 @@ type EditorContentProps = {
 
 export const EditorContent = ({ editor, empty }: EditorContentProps) => {
   const [rootPage] = useEditorSelector(({ editor }) => editor.state.rootPage);
+  const [mode] = useEditorSelector(({ editor }) => editor.mode);
 
   return (
     <editor.view.PluginProviders
       Renderer={(props: { block: Block }) => (
-        <Renderer block={props.block} editor={editor} componentType="editor" />
+        <Renderer block={props.block} editor={editor} componentType={mode} />
       )}
       editor={editor}
     >
-      <div className="editor-root">
-        {rootPage ? (
-          <Renderer block={rootPage} editor={editor} componentType="editor" />
-        ) : (
-          empty
-        )}
+      {rootPage ? (
+        <Renderer block={rootPage} editor={editor} componentType={mode} />
+      ) : (
+        empty
+      )}
 
-        <EditorContentPortals />
-      </div>
+      <EditorContentPortals />
     </editor.view.PluginProviders>
   );
 };
