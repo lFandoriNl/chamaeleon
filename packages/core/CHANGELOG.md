@@ -1,5 +1,15 @@
 # @chamaeleon/core
 
+## 0.16.0
+
+### Minor Changes
+
+- [`cb8d326`](https://github.com/lFandoriNl/chamaeleon/commit/cb8d326e7a14224a1b8db5f9612f5117423df524) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Add editor mode & editor.on("mode") event
+
+### Patch Changes
+
+- [`acc242e`](https://github.com/lFandoriNl/chamaeleon/commit/acc242e912da91c9dbc0da387ef260115b459236) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Fix hiding unnecessary ActionPopover
+
 ## 0.15.0
 
 ### Minor Changes
