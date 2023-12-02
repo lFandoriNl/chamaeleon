@@ -10,9 +10,7 @@ export const useEditorSelector = <T>(
 
   const editor = useEditor();
 
-  const selectorResultRef = useRef<T>(
-    selector({ editor, transaction: editor.state.tr }),
-  );
+  const selectorResultRef = useRef<T>(selector({ editor }));
 
   useEffect(() => {
     const update = (dataUpdated: EditorEvents['update']) => {
