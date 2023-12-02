@@ -45,8 +45,13 @@ export function ActionPopover(props: ActionPopoverProps) {
     const referenceElement = referenceRef.current;
     if (!referenceElement) throw new Error('Reference element not found');
 
-    const open = () => setOpen(true);
-    const close = () => setOpen(false);
+    const open = (event: Event) => {
+      setOpen(event.target === event.currentTarget);
+    };
+
+    const close = () => {
+      setOpen(false);
+    };
 
     referenceElement.addEventListener('mouseover', open);
     referenceElement.addEventListener('mouseleave', close);
