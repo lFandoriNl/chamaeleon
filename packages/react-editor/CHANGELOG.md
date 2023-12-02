@@ -1,5 +1,16 @@
 # @chamaeleon/react-editor
 
+## 0.4.0
+
+### Minor Changes
+
+- [`4755579`](https://github.com/lFandoriNl/chamaeleon/commit/4755579a92f6ef0265db4a1db9cf3bc0f1b3bdbb) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Add render according to the editor mode
+
+### Patch Changes
+
+- Updated dependencies [[`cb8d326`](https://github.com/lFandoriNl/chamaeleon/commit/cb8d326e7a14224a1b8db5f9612f5117423df524), [`acc242e`](https://github.com/lFandoriNl/chamaeleon/commit/acc242e912da91c9dbc0da387ef260115b459236)]:
+  - @chamaeleon/core@0.16.0
+
 ## 0.3.4
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @chamaeleon/plugin-persist
 
+## 0.3.8
+
+### Patch Changes
+
+- Updated dependencies [[`cb8d326`](https://github.com/lFandoriNl/chamaeleon/commit/cb8d326e7a14224a1b8db5f9612f5117423df524), [`acc242e`](https://github.com/lFandoriNl/chamaeleon/commit/acc242e912da91c9dbc0da387ef260115b459236)]:
+  - @chamaeleon/core@0.16.0
+
 ## 0.3.7
 
 ### Patch Changes
