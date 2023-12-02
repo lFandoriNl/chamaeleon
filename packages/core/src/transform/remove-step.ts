@@ -4,6 +4,18 @@ import { Block } from '../model';
 import { Blocks } from '../state';
 import { Step, StepResult } from './step';
 
+function removeTreeBlocks(blocks: Blocks, id: Block['id']) {
+  if (blocks[id]) {
+    blocks[id].children.children.forEach((blockId) => {
+      if (blocks[blockId]) {
+        return removeTreeBlocks(blocks, blockId);
+      }
+    });
+  }
+
+  delete blocks[id];
+}
+
 export class RemoveStep extends Step {
   constructor(
     private target: Block['id'],
@@ -23,9 +35,11 @@ export class RemoveStep extends Step {
         );
 
         this.blockIds.forEach((id) => {
-          delete draft[id];
+          removeTreeBlocks(draft, id);
         });
       } else {
+        removeTreeBlocks(draft, this.target);
+
         delete draft[this.target];
 
         Object.entries(draft).forEach(([id, block]) => {
