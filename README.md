@@ -47,8 +47,8 @@ Chameleon provides Drag And Drop capabilities out of the box
 - ✅ support for drag and drop blocks out of the box
 - ✅ update state using command
 - ✅ override internal UI components of the editor
-- ➖ view and editing mode of the editor (currently only editing)
-- ❌ lightweight rendering without major editor dependencies (only view mode)
+- ✅ `view` and `editor` mode of the editor
+- ❌ lightweight rendering without major editor dependencies (only `view` mode)
 - ❌ i18n support
 - ✅ possibility to add your own logger
 

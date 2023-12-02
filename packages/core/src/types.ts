@@ -12,10 +12,13 @@ export type Provider = React.FunctionComponent<{
   children: React.ReactNode;
 }>;
 
+export type EditorMode = 'view' | 'editor';
+
 export type EditorEvents = {
   ready: { editor: Editor };
-  update: { editor: Editor; transaction: Transaction };
+  update: { editor: Editor };
   transaction: { editor: Editor; transaction: Transaction };
+  mode: { editor: Editor; mode: EditorMode };
 };
 
 type LogData = number | string | Record<string, any> | any[];

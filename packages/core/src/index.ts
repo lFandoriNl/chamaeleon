@@ -18,6 +18,7 @@ export * as commands from './commands';
 
 export type {
   Provider,
+  EditorMode,
   EditorEvents,
   BlockViewRenderer,
   BlockViewRendererPack,

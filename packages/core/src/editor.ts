@@ -10,7 +10,7 @@ import {
   RawBlocks,
   Transaction,
 } from './state';
-import { Logger, EditorEvents, SingleCommands } from './types';
+import { Logger, EditorEvents, SingleCommands, EditorMode } from './types';
 import { isFunction } from './utilities/is-function';
 import { EditorView, EditorViewOptions } from './view';
 
@@ -31,6 +31,8 @@ export class Editor extends EventEmitter<EditorEvents> {
   schema: Schema;
 
   view!: EditorView;
+
+  mode: EditorMode = 'editor';
 
   options: EditorOptions = {
     blocks: {},
@@ -143,6 +145,19 @@ export class Editor extends EventEmitter<EditorEvents> {
     });
   }
 
+  changeMode(mode: EditorMode) {
+    this.mode = mode;
+
+    this.emit('mode', {
+      editor: this,
+      mode,
+    });
+
+    this.emit('update', {
+      editor: this,
+    });
+  }
+
   private dispatchTransaction(transaction: Transaction) {
     const state = this.state.apply(transaction);
 
@@ -155,7 +170,6 @@ export class Editor extends EventEmitter<EditorEvents> {
 
     this.emit('update', {
       editor: this,
-      transaction,
     });
   }
 
