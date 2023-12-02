@@ -9,9 +9,9 @@ We have almost finished our builder, almost the most important thing remains, th
 
 Chameleon provides two wrapper components for implementing drag and drop, these are `Draggable` and `Dropzone`
 
-**`Draggable`** - what we drag
+`Draggable` - what we drag
 
-**`Dropzone`** - area where blocks can be dropped
+`Dropzone` - area where blocks can be dropped
 
 There is also a hook `view.dragAndDrop.useBlockState(block)` which provides information about whether the dragged block is currently located above the block or whether the block is available for dropping a block into it
 

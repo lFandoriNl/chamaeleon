@@ -47,12 +47,14 @@ export const Demo = () => {
 
 As you can see, during creation we can expand the capabilities of our editor using plugins, as we did with `persist` and `history`
 
-Let's create a toolbar for undo redo operations
+Let's create a toolbar for undo redo operations and change the editor mode
 
 ```tsx
 // pages/survey-form/survey-form-page.tsx
 export function SurveyFormPage() {
-  const editor = useEditor();
+  const [isViewMode, editor] = useEditorSelector(
+    ({ editor }) => editor.mode === 'view',
+  );
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
@@ -61,15 +63,29 @@ export function SurveyFormPage() {
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="h5">Survey form</Typography>
 
-            <ButtonGroup variant="outlined">
-              <Button onClick={editor.commands.undo}>
-                <UndoIcon />
-              </Button>
+            <Box display="flex">
+              <FormControlLabel
+                control={
+                  <Switch
+                    value={isViewMode}
+                    onChange={(_, checked) => {
+                      editor.changeMode(checked ? 'view' : 'editor');
+                    }}
+                  />
+                }
+                label={isViewMode ? 'View mode' : 'Editor mode'}
+              />
 
-              <Button onClick={editor.commands.redo}>
-                <RedoIcon />
-              </Button>
-            </ButtonGroup>
+              <ButtonGroup variant="outlined">
+                <Button onClick={editor.commands.undo}>
+                  <UndoIcon />
+                </Button>
+
+                <Button onClick={editor.commands.redo}>
+                  <RedoIcon />
+                </Button>
+              </ButtonGroup>
+            </Box>
           </Stack>
         </Paper>
 
