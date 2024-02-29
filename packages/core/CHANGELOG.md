@@ -1,5 +1,11 @@
 # @chamaeleon/core
 
+## 0.16.1
+
+### Patch Changes
+
+- [`d4ab8eb`](https://github.com/lFandoriNl/chamaeleon/commit/d4ab8eb458fba051de47d05fa6d367c3c8bf7caa) Thanks [@lFandoriNl](https://github.com/lFandoriNl)! - Removal of blocks along with nested blocks
+
 ## 0.16.0
 
 ### Minor Changes
